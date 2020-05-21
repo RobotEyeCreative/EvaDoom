@@ -1,0 +1,17 @@
+
+// Dynamic Lights
+#include "actors/gl_monsters/gl_monsters.txt"
+
+
+
+
+
+// Brightmaps
+#include "brightmaps/bm_monsters/bm_monsters.txt"
+
+
+
+
+
+
+

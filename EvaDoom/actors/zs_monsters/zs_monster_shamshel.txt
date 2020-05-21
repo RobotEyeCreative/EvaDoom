@@ -1,0 +1,51 @@
+
+class shamshel : angel {
+	
+	default {
+		
+		//$Title "Shamshel"
+		
+		radius 25;
+		height 110;
+		health 5000;
+		speed 30;
+		mass 3000;
+		scale 2.0;
+		
+		deathsound "EvaDoom/Monster/Shamshel/Death";
+	}
+	
+	states {
+		spawn:
+			SHAM AB 10 A_Look;
+			loop;
+		see:
+			SHAM AABBCCDD 3 A_Chase;
+			loop;
+		melee:
+		missile:
+			SHAM EF 8 A_FaceTarget;
+			SHAM G 0 A_StartSound("EvaDoom/Monster/Shamshel/Attack");
+			SHAM G 6 A_TroopAttack;
+			goto see;
+		pain:
+			SHAM H 2;
+			SHAM H 2 A_Pain;
+			goto see;
+		death:
+			SHAM I 8;
+			SHAM J 8 A_Scream;
+			SHAM K 6;
+			SHAM L 6 A_NoBlocking;
+			SHAM M -1;
+			stop;
+		xdeath:
+			SHAM N 5;
+			SHAM O 5 A_XScream;
+			SHAM P 5;
+			SHAM Q 5 A_NoBlocking;
+			SHAM RST 5;
+			SHAM U -1;
+			stop;
+	}
+}

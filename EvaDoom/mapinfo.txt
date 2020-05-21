@@ -1,0 +1,168 @@
+gameinfo {
+	
+	// Essential definitions
+	playerclasses = "eva01"
+	
+	// Gameplay-esque properties
+	defkickback = 300
+	
+	// Gameplay decorative properties
+	advisorytime = 0
+	intermissioncounter = false
+	intermissionmusic = "music/music_intermission.midi"
+	pickupcolor = "00 00 00"
+	
+	// Menu decorative properties
+	drawreadthis = false
+	titlepage = "graphics/menu/m_title.png"
+	creditpage = "m_credit"
+	//infopage = "HELPINF1"
+	//addinfopage = "HELPINF2"
+	
+	titlemusic = "music/music_title.wav"
+	dimcolor = "00 00 00"
+	dimamount = 0.3
+	menufontcolor_title     = "green"
+	menufontcolor_label     = "white"
+	menufontcolor_value     = "white"
+	menufontcolor_action    = "UNTRANSLATED"
+	menufontcolor_header    = "green"
+	menufontcolor_highlight = "blue"
+	menufontcolor_selection = "cyan"
+	menuslidercolor = "white"
+	//pausesign = ""
+	//cursorpic = ""
+}
+
+doomednums {
+	
+	// Classes
+	//10000 = eva00
+	10001 = eva01
+	//10002 = eva02
+	
+	// Weapons
+	//10100 = eva00progressiveknife
+	//10101 = eva01progressiveknife
+	//10102 = eva02progressiveknife
+	//10110 = eva00handgun
+	10111 = eva01handgun
+	//10112 = eva02handgun
+	//10120 = eva00assaultrifle
+	10121 = eva01assaultrifle
+	//10122 = eva02assaultrifle
+	
+	// Monsters
+	//10200 = sachiel
+	10201 = shamshel
+	//10202 = ramiel
+	//10203 = gaghiel
+	//10204 = israfel
+	//10205 = sandalphon
+	//10206 = matarael
+	//10207 = sahaquiel
+	//10208 = ireul
+	10209 = leliel
+	//10210 = bardiel
+	//10211 = zeruel
+	//10212 = arael
+	//10213 = armisael
+	//10214 = tabris
+	
+	// NPCS
+	//10300 = rei
+	//10301 = shinji
+	//10302 = asuka
+	//10303 = kaworu
+	//10304 = misato
+	//10305 = ritsuko
+	//10306 = gendo
+	
+	// Items
+	10400 = noodles
+	
+	// Ammo
+	10500 = bullets
+	
+	// Decoration
+	//10600
+}
+
+automap {
+	
+	base = "Doom"
+	showlocks = true
+}
+
+defaultmap {
+
+	// Gameplay
+	nocrouch
+	keepfullinventory
+	//fallingdamage
+	//monsterfallingdamage
+	//checkswitchrange
+	//gravity = 800 // default gravity = 800
+	
+	// Gameplay visuals
+	sky1 = "RSKY1", 0
+	//forcenoskystretch
+	//evenlighting
+	//nointermission
+	
+	// GZDoom OpenGL options
+	//fogdensity = 8
+	//outsidefogdensity = 8
+	//skyfog = 1
+	lightmode = 0
+	//nolightfade
+	
+	// Other visuals
+	//bordertexture = ""
+	//titlepatch = ""
+	//mapbackground = "" // automap background image lump
+	
+	// Compatibility options
+	compat_shorttex = 0
+	compat_stairs = 0
+	compat_light = 0
+	compat_limitpain = 0
+	compat_nopassover = 0
+	compat_notossdrops = 0
+	compat_useblocking = 0
+	compat_nodoorlight = 0
+	compat_soundtarget = 0
+	compat_dehhealth = 0
+	compat_trace = 0
+	compat_dropoff = 0
+	compat_crossdropoff = 0
+	compat_invisibility = 0
+	compat_boomscroll = 0
+	compat_silent_instant_floors = 0
+	compat_sectorsounds = 0
+	compat_missileclip = 0
+	compat_anybossdeath = 0
+	compat_mbfmonstermove = 0
+	compat_corpsegibs = 0
+	compat_noblockfriends = 0
+	compat_spritesort = 0
+	compat_polyobj = 0
+	compat_maskedmidtex = 0
+	compat_badangles = 0
+	compat_floormove = 0
+}
+
+map MAP01 "Tokyo-3" {
+	
+	levelnum = 0
+	//titlepatch = ""
+	next = "MAP02"
+	//nointermission
+	//noinventorybar
+	music = "music/music_tokyo3.midi"
+	//fogdensity = 100
+	sky1 = "RSKY1", 0
+	exitpic = "INTER00"
+	enterpic = "INTER00"
+}
+

@@ -1,0 +1,1 @@
+#include "brightmaps/bm_monsters/bm_monster_leliel.txt"

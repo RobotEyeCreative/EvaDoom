@@ -1,0 +1,27 @@
+
+# Excluded file extensions from commits.
+
+*.tmp
+*.ini
+*.lnk
+*.zip
+*.rar
+*.7z
+
+*.doc
+*.docx
+*.rtf
+*.psd
+
+*.pk3
+*.pk7
+*.dbs
+*.bak
+*.backup1
+*.backup2
+*.backup3
+*.wad.bak
+*.wad.backup1
+*.wad.backup2
+*.wad.backup3
+*.dbprefab

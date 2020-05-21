@@ -1,0 +1,6 @@
+version "4.3.0"
+
+#include "actors/zs_items/zs_items.txt"
+#include "actors/zs_weapons/zs_weapons.txt"
+#include "actors/zs_others/zs_others.txt"
+#include "actors/zs_monsters/zs_monsters.txt"

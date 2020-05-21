@@ -1,0 +1,37 @@
+
+class Eva01AssaultRifle : eva01weapon {
+	
+	default {
+		
+		//$Title "Assault rifle"
+		
+		weapon.ammouse 1;
+		weapon.ammotype "Bullets";
+		weapon.ammogive 150;
+		//weapon.readysound "";
+		//weapon.upsound "";
+	}
+	
+	states {
+		spawn:
+			E1RF Z -1;
+			loop;
+		ready:
+			E1RF A 8 A_WeaponReady;
+			loop;
+		select:
+			E1RF A 1 A_Raise;
+			loop;
+		deselect:
+			E1RF A 1 A_Lower;
+			loop;
+		fire:
+			E1RF B 1;
+			E1RF MN 4 {
+				A_StartSound("EvaDoom/Weapon/HandGun/Fire");
+				A_FireBullets(0.8, 0.8, 1, 40);
+			}
+			E1RF A 0 A_ReFire;
+			goto ready;
+	}
+}

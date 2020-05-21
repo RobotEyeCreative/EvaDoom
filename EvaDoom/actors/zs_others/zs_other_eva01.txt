@@ -1,0 +1,41 @@
+
+class eva01 : DoomPlayer {
+	
+	default {
+		
+		//$Category Evangelion
+		//$Title "Evangelion Unit 01"
+		
+		health 100;
+		mass 5000;
+		//damagefactor 1.0;
+		friction 1.05;
+		painthreshold 5;
+		
+		player.SoundClass "eva01";
+		player.MaxHealth 100;
+		player.DisplayName "Evangelion Unit 01";
+		player.ViewHeight 56;
+		player.AttackZoffset 17;
+		player.AirCapacity 0;
+		player.FallingScreamSpeed 100.0,110.0;
+		player.ForwardMove 1.0, 1.2;
+		player.SideMove 0.7, 0.2;
+		player.JumpZ 10.0;
+		
+		player.weaponslot 1, "Eva01Fists";
+		player.weaponslot 2, "Eva01HandGun";
+		player.weaponslot 3, "Eva01AssaultRifle";
+		
+		player.startitem "Eva01Fists", 1;
+		player.startitem "Eva01HandGun", 1;
+		player.startitem "Bullets", 50;
+		
+		damagefactor "falling", 0.0;
+		
+		//+NOBLOOD;
+		//+NOTELEFRAG;
+		+DONTGIB;
+		//+PLAYERPAWN.NOTHRUSTWHENINVUL;
+	}
+}

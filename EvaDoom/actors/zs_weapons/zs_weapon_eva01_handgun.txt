@@ -1,0 +1,39 @@
+
+class Eva01HandGun : eva01weapon {
+	
+	default {
+		
+		//$Title "HandGun"
+		
+		weapon.ammouse 1;
+		weapon.ammotype "Bullets";
+		weapon.ammogive 50;
+		//weapon.readysound "";
+		//weapon.upsound "";
+	}
+	
+	states {
+		spawn:
+			PIST A -1;
+			loop;
+		ready:
+			E1HG A 8 A_WeaponReady;
+			loop;
+		select:
+			E1HG A 1 A_Raise;
+			loop;
+		deselect:
+			E1HG A 1 A_Lower;
+			loop;
+		fire:
+			E1HG A 1;
+			E1HG M 4 {
+				A_StartSound("EvaDoom/Weapon/HandGun/Fire");
+				A_FireBullets(0.6, 0.6, 1, 40);
+			}
+			E1HG N 4;
+			E1HG A 3;
+			E1HG A 1 A_ReFire;
+			goto ready;
+	}
+}

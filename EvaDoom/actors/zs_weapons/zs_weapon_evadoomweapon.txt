@@ -1,0 +1,19 @@
+
+class evadoomweapon : weapon abstract {
+	
+	default {
+		
+		//$NotAngled
+		//$Category Evangelion/Weapons
+		
+		inventory.PickupSound "EvaDoom/Weapon/Pickup";
+	}
+}
+
+class eva01weapon : evadoomweapon abstract {
+	
+	default {
+		
+		inventory.RestrictedTo "eva01";
+	}
+}

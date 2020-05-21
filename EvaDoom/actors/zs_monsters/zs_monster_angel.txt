@@ -1,0 +1,18 @@
+
+class angel : actor abstract {
+	
+	default {
+		
+		//$Category Evangelion/Monsters
+		
+		species "angel";
+		damagefactor "diracsea", 0.0;
+		
+		MONSTER;
+		+LOOKALLAROUND;
+		+DONTHARMSPECIES;
+		+DONTHARMCLASS;
+		+NOTELEFRAG;
+		+DONTSQUASH;
+	}
+}

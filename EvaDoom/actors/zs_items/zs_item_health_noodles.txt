@@ -1,0 +1,20 @@
+class Noodles : health {
+	
+	default {
+		
+		//$NotAngled
+		//$Category Evangelion/Health
+		//$Title "Noodles"
+		
+		radius 8;
+		height 16;
+		inventory.amount 5;
+		inventory.pickupmessage "You ate instant noodles. Delicious!";
+	}
+	
+	states {
+		spawn:
+			SOUP A -1;
+			loop;
+	}
+}

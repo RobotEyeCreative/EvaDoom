@@ -1,0 +1,4 @@
+
+#include "actors/zs_monsters/zs_monster_angel.txt"
+#include "actors/zs_monsters/zs_monster_shamshel.txt"
+#include "actors/zs_monsters/zs_monster_leliel.txt"
