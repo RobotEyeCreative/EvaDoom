@@ -1,0 +1,3 @@
+Texture Optional EVARR1 Range EVARR2 Tics 10
+
+Texture Optional LCL1 Range LCL4 Tics 8
