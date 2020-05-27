@@ -5,6 +5,8 @@ class shamshel : angel {
 		
 		//$Title "Shamshel"
 		
+		angel.patshields 1000;
+		
 		radius 25;
 		height 110;
 		health 5000;
@@ -19,6 +21,8 @@ class shamshel : angel {
 		spawn:
 			SHAM AB 10 A_Look;
 			loop;
+		pain:
+			SHAM AB 15 A_Pain;
 		see:
 			SHAM AABBCCDD 3 A_Chase;
 			loop;

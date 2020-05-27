@@ -73,7 +73,7 @@ class leliel : angel {
 			loop;
 		attack:
 			LELI A 0 A_FaceTarget;
-			LELI A 0 { if (target) target.A_SpawnItemEx("leliel_shadow"); }
+			LELI A 0 { if (target) spawn("leliel_shadow", target.pos); }//target.A_SpawnItemEx("leliel_shadow"); }
 			LELI A 300;
 			LELI A 1 {
 				A_FadeIn(0.04);

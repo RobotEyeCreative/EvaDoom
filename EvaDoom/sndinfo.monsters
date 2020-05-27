@@ -12,7 +12,7 @@
 EvaDoom/Monster/Shamshel/Death 				sounds/snd_monsters/snd_monster_shamshel/shamshel_death.wav
 EvaDoom/Monster/Shamshel/Attack 			sounds/snd_monsters/snd_monster_shamshel/shamshel_attack.wav
 $Volume EvaDoom/Monster/Shamshel/Death		1.0
-$Volume EvaDoom/Monster/Shamshel/Attack		1.0
+$Volume EvaDoom/Monster/Shamshel/Attack		0.6
 
 // 3 - Ramiel
 

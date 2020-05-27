@@ -14,10 +14,10 @@ $Volume EvaDoom/Weapon/EvaFists/Fire		0.5
 // 2 - HandGun
 
 EvaDoom/Weapon/HandGun/Fire 				sounds/snd_weapons/snd_weapon_handgun/handgun_fire.wav
-$Volume EvaDoom/Weapon/HandGun/Fire			0.5
+$Volume EvaDoom/Weapon/HandGun/Fire			0.3
 
 // 3 - AssaultRifle
 
 EvaDoom/Weapon/AssaultRifle/Fire 			sounds/snd_weapons/snd_weapon_handgun/handgun_fire.wav
-$Volume EvaDoom/Weapon/AssaultRifle/Fire	0.5
+$Volume EvaDoom/Weapon/AssaultRifle/Fire	0.3
 

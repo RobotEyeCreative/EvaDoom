@@ -34,7 +34,7 @@ class Eva01Fists : eva01weapon {
 			E1FI AB 3;
 			E1FI C 8 {
 				A_StartSound("EvaDoom/Weapon/EvaFists/Fire");
-				A_CustomPunch(80, false, CPF_NOTURN, "BulletPuff", 80);
+				A_CustomPunch(random(80,180), true, CPF_NOTURN, "BulletPuff", 80);
 			}
 			E1FI BA 3;
 			E1FI A 1 A_ReFire;

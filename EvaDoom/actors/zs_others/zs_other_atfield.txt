@@ -1,0 +1,30 @@
+
+class atfield : inventory {
+	
+	default {
+		inventory.amount 1;
+		inventory.maxamount 50000;
+	}
+}
+
+class atfieldsfx : actor {
+
+	default {
+		
+		radius 2;
+		height 2;
+		scale 0.25;
+		
+		+NOINTERACTION;
+		+NOGRAVITY;
+		+BRIGHT;
+	}
+	
+	states {
+		
+		spawn:
+			TNT1 A 0 A_StartSound("EvaDoom/ATField/Activate");
+			ATFI A 1 A_FadeOut();
+			loop;
+	}
+}

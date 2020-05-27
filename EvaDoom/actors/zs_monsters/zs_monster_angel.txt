@@ -1,5 +1,20 @@
 
+// TODO: The first hit that does damage to the health does not spawn blood.
+// TODO: There's no thrust when atfield is ON.
+// TODO: ATFieldSFX spawning needs a radius offset.
+
 class angel : actor abstract {
+	
+	actor atinstance;
+	private int atstate;			// AT field regeneration status (0 means ready)
+	
+	private int atshields;			// AT field max shields
+	private bool atstun;			// AT field stun state ON/OFF
+	private int atmultiplier;		// AT field regeneration rate multiplier
+	
+	property patshields: atshields;
+	property patstun: atstun;
+	property patregmult: atmultiplier;
 	
 	default {
 		
@@ -8,6 +23,10 @@ class angel : actor abstract {
 		species "angel";
 		damagefactor "diracsea", 0.0;
 		
+		angel.patshields 1000;
+		angel.patstun false;
+		angel.patregmult 1;
+		
 		MONSTER;
 		+LOOKALLAROUND;
 		+DONTHARMSPECIES;
@@ -15,4 +34,77 @@ class angel : actor abstract {
 		+NOTELEFRAG;
 		+DONTSQUASH;
 	}
+	
+	override int TakeSpecialDamage(actor inflictor, actor source, int damage, name damagetype) {
+		
+		int atdelay = 10;	// AT field regeneration delay after break. (in seconds)
+		
+		int atcount = CountInv("atfield");
+		int overflow = max(0, damage - atcount);
+		
+		// If we recieve damage...
+		if (damage > 0) {
+			
+			// Case 1: We have an AT field
+			if (atcount > 0) {
+				
+				// Take damage units from the AT field
+				A_TakeInventory("atfield", damage);
+				
+				// Case 1: We lost the AT field
+				if (atcount-damage <= 0) {
+					
+					bNOBLOOD = false;
+					bNOPAIN = false;
+					
+					// ...Activate the regeneration delay and go to stun state if enabled
+					atstate = atdelay * 35;
+					
+					if (atstun)
+						SetStateLabel("stun");
+				}
+				// Case 2: We still have an AT field
+				else {
+					if (atinstance)
+						atinstance.SetState(null);
+					
+					atinstance = spawn("atfieldsfx", (self.pos.x, self.pos.y, self.height/2.0));
+				}
+			}
+			// Case 2: We don't.
+			else {
+				bNOBLOOD = false;
+				bNOPAIN = false;
+			}
+		}
+		
+		return super.TakeSpecialDamage(inflictor, source, overflow, damagetype);
+	}
+	
+	override void Tick() {
+		
+		super.Tick();
+		
+		// AT field regeneration per tic.
+		int atrate = 2;
+		
+		// Initial AT field amount.
+		if (getAge() < 1)
+			A_GiveInventory("atfield", atshields);
+		
+		else {
+			
+			// Recover from AT field break
+			if (atstate > 0) atstate--;
+			
+			// Regenerate AT field
+			if (atstate <= 0 && CountInv("atfield") < atshields) {
+				A_GiveInventory("atfield", atrate*atmultiplier);
+				
+				bNOBLOOD = true;
+				bNOPAIN = true;
+			}
+		}
+	}
 }
+
