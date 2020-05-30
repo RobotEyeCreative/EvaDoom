@@ -99,7 +99,7 @@ class angel : actor abstract {
 			
 			// Regenerate AT field
 			if (atstate <= 0 && CountInv("atfield") < atshields) {
-				A_GiveInventory("atfield", atrate*atmultiplier);
+				A_GiveInventory("atfield", atrate*atmultiplier); // This line is buggued, when leliel dies and enters super.Tick();
 				
 				bNOBLOOD = true;
 				bNOPAIN = true;

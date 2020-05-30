@@ -14,6 +14,6 @@ class eva01weapon : evadoomweapon abstract {
 	
 	default {
 		
-		inventory.RestrictedTo "eva01";
+		//inventory.RestrictedTo "eva01";
 	}
 }

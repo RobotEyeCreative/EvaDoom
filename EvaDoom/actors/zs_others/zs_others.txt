@@ -1,3 +1,3 @@
 
 #include "actors/zs_others/zs_other_atfield.txt"
-#include "actors/zs_others/zs_other_eva01.txt"
+#include "actors/zs_others/zs_other_evangelionplayer.txt"

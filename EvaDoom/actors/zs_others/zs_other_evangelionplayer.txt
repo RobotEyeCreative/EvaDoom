@@ -1,0 +1,169 @@
+
+class changeStatus : inventory abstract {
+	
+	default {
+		
+		inventory.amount 1;
+		inventory.maxamount 1;
+		+INVENTORY.PERSISTENTPOWER;
+	}
+}
+
+class enterEva00 : changeStatus {}
+class enterEva01 : changeStatus {}
+class enterEva02 : changeStatus {}
+class playChild0 : changeStatus {}
+class playChild1 : changeStatus {}
+class playChild2 : changeStatus {}
+
+// TODO: View height only updates when changing your z height. (BUG?)
+// TODO: Mugshot changes have to be handled through zscript hud.
+// TODO: Switch falling damage.
+
+class evangelionPlayer : PlayerPawn {
+	
+	int changedStatus;
+	
+	property pStatus: changedStatus;
+	
+	default {
+		
+		//$Category Evangelion
+		//$Title "EvangelionPlayer"
+		
+		health 100;
+		player.MaxHealth 100;
+		player.DisplayName "EvangelionPlayer";
+		player.FallingScreamSpeed 100.0, 110.0;
+		
+		player.SoundClass "shinji";
+		mass 90;
+		player.AirCapacity 5;
+		player.ViewHeight 40;
+		player.AttackZoffset 16;
+		player.ForwardMove 0.5, 0.7;
+		player.SideMove 0.4, 0.5;
+		player.JumpZ 8.0;
+		player.ViewBob 0.1;
+		player.face "P01";
+		
+		player.weaponslot 1, "Eva01Fists";
+		player.weaponslot 2, "Eva01HandGun";
+		player.weaponslot 3, "Eva01AssaultRifle";
+		
+		//player.startitem "Eva01Fists", 1;
+		//player.startitem "Eva01HandGun", 1;
+		//player.startitem "Bullets", 50;
+		
+		evangelionPlayer.pStatus 0;
+		
+		damagefactor "falling", 0.0;
+		
+		//+NOBLOOD;
+		//+NOTELEFRAG;
+		//+PLAYERPAWN.NOTHRUSTWHENINVUL;
+	}
+	
+	void updateStatus() {
+		
+		if		(CountInv("enterEva00") > 0) { clearInv(); changedStatus = 1; updateProperties("eva01", 6000, 0, 56, 25, 1.05, 1.0, 1.2, 0.7, 0.2, 10.0, 0.6, 0.0, false); A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); A_GiveInventory("Bullets", 50); }
+		else if (CountInv("enterEva01") > 0) { clearInv(); changedStatus = 2; updateProperties("eva01", 6000, 0, 56, 25, 1.05, 1.0, 1.2, 0.7, 0.2, 10.0, 0.6, 0.0, false); A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); A_GiveInventory("Bullets", 50); }
+		else if (CountInv("enterEva02") > 0) { clearInv(); changedStatus = 3; updateProperties("eva01", 6000, 0, 56, 25, 1.05, 1.0, 1.2, 0.7, 0.2, 10.0, 0.6, 0.0, false); A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); A_GiveInventory("Bullets", 50); }
+		else if (CountInv("playChild0") > 0) { clearInv(); changedStatus = 4; updateProperties("shinji", 90, 5, 40, 16, 1.0, 0.5, 0.7, 0.4, 0.5, 8.0, 0.1, 1.0, true); }
+		else if (CountInv("playChild1") > 0) { clearInv(); changedStatus = 5; updateProperties("shinji", 90, 5, 40, 16, 1.0, 0.5, 0.7, 0.4, 0.5, 8.0, 0.1, 1.0, true); }
+		else if (CountInv("playChild2") > 0) { clearInv(); changedStatus = 6; updateProperties("shinji", 90, 5, 40, 16, 1.0, 0.5, 0.7, 0.4, 0.5, 8.0, 0.1, 1.0, true); }
+	}
+	
+	void clearInv() {
+		
+		A_TakeInventory("enterEva00");
+		A_TakeInventory("enterEva01");
+		A_TakeInventory("enterEva02");
+		A_TakeInventory("playChild0");
+		A_TakeInventory("playChild1");
+		A_TakeInventory("playChild2");
+		
+		A_TakeInventory("Eva01Fists");
+		A_TakeInventory("Eva01HandGun");
+		A_TakeInventory("Bullets");
+	}
+	
+	void updateProperties (string soundclass, int m, int air, int viewz, int attackz, double fric, double fm1, double fm2, double sm1, double sm2, double jumph, double viewb, double falling, bool gib) {
+		
+		//A_SetMugshotState("E01");
+		//face = "E01";
+		mass = m;
+		aircapacity = air;
+		viewheight = viewz;
+		attackzoffset = attackz;
+		friction = fric;
+		forwardmove1 = fm1;
+		forwardmove2 = fm2;
+		sidemove1 = sm1;
+		sidemove2 = sm2;
+		jumpz = jumph;
+		viewbob = viewb;
+		//damagefactor "falling" = falling;
+		bDONTGIB = gib;
+	}
+	
+	override void Tick() {
+		
+		super.Tick();
+		
+		updateStatus();
+	}
+	
+	states {
+		
+		Spawn:
+			PLAY A -1;
+			Loop;
+		See:
+			PLAY ABCD 4;
+			Loop;
+		Missile:
+			PLAY E 12;
+			Goto Spawn;
+		Melee:
+			PLAY F 6 BRIGHT;
+			Goto Missile;
+		Pain:
+			PLAY G 4;
+			PLAY G 4 A_Pain;
+			Goto Spawn;
+		Death:
+			PLAY H 0 A_PlayerSkinCheck("AltSkinDeath");
+		Death1:
+			PLAY H 10;
+			PLAY I 10 A_PlayerScream;
+			PLAY J 10 A_NoBlocking;
+			PLAY KLM 10;
+			PLAY N -1;
+			Stop;
+		XDeath:
+			PLAY O 0 A_PlayerSkinCheck("AltSkinXDeath");
+		XDeath1:
+			PLAY O 5;
+			PLAY P 5 A_XScream;
+			PLAY Q 5 A_NoBlocking;
+			PLAY RSTUV 5;
+			PLAY W -1;
+			Stop;
+		AltSkinDeath:
+			PLAY H 6;
+			PLAY I 6 A_PlayerScream;
+			PLAY JK 6;
+			PLAY L 6 A_NoBlocking;
+			PLAY MNO 6;
+			PLAY P -1;
+			Stop;
+		AltSkinXDeath:
+			PLAY Q 5 A_PlayerScream;
+			PLAY R 0 A_NoBlocking;
+			PLAY R 5 A_SkullPop;
+			PLAY STUVWX 5;
+			PLAY Y -1;
+			Stop;
+	}
+}

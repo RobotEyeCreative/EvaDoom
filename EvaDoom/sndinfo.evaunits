@@ -38,3 +38,41 @@ $playersound	eva01	other	*grunt		sounds/snd_other/eva_fall.wav
 $playersounddup	eva01	other	*land		*grunt
 $playersound	eva01	other	*jump		dscjump
 $playersound	eva01	other	*usefail	sounds/snd_other/eva_action.wav
+
+// Shinji
+
+$playersound	shinji	male	*death		sounds/snd_other/snd_other_eva01/eva01_death.wav
+$playersound	shinji	male	*xdeath		sounds/snd_other/snd_other_eva01/eva01_xdeath.wav
+$playersound	shinji	male	*gibbed		dsslop
+$playersound	shinji	male	*pain100	sounds/snd_other/snd_other_eva01/eva01_pain.wav
+$playersounddup	shinji	male	*pain75		*pain100
+$playersounddup	shinji	male	*pain50		*pain100
+$playersounddup	shinji	male	*pain25		*pain100
+$playersound	shinji	male	*grunt		sounds/snd_other/eva_fall.wav
+$playersounddup	shinji	male	*land		*grunt
+$playersound	shinji	male	*jump		dsjump
+$playersound	shinji	male	*usefail	sounds/snd_other/eva_action.wav
+
+$playersound	shinji	female	*death		sounds/snd_other/snd_other_eva01/eva01_death.wav
+$playersound	shinji	female	*xdeath		sounds/snd_other/snd_other_eva01/eva01_xdeath.wav
+$playersound	shinji	female	*gibbed		dsslop
+$playersound	shinji	female	*pain100	sounds/snd_other/snd_other_eva01/eva01_pain.wav
+$playersounddup	shinji	female	*pain75		*pain100
+$playersounddup	shinji	female	*pain50		*pain100
+$playersounddup	shinji	female	*pain25		*pain100
+$playersound	shinji	female	*grunt		sounds/snd_other/eva_fall.wav
+$playersounddup	shinji	female	*land		*grunt
+$playersound	shinji	female	*jump		dsfjump
+$playersound	shinji	female	*usefail	sounds/snd_other/eva_action.wav
+
+$playersound	shinji	other	*death		sounds/snd_other/snd_other_eva01/eva01_death.wav
+$playersound	shinji	other	*xdeath		sounds/snd_other/snd_other_eva01/eva01_xdeath.wav
+$playersound	shinji	other	*gibbed		dsslop
+$playersound	shinji	other	*pain100	sounds/snd_other/snd_other_eva01/eva01_pain.wav
+$playersounddup	shinji	other	*pain75		*pain100
+$playersounddup	shinji	other	*pain50		*pain100
+$playersounddup	shinji	other	*pain25		*pain100
+$playersound	shinji	other	*grunt		sounds/snd_other/eva_fall.wav
+$playersounddup	shinji	other	*land		*grunt
+$playersound	shinji	other	*jump		dscjump
+$playersound	shinji	other	*usefail	sounds/snd_other/eva_action.wav

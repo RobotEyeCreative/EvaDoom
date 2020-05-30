@@ -1,7 +1,7 @@
 gameinfo {
 	
 	// Essential definitions
-	playerclasses = "eva01"
+	playerclasses = "evangelionPlayer"
 	
 	// Gameplay-esque properties
 	defkickback = 300
@@ -37,9 +37,9 @@ gameinfo {
 doomednums {
 	
 	// Classes
-	//10000 = eva00
-	10001 = eva01
-	//10002 = eva02
+	//10000 = 
+	10001 = evangelionplayer
+	//10002 = 
 	
 	// Weapons
 	//10100 = eva00progressiveknife
@@ -82,10 +82,10 @@ doomednums {
 	10400 = noodles
 	
 	// Ammo
-	10500 = bullets
+	10600 = bullets
 	
 	// Decoration
-	//10600
+	//10700
 }
 
 automap {
@@ -154,9 +154,9 @@ defaultmap {
 
 map MAP01 "Tokyo-3" {
 	
-	levelnum = 0
+	levelnum = 1
 	//titlepatch = ""
-	next = "MAP02"
+	next = "Apartment"
 	//nointermission
 	//noinventorybar
 	music = "music/music_tokyo3.midi"
@@ -166,3 +166,10 @@ map MAP01 "Tokyo-3" {
 	enterpic = "INTER00"
 }
 
+map Apartment "Misato's Apartment" {
+	
+	levelnum = 2
+	next = "MAP03"
+	ResetHealth
+	ResetInventory
+}
