@@ -86,6 +86,7 @@ doomednums {
 	
 	// Decoration
 	//10700
+    10700 = decoration_plant_01
 }
 
 automap {

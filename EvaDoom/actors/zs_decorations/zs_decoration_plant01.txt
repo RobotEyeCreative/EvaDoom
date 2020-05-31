@@ -1,0 +1,18 @@
+class decoration_plant_01 : actor {
+    
+    default {
+        
+        //$NotAngled
+        //$Category Evangelion/Decoration
+        
+        radius 8;
+        height 32;
+    }
+    
+    states {
+        
+        spawn:
+            PL01 A -1;
+            loop;
+    }
+}
