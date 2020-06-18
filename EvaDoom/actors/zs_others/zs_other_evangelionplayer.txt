@@ -66,9 +66,9 @@ class evangelionPlayer : PlayerPawn {
 	
 	void updateStatus() {
 		
-		if		(CountInv("enterEva00") > 0) { clearInv(); changedStatus = 1; updateProperties("eva01", 6000, 0, 56, 25, 1.05, 1.0, 1.2, 0.7, 0.2, 10.0, 0.6, 0.0, false); A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); A_GiveInventory("Bullets", 50); }
-		else if (CountInv("enterEva01") > 0) { clearInv(); changedStatus = 2; updateProperties("eva01", 6000, 0, 56, 25, 1.05, 1.0, 1.2, 0.7, 0.2, 10.0, 0.6, 0.0, false); A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); A_GiveInventory("Bullets", 50); }
-		else if (CountInv("enterEva02") > 0) { clearInv(); changedStatus = 3; updateProperties("eva01", 6000, 0, 56, 25, 1.05, 1.0, 1.2, 0.7, 0.2, 10.0, 0.6, 0.0, false); A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); A_GiveInventory("Bullets", 50); }
+		if		(CountInv("enterEva00") > 0) { clearInv(); changedStatus = 1; updateProperties("eva01", 6000, 0, 56, 25, 1.05, 1.0, 1.2, 0.7, 0.2, 10.0, 0.6, 0.0, false); A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); }
+		else if (CountInv("enterEva01") > 0) { clearInv(); changedStatus = 2; updateProperties("eva01", 6000, 0, 56, 25, 1.05, 1.0, 1.2, 0.7, 0.2, 10.0, 0.6, 0.0, false); A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); }
+		else if (CountInv("enterEva02") > 0) { clearInv(); changedStatus = 3; updateProperties("eva01", 6000, 0, 56, 25, 1.05, 1.0, 1.2, 0.7, 0.2, 10.0, 0.6, 0.0, false); A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); }
 		else if (CountInv("playChild0") > 0) { clearInv(); changedStatus = 4; updateProperties("shinji", 90, 5, 40, 16, 1.0, 0.5, 0.7, 0.4, 0.5, 8.0, 0.1, 1.0, true); }
 		else if (CountInv("playChild1") > 0) { clearInv(); changedStatus = 5; updateProperties("shinji", 90, 5, 40, 16, 1.0, 0.5, 0.7, 0.4, 0.5, 8.0, 0.1, 1.0, true); }
 		else if (CountInv("playChild2") > 0) { clearInv(); changedStatus = 6; updateProperties("shinji", 90, 5, 40, 16, 1.0, 0.5, 0.7, 0.4, 0.5, 8.0, 0.1, 1.0, true); }

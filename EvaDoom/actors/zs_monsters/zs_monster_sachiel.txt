@@ -1,0 +1,419 @@
+
+class sachiel : angel {
+	
+	int hatemax; property hatesp: hatemax;
+	int flymax; property flysp: flymax;
+	
+	float haterandom; property haternd: haterandom;
+	float flyrandom; property flyrnd: flyrandom;
+	
+	int hategoal;
+	int flygoal;
+	int hate;
+	int fly;
+	
+	actor hand;
+	
+	default {
+		
+		//$Title "Sachiel"
+		
+		angel.patshields 2000;
+		
+		sachiel.hatesp 1500;
+		sachiel.haternd 0.2;
+		sachiel.flysp 2500;
+		sachiel.flyrnd 0.4;
+		
+		radius 25;
+		height 110;
+		health 4000;
+		speed 3;
+		mass 12000;
+		scale 1.5;
+		translation "Ice";
+		bloodcolor "AA00FF";
+		
+		//minmissilechance 10;
+		
+		deathsound "EvaDoom/Monster/Shamshel/Death";
+	}
+	
+	override void Tick() {
+		
+		super.Tick();
+		
+		if (!bCORPSE && target && InStateSequence(CurState, ResolveState("see"))) {
+			
+			int increment = Distance2D(target)/100;
+			
+			// additional automatic agresion system
+			if (CheckSight(target, SF_SEEPASTSHOOTABLELINES|SF_SEEPASTBLOCKEVERYTHING|SF_IGNOREWATERBOUNDARY))
+				if (CountDecision(hate, min(10, increment), hategoal)) {
+					
+					hategoal = hatemax + hatemax*frandom(-haterandom, haterandom);
+					SetStateLabel("missile");
+				}
+			
+			// flying decision system
+			if (Distance2D(target) > 256.0) {
+				if (CountDecision(fly, min(10, increment), flygoal)) {
+					
+					flygoal = flymax + flymax*frandom(-flyrandom, flyrandom);
+					SetStateLabel("levitate");
+				}
+			} else {
+				
+				fly = 0;
+			}
+		}
+	}
+	
+	bool CountDecision (out int pile, int increase, int setpoint) {
+		
+		pile += increase;
+		
+		if (pile >= setpoint) {
+			
+			pile = 0; 
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	void FaceOnSight () {
+		
+		if (target)
+			if (CheckSight(target, SF_SEEPASTSHOOTABLELINES|SF_SEEPASTBLOCKEVERYTHING|SF_IGNOREWATERBOUNDARY))
+				A_FaceTarget();
+	}
+	
+	bool GrabTarget (double dist = 64.0) {
+		
+		if (!target)
+			return false;
+		
+		if (target.CountInv("sachielblast") > 0)
+			return false;
+		
+		if (Distance3D(target) > dist) {
+			if (hand)
+				hand.SetState(null);
+			
+			return false;
+		}
+		
+		// spawn sachiel hand
+		if (!hand) {
+			
+			hand = spawn("sachielhand");
+			hand.target = target;
+			hand.master = self;
+		}
+		
+		// give grab effects
+		target.GiveInventory("sachielgrab", 1);
+		
+		return true;
+	}
+	
+	states {
+		
+		spawn:
+			SHAM A 0 NoDelay {
+				
+				// initial values
+				hategoal = hatemax + hatemax*frandom(-haterandom, haterandom);
+				flygoal = flymax + flymax*frandom(-flyrandom, flyrandom);
+				flygoal *= 0.5;
+			}
+		stand:
+			SHAM AB 10 A_Look;
+			loop;
+		pain:
+			SHAM AB 15 A_Pain;
+		see:
+			SHAM AABBCCDD 3 A_Chase("melee", "missile", CHF_NORANDOMTURN);
+			loop;
+		melee:
+			SHAM E 8; // Attack animation
+			SHAM E 0 {
+				
+				// If target inside range grab it...
+				if (target)
+					if (GrabTarget(80.0))
+						SetStateLabel("grab");
+			}
+			goto see;
+		grab:
+			SHAM E 5 A_FaceTarget;
+			SHAM E 0 GrabTarget(80.0);
+			SHAM E 0 A_JumpIfCloser(60.0, "grab");
+			SHAM E 0 { if (hand) hand.SetState(null); }
+			goto see;
+		missile:
+			SHAM E 0 A_FaceTarget;
+			SHAM E 0 A_StartSound("EvaDoom/Monster/Shamshel/Attack");
+			SHAM EF 10 FaceOnSight;
+			SHAM G 6 FaceOnSight;
+			SHAM G 0 A_CustomBulletAttack(0.0, 0.0, 1, random(10,15), "energyblast", 4096, CBAF_AIMFACING|CBAF_NORANDOM|CBAF_NORANDOMPUFFZ, AAPTR_TARGET, null, 56);
+			goto see;
+		levitate:
+			SHAM E 0 A_GiveInventory("sachiellevitation", 1);
+			goto see;
+		pain:
+			SHAM H 2;
+			SHAM H 2 A_Pain;
+			goto see;
+		death:
+			SHAM I 8;
+			SHAM J 8 A_Scream;
+			SHAM K 6;
+			SHAM L 6 A_NoBlocking;
+			SHAM M 1 A_Explode(128, 256);
+			stop;
+		xdeath:
+			SHAM N 5;
+			SHAM O 5 A_XScream;
+			SHAM P 5;
+			SHAM Q 5 A_NoBlocking;
+			SHAM RST 5;
+			SHAM U 1 A_Explode(128, 256);
+			stop;
+	}
+}
+
+class energyblast : bulletpuff {
+	
+	default {
+		
+		radius 2;
+		height 2;
+		renderstyle "Normal";
+		alpha 1.0;
+		scale 2.0;
+		vspeed 0;
+		
+		+NOBLOCKMAP;
+		+NOGRAVITY;
+		+BRIGHT;
+		+ALWAYSPUFF;
+		+PUFFONACTORS;
+		+SKYEXPLODE;
+		+FLOORCLIP;
+		+FLOORHUGGER;
+	}
+	
+	states {
+		spawn:
+			TNT1 A 0 NoDelay A_Warp(AAPTR_DEFAULT, 0, 0, 0, 0, WARPF_TOFLOOR);
+			TNT1 A 0 A_Explode(random(32,48), 128, 0, false, 0, 0, 0, "", "angeldmg");
+			TNT1 A 0 A_StartSound("EvaDoom/Monster/Shamshel/Death");
+			SHAM IJKL 6;
+			stop;
+	}
+}
+
+class sachielhand : actor {
+	
+	int hits;
+	
+	default {
+		
+		radius 2;
+		height 2;
+		xscale 0.02;
+		yscale 0.018;
+		
+		+NOBLOCKMAP;
+		+NOGRAVITY;
+		+NOCLIP;
+	}
+	
+	override void Tick() {
+		
+		super.Tick();
+		
+		if (!target)
+			SetState(null);
+		
+		A_Warp(AAPTR_TARGET, 5, 1, 57);
+		
+		if ( Distance3D(master) > 64.0+(target.radius*2) ) {
+			// A_Log("You breaked from sachiel grab!");
+			SetState(null);
+		}
+	}
+	
+	states {
+		
+		spawn:
+			SHND A 10 { hits = 0; }
+			SHND C 0 A_StartSound("EvaDoom/Monster/Sachiel/MeleeStart", CHAN_AUTO, CHANF_OVERLAP, 1.0, ATTN_NONE);
+			SHND C 40;
+			goto repeat+2;
+		repeat:
+			SHND A random(20,25);
+			SHND C 15;
+			SHND D 0 A_DamageTarget(random(5,8), "Melee");
+			SHND D 0 { if (hits++ >= random(3,4)) SetStateLabel("end"); }
+			SHND D 4 A_StartSound("EvaDoom/Monster/Sachiel/Melee", CHAN_AUTO, CHANF_OVERLAP, 1.0, ATTN_NONE);
+			loop;
+		end:
+			SHND D 0 { target.GiveInventory("sachielblast", 1); }
+			SHND D 4 A_StartSound("EvaDoom/Monster/Sachiel/Meleeend", CHAN_AUTO, CHANF_OVERLAP, 1.0, ATTN_NONE);
+			SHND D 0 { if (target) target.Thrust(100, master.angle); }
+			stop;
+	}
+}
+
+class sachiellevitation : powerup {
+
+	default {
+		Powerup.Duration -6;
+	}
+	
+	const SPEED_NEW = 6;
+	
+	double oldSpeed;
+	
+	override void initEffect () {
+		
+		super.initEffect();
+		
+		if (!owner) return;
+		
+		oldSpeed = owner.speed;
+		owner.speed = SPEED_NEW;
+		
+		owner.bFLOAT = true;
+		owner.bNOGRAVITY = true;
+		owner.bBRIGHT = true;
+		owner.A_AttachLight("sachiellevitation", DynamicLight.PointLight, "FFFFAA", 64, 64);
+	}
+	
+	override void doEffect () {
+		
+		if (!owner) return;
+		
+		owner.AddZ(1);
+		// owner.A_RadiusThrust(10000, 128, RTF_THRUSTZ);
+	}
+	
+	override void DetachFromOwner () {
+		
+		if (!owner) return;
+		
+		owner.speed = oldSpeed;
+		
+		owner.bFLOAT = false;
+		owner.bNOGRAVITY = false;
+		owner.bBRIGHT = false;
+		owner.A_RemoveLight("sachiellevitation");
+	}
+}
+
+// this powerup disables stun-lock grabbing for sachiel and adjusts friction to disable bouncing
+class sachielblast : Powerup {
+	
+	default {
+		Powerup.Duration 35;
+	}
+	
+	const FRICTION_NEW = 1.0;
+	
+	double oldFrict;
+	
+	override void initEffect () {
+		
+		super.initEffect();
+		
+		if (!owner) return;
+		
+		oldFrict = owner.friction;
+		owner.friction = FRICTION_NEW;
+	}
+	
+	override void DetachFromOwner () {
+		
+		if (!owner) return;
+		
+		owner.friction = oldFrict;
+	}
+}
+
+// this powerup applies speed adjustments
+class sachielgrab : Powerup {
+
+	default {
+		Powerup.Duration 7;
+	}
+	
+	const SPEED_FACTOR = 0.0;
+	const VIEWBOB_FACTOR = 0.0;
+	const JUMPZ_FACTOR = 0.0;
+	
+	double speedDiff;
+	double bobDiff;
+	double jumpzDiff;
+	
+	bool cantthrust;
+	
+	/*
+	// enable stacking effect
+	override bool handlePickup (Inventory item) {
+		return false;
+	}
+	*/
+	
+	override void initEffect () {
+		
+		super.initEffect();
+		
+		if (!owner) return;
+		
+		owner.A_Stop();
+		
+		cantthrust = owner.bDONTTHRUST;
+		
+		if (!cantthrust)
+			owner.bDONTTHRUST = true;
+		
+		// generic stuff for any actor
+		let oldSpeed = owner.speed;
+		owner.speed *= SPEED_FACTOR;
+		speedDiff = oldSpeed - owner.speed;
+		
+		// do some special stuff for player
+		let p = PlayerPawn(owner);
+		if (!p) return;
+		
+		// adjust viewbob or it'll look ridiculous
+		let oldBob = p.viewbob;
+		p.viewbob *= VIEWBOB_FACTOR;
+		bobDiff = oldBob - p.viewbob;
+		
+		// adjust jump height
+		let oldJumpZ = p.JumpZ;
+		p.JumpZ *= JUMPZ_FACTOR;
+		jumpzDiff = oldJumpZ - p.JumpZ;
+	}
+	
+	override void DetachFromOwner () {
+		
+		if (!owner) return;
+		
+		if (!cantthrust)
+			owner.bDONTTHRUST = false;
+		
+		owner.speed += speedDiff;
+		
+		let p = PlayerPawn(owner);
+		if (!p) return;
+		
+		p.viewbob += bobDiff;
+		p.JumpZ += jumpzDiff;
+	}
+}

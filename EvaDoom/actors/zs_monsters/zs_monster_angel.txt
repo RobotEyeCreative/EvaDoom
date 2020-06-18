@@ -22,6 +22,7 @@ class angel : actor abstract {
 		
 		species "angel";
 		damagefactor "diracsea", 0.0;
+		damagefactor "angeldmg", 0.0;
 		
 		angel.patshields 1000;
 		angel.patstun false;
@@ -68,7 +69,7 @@ class angel : actor abstract {
 					if (atinstance)
 						atinstance.SetState(null);
 					
-					atinstance = spawn("atfieldsfx", (self.pos.x, self.pos.y, self.height/2.0));
+					atinstance = spawn("atfieldsfx", (self.pos.x, self.pos.y, self.pos.z + (self.height/2.0)));
 				}
 			}
 			// Case 2: We don't.
@@ -92,14 +93,15 @@ class angel : actor abstract {
 		if (getAge() < 1)
 			A_GiveInventory("atfield", atshields);
 		
-		else {
+		else if (!bCORPSE) {
 			
 			// Recover from AT field break
 			if (atstate > 0) atstate--;
 			
 			// Regenerate AT field
 			if (atstate <= 0 && CountInv("atfield") < atshields) {
-				A_GiveInventory("atfield", atrate*atmultiplier); // This line is buggued, when leliel dies and enters super.Tick();
+				
+				A_GiveInventory("atfield", atrate*atmultiplier);
 				
 				bNOBLOOD = true;
 				bNOPAIN = true;
@@ -107,4 +109,3 @@ class angel : actor abstract {
 		}
 	}
 }
-

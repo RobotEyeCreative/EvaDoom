@@ -2,4 +2,4 @@
 // #### Others ####
 
 EvaDoom/ATField/Activate 					sounds/snd_other/snd_other_atfield/atfield_activate.ogg
-$Volume EvaDoom/ATField/Activate			1.0
+$Volume EvaDoom/ATField/Activate			0.3

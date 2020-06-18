@@ -7,7 +7,7 @@ class Eva01HandGun : eva01weapon {
 		
 		weapon.ammouse 1;
 		weapon.ammotype "Bullets";
-		weapon.ammogive 50;
+		weapon.ammogive 30;
 		//weapon.readysound "";
 		//weapon.upsound "";
 	}
@@ -29,7 +29,7 @@ class Eva01HandGun : eva01weapon {
 			E1HG A 1;
 			E1HG M 4 {
 				A_StartSound("EvaDoom/Weapon/HandGun/Fire");
-				A_FireBullets(0.6, 0.6, 1, 40);
+				A_FireBullets(0.6, 0.6, 1, 30);
 			}
 			E1HG N 4;
 			E1HG A 3;

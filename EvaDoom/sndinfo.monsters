@@ -3,9 +3,14 @@
 
 // 1 - Sachiel
 
-
-
-
+EvaDoom/Monster/Sachiel/Melee 				sounds/snd_monsters/snd_monster_sachiel/sachiel_melee.wav
+EvaDoom/Monster/Sachiel/MeleeStart 			sounds/snd_monsters/snd_monster_sachiel/sachiel_meleestart.wav
+EvaDoom/Monster/Sachiel/MeleeEnd 			sounds/snd_monsters/snd_monster_sachiel/sachiel_meleeend.wav
+EvaDoom/Monster/Sachiel/MeleeRam 			sounds/snd_monsters/snd_monster_sachiel/sachiel_meleeram.wav
+$Volume EvaDoom/Monster/Sachiel/Melee		1.0
+$Volume EvaDoom/Monster/Sachiel/MeleeStart	1.0
+$Volume EvaDoom/Monster/Sachiel/MeleeEnd	1.0
+$Volume EvaDoom/Monster/Sachiel/MeleeRam	1.0
 
 // 2 - Shamshel
 

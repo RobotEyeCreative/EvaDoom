@@ -53,7 +53,7 @@ doomednums {
 	//10122 = eva02assaultrifle
 	
 	// Monsters
-	//10200 = sachiel
+	10200 = sachiel
 	10201 = shamshel
 	//10202 = ramiel
 	//10203 = gaghiel
