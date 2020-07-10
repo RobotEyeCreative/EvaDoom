@@ -86,7 +86,16 @@ doomednums {
 	
 	// Decoration
 	//10700
+	//10701
+	//10702
+	//10703
+	//10704
     10700 = decoration_plant_01
+    10701 = decoration_plant_02
+    10702 = decoration_plant_03
+    10703 = decoration_plant_04
+    10704 = decoration_plant_05
+
 }
 
 automap {
