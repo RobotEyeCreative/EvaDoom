@@ -1,0 +1,97 @@
+
+class playerStatus : inventory {
+	
+	default {
+		
+		inventory.amount 1;
+		inventory.maxamount 6;
+		+INVENTORY.PERSISTENTPOWER;
+	}
+}
+
+class changeStatus : inventory abstract {
+	
+	default {
+		
+		inventory.amount 1;
+		inventory.maxamount 1;
+		+INVENTORY.PERSISTENTPOWER;
+	}
+}
+
+class enterEva00 : changeStatus {}
+class enterEva01 : changeStatus {}
+class enterEva02 : changeStatus {}
+class playChild0 : changeStatus {}
+class playChild1 : changeStatus {}
+class playChild2 : changeStatus {}
+
+class atfieldactivated : inventory {
+	
+	default {
+		
+		inventory.amount 1;
+		inventory.maxamount 1;
+		+INVENTORY.PERSISTENTPOWER;
+	}
+}
+
+
+extend class evangelionPlayer {
+	
+	void updateStatus() {
+		
+		if		(CountInv("enterEva00") > 0) { clearInv(); updateProperties(1, "eva01", 6000, 0, 56, 25, 1.05, 1.0, 1.2, 0.7, 0.2, 10.0, 0.6, 0.0, false); A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); A_GiveInventory("evaenergy", 1800); A_GiveInventory("evasynchronization", 50); A_GiveInventory("atfield", 500); }
+		else if (CountInv("enterEva01") > 0) { clearInv(); updateProperties(2, "eva01", 6000, 0, 56, 25, 1.05, 1.0, 1.2, 0.7, 0.2, 10.0, 0.6, 0.0, false); A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); A_GiveInventory("evaenergy", 3000); A_GiveInventory("evasynchronization", 50); A_GiveInventory("atfield", 500); }
+		else if (CountInv("enterEva02") > 0) { clearInv(); updateProperties(3, "eva01", 6000, 0, 56, 25, 1.05, 1.0, 1.2, 0.7, 0.2, 10.0, 0.6, 0.0, false); A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); A_GiveInventory("evaenergy", 3000); A_GiveInventory("evasynchronization", 50); A_GiveInventory("atfield", 500); }
+		else if (CountInv("playChild0") > 0) { clearInv(); updateProperties(4, "shinji", 90, 5, 40, 16, 1.0, 0.5, 0.7, 0.4, 0.5, 8.0, 0.1, 1.0, true); }
+		else if (CountInv("playChild1") > 0) { clearInv(); updateProperties(5, "shinji", 90, 5, 40, 16, 1.0, 0.5, 0.7, 0.4, 0.5, 8.0, 0.1, 1.0, true); }
+		else if (CountInv("playChild2") > 0) { clearInv(); updateProperties(6, "shinji", 90, 5, 40, 16, 1.0, 0.5, 0.7, 0.4, 0.5, 8.0, 0.1, 1.0, true); }
+	}
+	
+	void clearInv() {
+		
+		A_TakeInventory("enterEva00");
+		A_TakeInventory("enterEva01");
+		A_TakeInventory("enterEva02");
+		A_TakeInventory("playChild0");
+		A_TakeInventory("playChild1");
+		A_TakeInventory("playChild2");
+		
+		A_TakeInventory("Eva01Fists");
+		A_TakeInventory("Eva01HandGun");
+		A_TakeInventory("Bullets");
+		
+		A_TakeInventory("evaenergy");
+		A_TakeInventory("evasynchronization");
+		A_TakeInventory("atfield");
+	}
+	
+	void updateProperties (int newstatus, string soundclass, int m, int air, int viewz, int attackz, double fric, double fm1, double fm2, double sm1, double sm2, double jumph, double viewb, double falling, bool gib) {
+		
+		A_SetInventory("playerStatus", newstatus);
+		
+		//A_SetMugshotState("E01");
+		//face = "E01";
+		mass = m;
+		aircapacity = air;
+		viewheight = viewz;
+		attackzoffset = attackz;
+		friction = fric;
+		forwardmove1 = fm1;
+		forwardmove2 = fm2;
+		sidemove1 = sm1;
+		sidemove2 = sm2;
+		jumpz = jumph;
+		viewbob = viewb;
+		//damagefactor "falling" = falling;
+		bDONTGIB = gib;
+	}
+	
+	override void Tick() {
+		
+		super.Tick();
+		
+		updateStatus();
+	}
+}

@@ -1,3 +1,6 @@
 
 #include "actors/zs_others/zs_other_atfield.txt"
+#include "actors/zs_others/zs_other_evaenergy.txt"
+#include "actors/zs_others/zs_other_evasynchronization.txt"
 #include "actors/zs_others/zs_other_evangelionplayer.txt"
+#include "actors/zs_others/zs_other_evangelionplayer_functions.txt"

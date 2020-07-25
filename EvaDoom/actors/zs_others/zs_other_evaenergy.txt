@@ -1,0 +1,8 @@
+
+class evaenergy : inventory {
+	
+	default {
+		inventory.amount 1;
+		inventory.maxamount 3000;
+	}
+}

@@ -10,6 +10,7 @@ class Eva01Fists : eva01weapon {
 		weapon.ammouse 0;
 		weapon.ammotype "";
 		weapon.ammogive 0;
+		weapon.slotnumber 1;
 		//weapon.readysound "";
 		//weapon.upsound "";
 		

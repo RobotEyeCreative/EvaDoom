@@ -1,3 +1,7 @@
-Texture Optional EVARR1 Range EVARR2 Tics 10
+Texture EVARR1 Range EVARR2 Tics 10
 
-Texture Optional LCL1 Range LCL4 Tics 8
+Texture LCL1 Range LCL4 Tics 8
+
+Texture HUD_BL1 Range HUD_BL2 Tics 1
+
+Texture HUD_BR1 Range HUD_BR4 Tics 2
