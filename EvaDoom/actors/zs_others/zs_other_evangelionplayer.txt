@@ -6,6 +6,8 @@
 
 class evangelionPlayer : PlayerPawn {
 	
+	int restCD;
+	
 	default {
 		
 		//$Category Evangelion
@@ -52,10 +54,10 @@ class evangelionPlayer : PlayerPawn {
 	states {
 		
 		Spawn:
-			PLAY A -1;
+			PLAY A 4 EvaUnitRestore();
 			Loop;
 		See:
-			PLAY ABCD 4;
+			PLAY ABCD 4 { restCD = 0; }
 			Loop;
 		Missile:
 			PLAY E 12;

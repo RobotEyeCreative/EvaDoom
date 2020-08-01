@@ -39,6 +39,9 @@ $playersounddup	eva01	other	*land		*grunt
 $playersound	eva01	other	*jump		dscjump
 $playersound	eva01	other	*usefail	sounds/snd_other/eva_action.wav
 
+EvaDoom/EvaUnit/Eva01/Fear 					sounds/snd_other/snd_other_eva01/eva01_fear1.wav
+$Volume EvaDoom/EvaUnit/Eva01/Fear			1.0
+
 // Shinji
 
 $playersound	shinji	male	*death		sounds/snd_other/snd_other_eva01/eva01_death.wav
