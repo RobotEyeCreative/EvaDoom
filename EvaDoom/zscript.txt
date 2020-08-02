@@ -5,3 +5,5 @@ version "4.3.0"
 #include "actors/zs_others/zs_others.txt"
 #include "actors/zs_monsters/zs_monsters.txt"
 #include "actors/zs_decorations/zs_decorations.txt"
+
+#include "zscript/zs_hud/zs_hud.txt"

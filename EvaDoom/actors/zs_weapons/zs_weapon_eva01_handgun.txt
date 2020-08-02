@@ -8,6 +8,7 @@ class Eva01HandGun : eva01weapon {
 		weapon.ammouse 1;
 		weapon.ammotype "Bullets";
 		weapon.ammogive 30;
+		weapon.slotnumber 3;
 		//weapon.readysound "";
 		//weapon.upsound "";
 	}

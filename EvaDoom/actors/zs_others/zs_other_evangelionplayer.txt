@@ -1,20 +1,4 @@
 
-class changeStatus : inventory abstract {
-	
-	default {
-		
-		inventory.amount 1;
-		inventory.maxamount 1;
-		+INVENTORY.PERSISTENTPOWER;
-	}
-}
-
-class enterEva00 : changeStatus {}
-class enterEva01 : changeStatus {}
-class enterEva02 : changeStatus {}
-class playChild0 : changeStatus {}
-class playChild1 : changeStatus {}
-class playChild2 : changeStatus {}
 
 // TODO: View height only updates when changing your z height. (BUG?)
 // TODO: Mugshot changes have to be handled through zscript hud.
@@ -22,9 +6,7 @@ class playChild2 : changeStatus {}
 
 class evangelionPlayer : PlayerPawn {
 	
-	int changedStatus;
-	
-	property pStatus: changedStatus;
+	int restCD;
 	
 	default {
 		
@@ -47,15 +29,20 @@ class evangelionPlayer : PlayerPawn {
 		player.ViewBob 0.1;
 		player.face "P01";
 		
-		player.weaponslot 1, "Eva01Fists";
-		player.weaponslot 2, "Eva01HandGun";
-		player.weaponslot 3, "Eva01AssaultRifle";
+		//player.weaponslot 1, "Eva01Fists";
+		//player.weaponslot 2, "Eva01HandGun";
+		//player.weaponslot 3, "Eva01AssaultRifle";
 		
 		//player.startitem "Eva01Fists", 1;
 		//player.startitem "Eva01HandGun", 1;
-		//player.startitem "Bullets", 50;
-		
-		evangelionPlayer.pStatus 0;
+		player.startitem "Bullets", 0;
+		player.startitem "HeavyBullets", 0;
+		player.startitem "evaenergy", 0;
+		player.startitem "evasynchronization", 0;
+		player.startitem "atfield", 0;
+		player.startitem "enterEva00", 0;
+		player.startitem "enterEva01", 0;
+		player.startitem "enterEva02", 0;
 		
 		damagefactor "falling", 0.0;
 		
@@ -64,63 +51,13 @@ class evangelionPlayer : PlayerPawn {
 		//+PLAYERPAWN.NOTHRUSTWHENINVUL;
 	}
 	
-	void updateStatus() {
-		
-		if		(CountInv("enterEva00") > 0) { clearInv(); changedStatus = 1; updateProperties("eva01", 6000, 0, 56, 25, 1.05, 1.0, 1.2, 0.7, 0.2, 10.0, 0.6, 0.0, false); A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); }
-		else if (CountInv("enterEva01") > 0) { clearInv(); changedStatus = 2; updateProperties("eva01", 6000, 0, 56, 25, 1.05, 1.0, 1.2, 0.7, 0.2, 10.0, 0.6, 0.0, false); A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); }
-		else if (CountInv("enterEva02") > 0) { clearInv(); changedStatus = 3; updateProperties("eva01", 6000, 0, 56, 25, 1.05, 1.0, 1.2, 0.7, 0.2, 10.0, 0.6, 0.0, false); A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); }
-		else if (CountInv("playChild0") > 0) { clearInv(); changedStatus = 4; updateProperties("shinji", 90, 5, 40, 16, 1.0, 0.5, 0.7, 0.4, 0.5, 8.0, 0.1, 1.0, true); }
-		else if (CountInv("playChild1") > 0) { clearInv(); changedStatus = 5; updateProperties("shinji", 90, 5, 40, 16, 1.0, 0.5, 0.7, 0.4, 0.5, 8.0, 0.1, 1.0, true); }
-		else if (CountInv("playChild2") > 0) { clearInv(); changedStatus = 6; updateProperties("shinji", 90, 5, 40, 16, 1.0, 0.5, 0.7, 0.4, 0.5, 8.0, 0.1, 1.0, true); }
-	}
-	
-	void clearInv() {
-		
-		A_TakeInventory("enterEva00");
-		A_TakeInventory("enterEva01");
-		A_TakeInventory("enterEva02");
-		A_TakeInventory("playChild0");
-		A_TakeInventory("playChild1");
-		A_TakeInventory("playChild2");
-		
-		A_TakeInventory("Eva01Fists");
-		A_TakeInventory("Eva01HandGun");
-		A_TakeInventory("Bullets");
-	}
-	
-	void updateProperties (string soundclass, int m, int air, int viewz, int attackz, double fric, double fm1, double fm2, double sm1, double sm2, double jumph, double viewb, double falling, bool gib) {
-		
-		//A_SetMugshotState("E01");
-		//face = "E01";
-		mass = m;
-		aircapacity = air;
-		viewheight = viewz;
-		attackzoffset = attackz;
-		friction = fric;
-		forwardmove1 = fm1;
-		forwardmove2 = fm2;
-		sidemove1 = sm1;
-		sidemove2 = sm2;
-		jumpz = jumph;
-		viewbob = viewb;
-		//damagefactor "falling" = falling;
-		bDONTGIB = gib;
-	}
-	
-	override void Tick() {
-		
-		super.Tick();
-		
-		updateStatus();
-	}
-	
 	states {
 		
 		Spawn:
-			PLAY A -1;
+			PLAY A 4 EvaUnitRestore();
 			Loop;
 		See:
-			PLAY ABCD 4;
+			PLAY ABCD 4 { restCD = 0; }
 			Loop;
 		Missile:
 			PLAY E 12;

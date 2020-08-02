@@ -8,6 +8,7 @@ class Eva01AssaultRifle : eva01weapon {
 		weapon.ammouse 1;
 		weapon.ammotype "HeavyBullets";
 		weapon.ammogive 100;
+		weapon.slotnumber 2;
 		//weapon.readysound "";
 		//weapon.upsound "";
 	}

@@ -1,0 +1,100 @@
+
+Class MinimalStatusBar : BaseStatusBar {
+
+	//HUDFont FontLiquidCrystal;
+	HUDFont FontEvangelionLCDMono;
+	HUDFont FontEvangelionBITMono;
+	InventoryBarState diparms;
+	Array<Ammo> ownedAmmo;
+	int curAmmoIndex;
+	int healthInterpolated;
+	int healthInterpolationPile;
+	int syncInterpolated;
+	int syncInterpolationPile;
+	//int tictime;
+	
+	int syncGraphs[3];
+	int syncmovement1;
+	int syncmovement2;
+	int syncmovement3;
+	
+	override void Init () {
+		
+		Super.Init();
+		
+		//SetSize(0, 1920, 1080);
+		//fullscreenOffsets = true;
+		
+		Font fnt;
+		
+		// the small font is monospace because it helps with centering and positioning
+		fnt = "EDOOMLCD";
+		FontEvangelionLCDMono = HUDFont.Create(fnt, fnt.GetCharWidth("0")+4, true);
+		
+		// the small font is monospace because it helps with centering and positioning
+		fnt = "EDOOMBIT";
+		FontEvangelionBITMono = HUDFont.Create(fnt, fnt.GetCharWidth("0")+2, true);
+		
+		// inventory list
+		diparms = InventoryBarState.Create(null, Font.CR_UNTRANSLATED, 1, "ITEMBOX");
+		
+		//tictime = 1;
+		
+		// just to be sure
+		syncGraphs[0] = 0;
+		syncGraphs[1] = 0;
+		syncGraphs[2] = 0;
+	}
+	
+	// makes my life easier
+	vector2 TexSize (String texture) { return Texman.GetScaledSize(TexMan.CheckForTexture(texture, TexMan.Type_Any)); }
+	
+	void InterpolateValue (int value, out int interpolatedValue, out int pile, int speed = 1, int accel = 5) { // safe values: speed = 2, accel = 10;
+		
+		int diff = max(interpolatedValue, value) - min(interpolatedValue, value);
+		int curve = clamp((diff / max(1,accel)), 1, 4);
+		int slowmo = (diff < 20 && diff > 0) ? 50/max(1,diff) : 0;
+		
+		if (++pile >= abs(speed)+slowmo) {
+			
+			pile = 0;
+			
+			if (interpolatedValue > value)
+				interpolatedValue = (interpolatedValue - curve < value) ? value : interpolatedValue - curve;
+			else if (interpolatedValue < value)
+				interpolatedValue = (interpolatedValue + curve > value) ? value : interpolatedValue + curve;
+		}
+	}
+	
+	int CreatePercent (int monitor, int monitorMax, int relativeValue) {
+		
+		if (monitorMax == 0)
+			return 0;
+		
+		double monitorD = monitor;
+		
+		return round(monitorD * relativeValue/monitorMax);
+	}
+	
+	/*
+	override void Tick () {
+		
+		super.Tick();
+		
+		if (++tictime > 35)
+			tictime = 1;
+	}*/
+	
+	int GraphMovement (out int register, int limit, int basespeed = 1, int syncoffs = 0) {
+		
+		register += basespeed;
+		
+		if (register+syncoffs > limit*2)
+			register -= limit;
+		
+		if (register+syncoffs > limit)
+			return (register+syncoffs) - limit;
+		
+		return register+syncoffs;
+	}
+}

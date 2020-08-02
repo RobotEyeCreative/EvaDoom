@@ -2,6 +2,7 @@ gameinfo {
 	
 	// Essential definitions
 	playerclasses = "evangelionPlayer"
+	statusbarclass = "MinimalStatusBar"
 	
 	// Gameplay-esque properties
 	defkickback = 300
