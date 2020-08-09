@@ -21,10 +21,10 @@ class Eva01HandGun : eva01weapon {
 			E1HG A 8 A_WeaponReady;
 			loop;
 		select:
-			E1HG A 1 A_Raise;
+			E1HG A 1 A_Raise(12);
 			loop;
 		deselect:
-			E1HG A 1 A_Lower;
+			E1HG A 1 A_Lower(12);
 			loop;
 		fire:
 			E1HG A 1;

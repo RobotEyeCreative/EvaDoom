@@ -1,0 +1,97 @@
+
+mixin class atfieldhandling {
+	
+	actor atinstance;
+	private int atstate;			// AT field regeneration status (0 means ready)
+	
+	private int atshields;			// AT field max shields
+	private bool atstun;			// AT field stun state ON/OFF
+	
+	property patshields: atshields;
+	property patstun: atstun;
+	
+	override int TakeSpecialDamage(actor inflictor, actor source, int damage, name damagetype) {
+		
+		int atdelay = 10;	// AT field regeneration delay after break. (in seconds)
+		
+		int atcount = CountInv("atfield");
+		
+		int overflow = max(0, damage - atcount);
+		
+		// If we are an eva, and we have not activated the at field skill...
+		if (!bISMONSTER && !FindInventory("atfieldactivated"))
+			overflow = damage; // Ignore atfield as it's not activated.
+		
+		// If we recieve damage...
+		if (damage > 0) {
+			
+			// Case 1: We have an AT field
+			if (atcount > 0 && bISMONSTER || FindInventory("atfieldactivated")) {
+				
+				// Take damage units from the AT field if we're an angel or we activated the at field skill.
+				if (bISMONSTER || FindInventory("atfieldactivated"))
+					A_TakeInventory("atfield", damage);
+				
+				// Case 1: We lost the AT field
+				if (atcount-damage <= 0) {
+					
+					bNOBLOOD = false;
+					bNOPAIN = false;
+					
+					// ...Activate the regeneration delay and go to stun state if enabled
+					atstate = atdelay * 35;
+					
+					if (atstun)
+						SetStateLabel("stun");
+				}
+				// Case 2: We still have an AT field
+				else {
+					if (atinstance)
+						atinstance.SetState(null);
+					
+					// Handle the spawning differently for monsters than players.
+					if (bISMONSTER)
+						if (target)
+							atinstance = spawn("atfieldsfx", (self.pos.x + 32.0*cos(AngleTo(target)), self.pos.y + 32.0*sin(AngleTo(target)), self.pos.z + (self.height/2.0)));
+						else
+							atinstance = spawn("atfieldsfx", (self.pos.x + 32.0*cos(angle), self.pos.y + 32.0*sin(angle), self.pos.z + (self.height/2.0)));
+					else
+						atinstance = spawn("atfieldsfx", (self.pos.x + 32.0*cos(angle), self.pos.y + 32.0*sin(angle), self.pos.z + self.player.viewheight));
+				}
+			}
+			// Case 2: We don't.
+			else {
+				bNOBLOOD = false;
+				bNOPAIN = false;
+			}
+		}
+		
+		// The synchronization is reduced by half of the damage recieved.
+		if (!bISMONSTER && overflow*0.5 > 0)
+			A_TakeInventory("evasynchronization", overflow*0.5);
+		
+		return super.TakeSpecialDamage(inflictor, source, overflow, damagetype);
+	}
+	
+	void ATFieldRegenerate (int rate = 2) {
+		
+		// Initial AT field amount.
+		if (getAge() < 1)
+			A_GiveInventory("atfield", atshields);
+		
+		else if (!bCORPSE) {
+			
+			// Recover from AT field break
+			if (atstate > 0) atstate--;
+			
+			// Regenerate AT field
+			if (atstate <= 0 && CountInv("atfield") < atshields) {
+				
+				A_GiveInventory("atfield", rate);
+				
+				bNOBLOOD = true;
+				bNOPAIN = true;
+			}
+		}
+	}
+}

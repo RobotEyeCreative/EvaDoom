@@ -1,0 +1,21 @@
+
+extend class evangelionPlayer {
+	
+	override void Tick () {
+		
+		super.Tick();
+		
+		// Class functions
+		refreshStatus();
+		
+		// Skills functions
+		SkillATField();
+		ATFieldRegenerate(3);
+		
+		// Synchronization functions
+		SyncronizationMultiplier();
+		
+		// Update properties
+		applyProperties(CountInv("playerStatus"));
+	}
+}

@@ -290,7 +290,10 @@ extend class MinimalStatusBar {
 		if (atfieldcurrent) {
 			
 			atfieldcount = pmo.CountInv("atfield");
-			atfieldmax = atfieldcurrent.MaxAmount;
+			
+			// TODO: read the player class property!
+			atfieldmax = 2000; //pmo.atshields;
+			//atfieldmax = atfieldcurrent.MaxAmount;
 		}
 		
 		int atfbarfragments = CreatePercent(atfieldcount, atfieldmax, 12);

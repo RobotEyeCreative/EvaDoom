@@ -4,6 +4,7 @@ class atfield : inventory {
 	default {
 		inventory.amount 1;
 		inventory.maxamount 50000;
+		+INVENTORY.KEEPDEPLETED;
 	}
 }
 

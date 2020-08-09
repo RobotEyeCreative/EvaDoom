@@ -12,6 +12,18 @@ class evadoomweapon : weapon abstract {
 
 class eva01weapon : evadoomweapon abstract {
 	
+	string oldweapon; property poldweapon: oldweapon;
+	
+	// Always remove the atfieldskill when selecting other weapons
+	override state GetUpState () {
+		
+		if (getClassName() != "Eva01ATField")
+			if (owner.CountInv("Eva01ATField") > 0)
+				owner.A_TakeInventory("Eva01ATField");
+		
+		return super.GetUpState();
+	}
+	
 	default {
 		
 		//inventory.RestrictedTo "eva01";

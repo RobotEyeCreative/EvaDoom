@@ -241,10 +241,12 @@ class sachielhand : actor {
 		
 		A_Warp(AAPTR_TARGET, 5, 1, 57);
 		
-		if ( Distance3D(master) > 64.0+(target.radius*2) ) {
-			// A_Log("You breaked from sachiel grab!");
+		if (!master)
 			SetState(null);
-		}
+		
+		if (master && target)
+			if (Distance3D(master) > 64.0+(target.radius*2) )
+				SetState(null);
 	}
 	
 	states {
