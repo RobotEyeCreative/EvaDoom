@@ -25,10 +25,10 @@ class Eva01Fists : eva01weapon {
 			TNT1 A 8 A_WeaponReady;
 			wait;
 		select:
-			TNT1 A 1 A_Raise;
+			TNT1 A 1 A_Raise(32);
 			loop;
 		deselect:
-			TNT1 A 1 A_Lower;
+			TNT1 A 1 A_Lower(32);
 			loop;
 		fire:
 			E1FI A 0 {

@@ -4,3 +4,6 @@
 #include "actors/zs_weapons/zs_weapon_eva01_assaultrifle.txt"
 #include "actors/zs_weapons/zs_weapon_eva01_handgun.txt"
 #include "actors/zs_weapons/zs_weapon_eva01_fists.txt"
+
+
+#include "actors/zs_weapons/zs_weapon_eva01_atfield.txt"

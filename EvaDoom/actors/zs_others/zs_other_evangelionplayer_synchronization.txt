@@ -1,0 +1,73 @@
+
+class evasynchronization : inventory {
+	
+	default {
+		inventory.amount 1;
+		inventory.maxamount 999;
+	}
+}
+
+class evasynchronizationmission : evasynchronization {}
+
+extend class evangelionPlayer {
+	
+	int syncreg;		property psyncreg: syncreg;
+	int syncregdelay;	property psyncregdelay: syncregdelay;
+	int syncreghealth;	property psyncreghealth: syncreghealth;
+	
+	void SyncronizationMultiplier () {
+		
+		// Synchronization multiplier property buff.
+		if (CountInv("playerStatus") < 4)
+			PP[CountInv("playerStatus")].syncfactor = 1.0*CountInv("evasynchronization")/100.0;
+	}
+	
+	override void FireWeapon (State stat) {
+		
+		// If synchronization is less than 2%, disable shooting.
+		if (CountInv("evasynchronization") < 2)
+			return;
+		
+		super.FireWeapon(stat);
+	}
+	
+	void EvaUnitRestoreSync (int maxsync = 0, int amount = 15, int delay = 70, int healthmax = 50) {
+		
+		// Skip if we're not in a evaunit.
+		if (CountInv("playerStatus") > 3 || delay == 0)
+			return;
+		
+		int maxsyncamount = maxsync;
+		
+		if (maxsync == 0)
+			maxsyncamount = 100;
+		
+		// Restore synchronization every 8 seconds when standing still.
+		if (restCD++ > delay && CountInv("evasynchronization") < maxsyncamount) {
+			
+			restCD = 0;
+			
+			string fear;
+			
+			switch(CountInv("playerStatus")) {
+				case 1:
+					fear = "EvaDoom/EvaUnit/Eva01/Fear";
+					break;
+				case 2:
+					fear = "EvaDoom/EvaUnit/Eva01/Fear";
+					break;
+				case 3:
+					fear = "EvaDoom/EvaUnit/Eva01/Fear";
+					break;
+			}
+			
+			A_StartSound(fear);
+			
+			A_SetInventory("evasynchronization", min(maxsyncamount, CountInv("evasynchronization")+amount));
+		}
+		
+		// Give regeneration when at 200% sync or more (Berserk)
+		if (health < healthmax && CountInv("evasynchronization") >= 200)
+			A_GiveInventory("health", 1);
+	}
+}
