@@ -1,0 +1,30 @@
+class rei : npc {
+
+	states {
+	
+		Spawn:
+			REI2 T 4 A_Look;
+			Loop;
+		See:
+			REI2 T 6 A_Chase;
+			Loop;
+		Pain:
+			REI2 T 4;
+			REI2 T 4 A_Pain;
+			Goto Spawn;
+		Death:
+			REI2 T 10;
+			REI2 T 10 A_PlayerScream;
+			REI2 T 10 A_NoBlocking;
+			REI2 T 10;
+			REI2 T -1;
+			Stop;
+		XDeath:
+			REI2 T 5;
+			REI2 T 5 A_XScream;
+			REI2 T 5 A_NoBlocking;
+			REI2 T 5;
+			REI2 T -1;
+			Stop;
+	}
+}

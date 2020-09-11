@@ -1,0 +1,272 @@
+#library "mathlib"
+#include "zcommon.acs"
+
+
+/*	Round: Returns the input (fixed) as fixed without decimal part. If the decimal part is greater or equal to .5 then returns the next fixed integer.
+	Examples:
+	round(1.4) -> 1.0
+	round(1.5) -> 2.0
+	round(-1.4) -> 0.0
+*/
+
+function int roundf (int fixedNum) {
+	
+	return (fixedNum + 0.5) >> 16;
+}
+
+/*	Truncation: Returns the input (fixed) as fixed without decimal part.
+	Examples:
+	trunc(1.4) -> 1.0
+	trunc(1.5) -> 1.0
+	trunc(-1.4) -> -1.0
+*/
+
+function int trunc (int fixedNum) {
+	
+	return fixedNum & 0xFFFF0000;
+}
+
+/*	Absolute: Returns the input value without sign.
+	Examples:
+	abs(6) -> 6
+	abs(-6) -> 6
+	abs(-8.7) -> 8.7
+*/
+
+function int abs (int x) {
+    
+	if (x < 0)
+        return -x;
+
+    return x;
+}
+
+/*	Min: Returns the lowest value.
+	Examples:
+	min(4, 7) -> 4
+	min(-6, 2) -> -6
+*/
+
+function int min (int a, int b) {
+	
+	if (a < b)
+		return a;
+
+	return b;
+}
+
+/*	Max: Returns the highest value.
+	Examples:
+	max(4, 7) -> 7
+	max(-2, -5) -> -2
+*/
+
+function int max (int a, int b) {
+	
+	if (a > b)
+		return a;
+
+	return b;
+}
+
+/*	Power: Returns the result of elevating the input base (integer) to the input exponent (integer).
+	Examples:
+	pow(2, 5) -> 32
+	pow(5, 3) -> 125
+	pow(5, 1) -> 1
+	pow(-3, 3) -> -27
+	pow(-3, 4) -> 81
+*/
+
+function int pow (int base, int exp) {
+
+	int y = 1;
+	
+	while (exp-- > 0) y *= base;
+	
+	return y;
+}
+
+/*	Map: Converts a number from one range to another. Does not constrain.
+	Examples:
+	map(6, 0, 10, 0, 100) -> 60
+	map(6, 0, 10, 10, 0) -> 4
+	map(6, 0, 50, 0, -100) -> -12
+	map(12, 0, 10, 0, 100) -> 120
+	map(1.3, 1.0, 2.0, 8.0, 9.0) -> 8.3
+*/
+
+function int map (int x, int in_min, int in_max, int out_min, int out_max) {
+	
+	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+/*	Constrain: Returns the value of a number within the stablished limits.
+	Examples:
+	constrain(54, 50, 100) -> 54
+	constrain(31, 50, 100) -> 50
+	constrain(113, 50, 100) -> 100
+	constrain(-46, -50, -100) -> -46
+	constrain(-46, -100, -50) -> -50
+	constrain(1.6, -2.0, 1.0) -> 1.0
+*/
+
+function int constrain (int x, int pmin, int pmax) {
+	
+	if (x < pmin)
+		return pmin;
+	
+	if (x > pmax)
+		return pmax;
+	
+	return x;
+}
+
+/*	Concatenate: Returns the two integers joined. Only works with non-negative integers.
+	Examples:
+	concatenate(44, 36) -> 4436
+	concatenate(764, 234) -> 764234
+	concatenate(21474, 83647) -> 2147483647 (maximum integer size)
+	concatenate(21474, 83648) -> overflow
+*/
+
+function int concatenate (int a, int b) {
+	
+	int m = 10;
+	
+	while (b >= m) m *= 10;
+	
+	return a * m + b;
+}
+
+/*	Loop positive: Returns the input integer incremented or the minimum limit if the maximum limit has been reached.
+	Examples:
+	loopp(5, 2, 8) -> 6
+	loopp(7, 2, 8) -> 8
+	loopp(8, 2, 8) -> 2
+	loopp(-4, -11, -3) -> -3
+	loopp(-3, -11, -3) -> -11
+*/
+
+function int loopp (int var, int pmin, int pmax) {
+
+	int num = var;
+
+	if (num+1 > pmax) num = pmin; else num++;
+
+	return num;
+}
+
+/*	Loop negative: Returns the input integer decremented or the maximum limit if the minimum limit has been reached.
+	Examples:
+	loopn(5, 2, 8) -> 4
+	loopn(3, 2, 8) -> 2
+	loopn(2, 2, 8) -> 8
+	loopn(-10, -11, -3) -> -11
+	loopn(-11, -11, -3) -> -3
+*/
+
+function int loopn (int var, int pmin, int pmax) {
+
+	int num = var;
+
+	if (num-1 < pmin) num = pmax; else num--;
+
+	return num;
+}
+
+/*
+	int num = var;
+
+	if (pos)
+		if (num+1 > pmax) num = pmin; else num++;
+	else
+		if (num-1 < pmin) num = pmax; else num--;
+
+	return num;
+*/
+
+/*	Loop sum: Returns the sum of the two input integer or the minimum limit if the maximum limit has been reached.
+	If carry is true, also adds the difference between the maximum limit and the initial sum result to the minimum value.
+	Examples:
+	loopsum(62, 12, 40, 80, 0) -> 74
+	loopsum(62, 22, 40, 80, 0) -> 40
+	loopsum(62, 22, 40, 80, 1) -> 44
+*/
+
+function int loopsum (int var, int sum, int pmin, int pmax, bool carriage) {
+
+	int num = var;
+
+	if (num + sum > pmax)
+		if (carriage)
+			num = pmin + ((num + sum) - pmax);
+		else
+			num = pmin;
+	else
+		num += sum;
+
+	return num;
+}
+
+/*	Loop dif: Returns the diference of the two input integer or the maximum limit if the minimum limit has been reached.
+	If carry is true, also substracts the difference between the minimum limit and the initial diference result to the maximum value.
+	Examples:
+	loopdif(62, 16, 40, 80, 0) -> 46
+	loopdif(62, 26, 40, 80, 0) -> 80
+	loopdif(62, 26, 40, 80, 1) -> 76
+*/
+
+function int loopdif (int var, int dif, int pmin, int pmax, bool carriage) {
+
+	int num = var;
+
+	if (num - dif < pmin)
+		if (carriage)
+			num = pmax - (pmin - (num - dif));
+		else
+			num = pmax;
+	else
+		num -= dif;
+
+	return num;
+}
+
+
+/*
+function int proportion (int num, int in_zero, int in_max) {
+	
+	return 
+}*/
+
+
+/*	Get lenght: Returns the amount of digits in an integer.
+	Examples:
+	getlenght(6) -> 1
+	getlenght(78) -> 2
+	getlenght(47938) -> 5
+*/
+
+function int getlenght (int num) {
+
+	int m = 1;
+
+	for (int i = 1; i <= 5; i++)
+		if (abs(num) >= pow(10,i))
+			m++;
+
+	return m;
+}
+
+/*	Get digit: Returns the digit of an integer in the specified position, being the first digit the position 1.
+	Examples:
+	getdigit(6, 1) -> 6
+	getdigit(4567, 2) -> 5
+	getdigit(-54287, 4) -> 8
+*/
+
+function int getdigit (int num, int pos) {
+
+	return abs(num) % pow(10,pos) / pow(10,pos-1);
+}
+

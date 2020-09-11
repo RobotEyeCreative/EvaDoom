@@ -1,0 +1,3 @@
+#include "actors/zs_npcs/zs_npc_npc.txt"
+#include "actors/zs_npcs/zs_npc_misato.txt"
+#include "actors/zs_npcs/zs_npc_rei.txt"
