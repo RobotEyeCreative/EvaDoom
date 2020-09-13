@@ -1,0 +1,18 @@
+class decoration_can_02 : actor {
+    
+    default {
+        
+        //$NotAngled
+        //$Category Evangelion/Decoration
+        
+        radius 5;
+        height 24;
+    }
+    
+    states {
+        
+        spawn:
+            TN02 A -1;
+            loop;
+    }
+}

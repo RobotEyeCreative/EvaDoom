@@ -96,7 +96,31 @@ doomednums {
     10702 = decoration_plant_03
     10703 = decoration_plant_04
     10704 = decoration_plant_05
-
+    10705 = decoration_bottle_01
+    10706 = decoration_bottle_02
+    10707 = decoration_bottle_03
+    10708 = decoration_bottle_04
+    10709 = decoration_bottle_05
+    10710 = decoration_bottle_06
+    10711 = decoration_bottle_07
+    10712 = decoration_bottle_08
+    10713 = decoration_bottle_09
+    10714 = decoration_bottle_10
+    10715 = decoration_bottle_11
+    10716 = decoration_bottle_12
+    10717 = decoration_kettle_01
+    10719 = decoration_can_01
+    10720 = decoration_can_02
+    10721 = decoration_can_03
+    10722 = decoration_trash_01
+    10723 = decoration_trash_02
+    10724 = decoration_trash_03
+    10725 = decoration_trash_04
+    10726 = decoration_trash_05
+    10727 = decoration_trash_06
+    10728 = decoration_trash_07
+    10729 = decoration_trash_08
+    10730 = decoration_trash_09
 }
 
 automap {
@@ -170,7 +194,7 @@ map MAP01 "Tokyo-3" {
 	next = "Apartment"
 	//nointermission
 	//noinventorybar
-	music = "music/music_tokyo3.midi"
+	music = "music/music_apartment.wav"
 	//fogdensity = 100
 	sky1 = "RSKY1", 0
 	exitpic = "INTER00"
@@ -183,6 +207,7 @@ map Apartment "Misato's Apartment" {
 	next = "MAP03"
 	ResetHealth
 	ResetInventory
+	music = "music_apartment.wav"
 }
 
 map TestingMap "Testing Map" {

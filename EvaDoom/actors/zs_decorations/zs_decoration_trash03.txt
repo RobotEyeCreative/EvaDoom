@@ -1,0 +1,18 @@
+class decoration_trash_03 : actor {
+    
+    default {
+        
+        //$NotAngled
+        //$Category Evangelion/Decoration
+        
+        radius 5;
+        height 24;
+    }
+    
+    states {
+        
+        spawn:
+            TR03 A -1;
+            loop;
+    }
+}

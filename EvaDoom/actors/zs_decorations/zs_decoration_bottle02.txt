@@ -1,0 +1,18 @@
+class decoration_bottle_02 : actor {
+    
+    default {
+        
+        //$NotAngled
+        //$Category Evangelion/Decoration
+        
+        radius 5;
+        height 17;
+    }
+    
+    states {
+        
+        spawn:
+            BO02 B -1;
+            loop;
+    }
+}
