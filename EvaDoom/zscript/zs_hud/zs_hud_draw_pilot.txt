@@ -1,0 +1,8 @@
+
+extend class MinimalStatusBar {
+	
+	void DrawFullScreenPilot (double TicFrac) {
+	}
+}
+
+	
