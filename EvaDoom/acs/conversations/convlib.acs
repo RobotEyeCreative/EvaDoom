@@ -1,0 +1,133 @@
+#library "convlib"
+#include "zcommon.acs"
+#import "npclib.acs"
+
+
+// ------------- Start-End conversation functions, set and reset the NPC potrait and some general effects.
+
+
+// Conversation hud display properties
+#define NoTime 32000.0
+#define IDStart 20
+
+#define XCoord 0.15
+#define YCoord 0.71
+#define XCenter 0.5
+#define YCenter 0.5
+#define ResponseYOffs 0.025
+#define AnswersGap 0.1
+
+#libdefine MaxResponses 8
+
+/*
+	HudMessage ID definitions for conversations:
+	IDStart +
+	
+	-4	---------------------	Conversation HUD arrow
+	-3	---------------------	NPC potrait
+	-2	---------------------	NPC name
+	-1	---------------------	NPC text message
+	1 to MaxResponses	-----	Conversation answer option message
+
+*/
+
+Function void ConversationStart (int who) {
+	
+	// Fade in.
+	CancelFade();
+	FadeTo(0, 0, 0, 0.5, 3.0);
+	
+	// Print potrait.
+	SetFont(GetNpcPotrait(who));
+	HudMessage(s:"A"; HUDMSG_FADEINOUT, IDStart-3, 0, -XCenter, -YCoord+ResponseYOffs+0.05, NoTime, 0.4);
+	
+	// Print name.
+	SetFont("VARELA");
+	HudMessage(s:GetNpcName(who); HUDMSG_PLAIN, IDStart-2, CR_YELLOW, -XCoord, YCoord-(ResponseYOffs*3), 0);
+	
+	// PlaySound(0, "interaction/paper");
+	
+	// Print conversation hud.
+	GiveInventory("playerConversation", 1);
+	//SetFont("graphics/chud/chud_text3.png");
+	//SetHudSize(1280, 720, TRUE);
+	//HudMessage(s:"A"; HUDMSG_FADEINOUT, IDStart+MaxResponses+1, 0, 640.0, 720.2, NoTime, 0.4);
+	//SetHudSize(0, 0, TRUE);
+	
+	//SetHudSize(1280, 720, TRUE);
+	//HudMessage(s:"A"; HUDMSG_FADEINOUT, IDStart+MaxResponses+1, 0, 640.0, 0.1, NoTime, 0.4);
+	//SetHudSize(0, 0, TRUE);
+}
+
+Function void ConversationEnd (void) {
+	
+	// Exits conversation hud
+	TakeInventory("playerConversation", 2);
+	
+	// Clear all text.
+	for (int i = -4; i <= MaxResponses; i++)
+		HudMessage(s:""; HUDMSG_PLAIN, IDStart+i, 0, 0.0, 0.0, 1);
+	
+	CancelFade();
+	FadeTo(0, 0, 0, 0.0, 0.4);
+	SetFont("SMALLFONT");
+}
+
+Function void PrintNPCMessage (int text) {
+
+	SetFont("VARELA");
+	HudMessage(l:text; HUDMSG_TYPEON, IDStart-1, CR_CYAN, -XCoord, YCoord, NoTime, 0.025, 0.4); //0.05
+}
+
+
+// ------------- Conversation behavioral functions, defines how the text will display and the logic.
+
+
+int IDCounter = 1;
+int YCoordResponse = YCoord + AnswersGap;
+int ResponsesBuffer[MaxResponses];
+
+Function void PrintOptionsMessages (str text) {
+
+	SetFont("VARELA");
+	
+	HudMessage (l:text; HUDMSG_PLAIN, IDStart+IDCounter++, CR_WHITE, -XCoord, YCoordResponse, 0);
+	YCoordResponse += ResponseYOffs;
+}
+
+Function void ResetOptionsMessagesCoords (void) {
+	
+	YCoordResponse = YCoord + AnswersGap;
+	IDCounter = 1;
+}
+
+
+int ArrowIndex = 1;
+int ResponsesBufferCount;
+int YCoordArrow;
+
+Function void PrintArrowConversation (int direction) {
+	
+	switch (direction) {
+		case 1:
+			if (ArrowIndex < ResponsesBufferCount) ArrowIndex++; // If there's a next option to select go on
+			break;
+		case 2:
+			if (ArrowIndex > 1) ArrowIndex--; // If there's a next option to select go on
+			break;
+		case 666:
+			ArrowIndex = 1; // Reset the arrow position.
+	}
+	
+	// Update arrow Y position.
+	YCoordArrow = YCoord + AnswersGap + (ResponseYOffs * (ArrowIndex-1));
+	
+	SetFont("VARELA");
+	HudMessage(s:">"; HUDMSG_PLAIN, IDStart-4, CR_GREEN, -XCoord+0.01, YCoordArrow, 0);
+}
+
+Function int GetResponse (void) {
+	
+	return ResponsesBuffer[ArrowIndex-1]; // Return the actually selected response.
+}
+

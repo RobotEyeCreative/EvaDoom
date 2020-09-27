@@ -6,6 +6,7 @@ version "4.3.0"
 #include "actors/zs_weapons/zs_weapons.txt"
 #include "actors/zs_others/zs_others.txt"
 #include "actors/zs_monsters/zs_monsters.txt"
+#include "actors/zs_npcs/zs_npcs.txt"
 #include "actors/zs_decorations/zs_decorations.txt"
 
 #include "actors/zs_mixins/zs_mixins.txt"

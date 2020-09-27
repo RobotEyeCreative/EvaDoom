@@ -1,0 +1,54 @@
+
+// LEVEL STRINGS
+
+	[enu default]
+
+	// Tokyo-3 City
+	TITLE_MAP_01 = "Tokyo-3";
+	TITLE_MAP_02 = "Misato's Apartment";
+	TITLE_MAP_03 = "School";
+	// Nerv HQ
+	TITLE_MAP_04 = "Train Station";
+	TITLE_MAP_05 = "Nerv Main Gate";
+	TITLE_MAP_06 = "Nerv Elevator";
+	// Central Dogma
+	TITLE_MAP_07 = "Operations Center";
+	TITLE_MAP_08 = "Briefing Station";
+	TITLE_MAP_09 = "Pilot Ready Room";
+	TITLE_MAP_10 = "EVA-01 Cage";
+	TITLE_MAP_11 = "EVA-00 Cage";
+	TITLE_MAP_12 = "EVA-02 Cage";
+	TITLE_MAP_13 = "Detention Cells";
+	// Nerv Office Complex
+	TITLE_MAP_14 = "Gendo's Office";
+	TITLE_MAP_15 = "Misato Office";
+	TITLE_MAP_16 = "Ritsuko Office";
+	TITLE_MAP_17 = "Kaji's Work Station";
+	TITLE_MAP_18 = "Break Room";
+	TITLE_MAP_19 = "Kaji's Garden";
+	// Terminal Dogma
+	TITLE_MAP_20 = "Lilith Containment Facility";
+
+
+// PLAYER STRINGS
+
+	[enu default]
+
+	PLAYER_0001 = "I can't do this.";
+	PLAYER_0002 = "This seems blocked.";
+	PLAYER_0003 = "Doesn't work.";
+	PLAYER_0004 = "Can't be opened.";
+	PLAYER_0005 = "I should not do this.";
+	PLAYER_0006 = "This is not good.";
+	PLAYER_0007 = "I don't understand this.";
+	PLAYER_0008 = "Perfect!";
+	PLAYER_0009 = "Finally!";
+	PLAYER_0010 = "I should not run!";
+
+
+// SYSTEM STRINGS
+
+	[enu default]
+
+	SYSTEM_0001 = "Access granted";
+	SYSTEM_0002 = "Access denied";

@@ -1,0 +1,36 @@
+class misato : npc {
+
+	states {
+	
+		Spawn:
+			MISA T 4 A_Look;
+			Loop;
+		See:
+			MISA T 6 A_Chase;
+			Loop;
+		Missile:
+			MISA T 3 A_CustomBulletAttack(0.8, 0.8, 1, 8, "BulletPuff");
+			Goto Spawn;
+	//	Melee:
+	//		MISA F 6 BRIGHT;
+	//		Goto Missile;
+		Pain:
+			MISA T 4;
+			MISA T 4 A_Pain;
+			Goto Spawn;
+		Death:
+			MISA T 10;
+			MISA T 10 A_PlayerScream;
+			MISA T 10 A_NoBlocking;
+			MISA T 10;
+			MISA T -1;
+			Stop;
+		XDeath:
+			MISA T 5;
+			MISA T 5 A_XScream;
+			MISA T 5 A_NoBlocking;
+			MISA T 5;
+			MISA T -1;
+			Stop;
+	}
+}

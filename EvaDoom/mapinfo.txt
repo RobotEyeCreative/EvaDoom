@@ -71,11 +71,11 @@ doomednums {
 	//10214 = tabris
 	
 	// NPCS
-	//10300 = rei
+	10300 = rei
 	//10301 = shinji
 	//10302 = asuka
 	//10303 = kaworu
-	//10304 = misato
+	10304 = misato
 	//10305 = ritsuko
 	//10306 = gendo
 	
@@ -208,4 +208,12 @@ map Apartment "Misato's Apartment" {
 	ResetHealth
 	ResetInventory
 	music = "music_apartment.wav"
+}
+
+map TestingMap "Testing Map" {
+	
+	levelnum = 3
+	next = "MAP03"
+	ResetHealth
+	ResetInventory
 }

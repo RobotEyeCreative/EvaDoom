@@ -1,0 +1,17 @@
+#library "vilescr"
+#include "zcommon.acs"
+
+#define StartingTID 1000 // Must match STARTINGPLAYERTID in vilelib!
+
+Script "Vile_AssignID" ENTER {
+	
+	if (ActivatorTID() == 0)
+		Thing_ChangeTID(0, StartingTID + PlayerNumber());
+}
+
+Script "Vile_ResurrectID" RESPAWN {
+	
+	// Make sure our old dead body doesn't still have our tid
+	Thing_ChangeTID(StartingTID + PlayerNumber(), 0);
+	Thing_ChangeTID(0, StartingTID + PlayerNumber());
+}
