@@ -28,3 +28,9 @@
 #include "actors/zs_decorations/zs_decoration_trash07.txt"
 #include "actors/zs_decorations/zs_decoration_trash08.txt"
 #include "actors/zs_decorations/zs_decoration_trash09.txt"
+#include "actors/zs_decorations/zs_decoration_lamp01.txt"
+#include "actors/zs_decorations/zs_decoration_desc01.txt"
+
+
+
+

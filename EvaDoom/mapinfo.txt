@@ -121,6 +121,8 @@ doomednums {
     10728 = decoration_trash_07
     10729 = decoration_trash_08
     10730 = decoration_trash_09
+    10731 = decoration_lamp_01
+    10732 = decoration_desk_01
 }
 
 automap {
