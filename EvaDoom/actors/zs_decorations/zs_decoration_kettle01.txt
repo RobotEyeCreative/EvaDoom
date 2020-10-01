@@ -1,9 +1,6 @@
-class decoration_kettle_01 : actor {
+class decoration_kettle_01 : decoration {
     
     default {
-        
-        //$NotAngled
-        //$Category Evangelion/Decoration
         
         radius 5;
         height 17;

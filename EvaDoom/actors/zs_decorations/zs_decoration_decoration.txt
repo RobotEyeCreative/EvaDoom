@@ -1,0 +1,8 @@
+class decoration : actor abstract {
+    
+    default {
+        
+        //$NotAngled
+        //$Category Evangelion/Decoration
+    }
+}

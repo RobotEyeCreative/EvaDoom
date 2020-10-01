@@ -1,9 +1,6 @@
-class decoration_trash_09 : actor {
+class decoration_trash_09 : decoration {
     
     default {
-        
-        //$NotAngled
-        //$Category Evangelion/Decoration
         
         radius 5;
         height 24;

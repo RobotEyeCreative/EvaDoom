@@ -1,9 +1,6 @@
-class decoration_plant_02 : actor {
+class decoration_plant_02 : decoration {
     
     default {
-        
-        //$NotAngled
-        //$Category Evangelion/Decoration
         
         radius 5;
         height 24;

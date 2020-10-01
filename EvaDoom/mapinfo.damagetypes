@@ -1,0 +1,5 @@
+damageType EvaSplashDamage {
+	
+	Factor = 0
+	ReplaceFactor
+}

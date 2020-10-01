@@ -1,3 +1,5 @@
+#include "actors/zs_decorations/zs_decoration_decoration.txt"
+#include "actors/zs_decorations/zs_decoration_tree.txt"
 #include "actors/zs_decorations/zs_decoration_plant01.txt"
 #include "actors/zs_decorations/zs_decoration_plant02.txt"
 #include "actors/zs_decorations/zs_decoration_plant03.txt"

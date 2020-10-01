@@ -1,9 +1,6 @@
-class decoration_bottle_03 : actor {
+class decoration_bottle_03 : decoration {
     
     default {
-        
-        //$NotAngled
-        //$Category Evangelion/Decoration
         
         radius 5;
         height 17;

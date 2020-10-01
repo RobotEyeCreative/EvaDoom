@@ -1,0 +1,85 @@
+doomednums {
+	
+	// Classes
+	//10000 = 
+	10001 = evangelionplayer
+	//10002 = 
+	
+	// Weapons
+	//10100 = eva00progressiveknife
+	//10101 = eva01progressiveknife
+	//10102 = eva02progressiveknife
+	//10110 = eva00handgun
+	10111 = eva01handgun
+	//10112 = eva02handgun
+	//10120 = eva00assaultrifle
+	10121 = eva01assaultrifle
+	//10122 = eva02assaultrifle
+	
+	// Monsters
+	10200 = sachiel
+	10201 = shamshel
+	//10202 = ramiel
+	//10203 = gaghiel
+	//10204 = israfel
+	//10205 = sandalphon
+	//10206 = matarael
+	//10207 = sahaquiel
+	//10208 = ireul
+	10209 = leliel
+	//10210 = bardiel
+	//10211 = zeruel
+	//10212 = arael
+	//10213 = armisael
+	//10214 = tabris
+	
+	// NPCS
+	10300 = rei
+	//10301 = shinji
+	//10302 = asuka
+	//10303 = kaworu
+	10304 = misato
+	//10305 = ritsuko
+	//10306 = gendo
+	
+	// Items
+	10400 = noodles
+	
+	// Ammo
+	10600 = bullets
+	
+	// Decoration
+    10700 = decoration_plant_01
+    10701 = decoration_plant_02
+    10702 = decoration_plant_03
+    10703 = decoration_plant_04
+    10704 = decoration_plant_05
+    10705 = decoration_bottle_01
+    10706 = decoration_bottle_02
+    10707 = decoration_bottle_03
+    10708 = decoration_bottle_04
+    10709 = decoration_bottle_05
+    10710 = decoration_bottle_06
+    10711 = decoration_bottle_07
+    10712 = decoration_bottle_08
+    10713 = decoration_bottle_09
+    10714 = decoration_bottle_10
+    10715 = decoration_bottle_11
+    10716 = decoration_bottle_12
+    10717 = decoration_kettle_01
+    10719 = decoration_can_01
+    10720 = decoration_can_02
+    10721 = decoration_can_03
+    10722 = decoration_trash_01
+    10723 = decoration_trash_02
+    10724 = decoration_trash_03
+    10725 = decoration_trash_04
+    10726 = decoration_trash_05
+    10727 = decoration_trash_06
+    10728 = decoration_trash_07
+    10729 = decoration_trash_08
+    10730 = decoration_trash_09
+    10731 = decoration_lamp_01
+    10732 = decoration_desk_01
+	10733 = decoration_tree
+}

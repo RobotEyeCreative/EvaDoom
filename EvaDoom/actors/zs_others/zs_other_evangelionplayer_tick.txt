@@ -17,5 +17,12 @@ extend class evangelionPlayer {
 		
 		// Update properties
 		applyProperties(CountInv("playerStatus"));
+		
+		// Destructive effect
+		double evaspeed = sqrt((vel.x*vel.x)+(vel.y*vel.y));
+		if (evaspeed > 16.0)
+			A_Explode(10, 16, XF_EXPLICITDAMAGETYPE, FALSE, 0, 0, 0, "", "EvaSplashDamage");
+		if (evaspeed > 33.0)
+			A_Explode(12, 18, XF_EXPLICITDAMAGETYPE, FALSE, 0, 0, 0, "", "EvaSplashDamage");
 	}
 }

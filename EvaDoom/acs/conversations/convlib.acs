@@ -10,12 +10,13 @@
 #define NoTime 32000.0
 #define IDStart 20
 
-#define XCoord 0.15
-#define YCoord 0.71
+#define XCoord 0.156
+#define YCoord 0.734
 #define XCenter 0.5
 #define YCenter 0.5
 #define ResponseYOffs 0.025
 #define AnswersGap 0.1
+#define MessageGap 0.07
 
 #libdefine MaxResponses 8
 
@@ -43,20 +44,12 @@ Function void ConversationStart (int who) {
 	
 	// Print name.
 	SetFont("VARELA");
-	HudMessage(s:GetNpcName(who); HUDMSG_PLAIN, IDStart-2, CR_YELLOW, -XCoord, YCoord-(ResponseYOffs*3), 0);
+	HudMessage(s:GetNpcName(who); HUDMSG_PLAIN, IDStart-2, CR_YELLOW, -XCoord, YCoord-(ResponseYOffs*4), 0);
 	
 	// PlaySound(0, "interaction/paper");
 	
 	// Print conversation hud.
 	GiveInventory("playerConversation", 1);
-	//SetFont("graphics/chud/chud_text3.png");
-	//SetHudSize(1280, 720, TRUE);
-	//HudMessage(s:"A"; HUDMSG_FADEINOUT, IDStart+MaxResponses+1, 0, 640.0, 720.2, NoTime, 0.4);
-	//SetHudSize(0, 0, TRUE);
-	
-	//SetHudSize(1280, 720, TRUE);
-	//HudMessage(s:"A"; HUDMSG_FADEINOUT, IDStart+MaxResponses+1, 0, 640.0, 0.1, NoTime, 0.4);
-	//SetHudSize(0, 0, TRUE);
 }
 
 Function void ConversationEnd (void) {
@@ -84,7 +77,7 @@ Function void PrintNPCMessage (int text) {
 
 
 int IDCounter = 1;
-int YCoordResponse = YCoord + AnswersGap;
+int YCoordResponse = YCoord + MessageGap;
 int ResponsesBuffer[MaxResponses];
 
 Function void PrintOptionsMessages (str text) {
@@ -97,7 +90,7 @@ Function void PrintOptionsMessages (str text) {
 
 Function void ResetOptionsMessagesCoords (void) {
 	
-	YCoordResponse = YCoord + AnswersGap;
+	YCoordResponse = YCoord + MessageGap;
 	IDCounter = 1;
 }
 
@@ -120,7 +113,7 @@ Function void PrintArrowConversation (int direction) {
 	}
 	
 	// Update arrow Y position.
-	YCoordArrow = YCoord + AnswersGap + (ResponseYOffs * (ArrowIndex-1));
+	YCoordArrow = YCoord + MessageGap + (ResponseYOffs * (ArrowIndex-1));
 	
 	SetFont("VARELA");
 	HudMessage(s:">"; HUDMSG_PLAIN, IDStart-4, CR_GREEN, -XCoord+0.01, YCoordArrow, 0);
