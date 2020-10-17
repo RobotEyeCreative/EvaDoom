@@ -1,6 +1,8 @@
 
 extend class MinimalStatusBar {
 	
+	int faketimecounter;
+	
 	void DrawFullScreenEvangelion (double TicFrac, PlayerInfo cp) {
 		
 		
@@ -200,6 +202,41 @@ extend class MinimalStatusBar {
 		}
 		
 		ClearClipRect();
+		
+		// energy (time) counter
+		vector2 energycounterpos = (-Screen.GetWidth()*0.001, -Screen.GetHeight()*0.3);
+		vector2 energycountertextpos = (energycounterpos.x-Screen.GetWidth()*0.009, energycounterpos.y+Screen.GetHeight()*0.018);
+		string energycounterval = "0:00:0";
+		int energycount;
+		
+		if (pmo.CountInv("evacharging") < 10) { // if we are not charging
+			
+			if (pmo.CountInv("evaenergyhudinactive") == 1)
+				DrawImage("HUD_BRE2", energycounterpos, DI_ITEM_RIGHT_TOP | DI_SCREEN_RIGHT_BOTTOM, 1, (-1, -1), resolutionFactorStrictVec);
+			else
+				DrawImage("HUD_BRE1", energycounterpos, DI_ITEM_RIGHT_TOP | DI_SCREEN_RIGHT_BOTTOM, 1, (-1, -1), resolutionFactorStrictVec);
+			
+			energycount = min(9999,pmo.CountInv("evaenergy"));
+			
+			string energycountermin = FormatNumber(energycount/600, 0, 9, 0);
+			
+			int energysec = (energycount/10) - ((energycount/600)*60);
+			string energycountersec = FormatNumber(energysec, 0, 9, 0);
+			
+			if (energysec < 10)
+				energycountersec = "0"..energycountersec;
+			
+			string energycounterdsc = FormatNumber(energycount % 10, 0, 9, 0);
+			
+			if (energycount == 0)
+				faketimecounter = 0;
+			else if (pmo.CountInv("evaenergyhudinactive") == 0 && --faketimecounter < 0 || faketimecounter > 9) // simulate hundredth of a second
+				faketimecounter = 9;
+			
+			energycounterval = energycountermin..":"..energycountersec..":"..energycounterdsc..faketimecounter;
+			
+			DrawString(FontLiquidCrystal, energycounterval, energycountertextpos, DI_TEXT_ALIGN_RIGHT | DI_SCREEN_RIGHT_BOTTOM, Font.CR_ORANGE, 1, -1, 4, resolutionFactorStrictVec*0.5);
+		}
 		
 		
 		// ----------------- draw hud parts (top right)

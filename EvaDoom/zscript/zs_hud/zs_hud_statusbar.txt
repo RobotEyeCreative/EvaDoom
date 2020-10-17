@@ -1,7 +1,7 @@
 
 Class MinimalStatusBar : BaseStatusBar {
 
-	//HUDFont FontLiquidCrystal;
+	HUDFont FontLiquidCrystal;
 	HUDFont FontEvangelionLCDMono;
 	HUDFont FontEvangelionBITMono;
 	InventoryBarState diparms;
@@ -34,6 +34,10 @@ Class MinimalStatusBar : BaseStatusBar {
 		// the small font is monospace because it helps with centering and positioning
 		fnt = "EDOOMBIT";
 		FontEvangelionBITMono = HUDFont.Create(fnt, fnt.GetCharWidth("0")+2, true);
+		
+		// the small font is monospace because it helps with centering and positioning
+		fnt = "LIQUIDCR";
+		FontLiquidCrystal = HUDFont.Create(fnt, fnt.GetCharWidth("0")-32, true);
 		
 		// inventory list
 		diparms = InventoryBarState.Create(null, Font.CR_UNTRANSLATED, 1, "ITEMBOX");

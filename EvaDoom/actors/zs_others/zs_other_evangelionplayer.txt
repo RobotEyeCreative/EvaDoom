@@ -6,7 +6,8 @@
 
 class evangelionPlayer : PlayerPawn {
 	
-	int restCD;
+	int restTime;
+	int moveTime;
 	
 	string lastWeapon;
 	
@@ -58,17 +59,10 @@ class evangelionPlayer : PlayerPawn {
 	states {
 		
 		Spawn:
-			PLAY A 4 {
-				
-				// Synchronization restoration.
-				EvaUnitRestoreSync(CountInv("evasynchronizationmission"));
-			}
+			PLAY A 4;
 			Loop;
 		See:
-			PLAY ABCD 4 {
-				
-				restCD = 0;
-			}
+			PLAY ABCD 4;
 			Loop;
 		Missile:
 			PLAY E 12;

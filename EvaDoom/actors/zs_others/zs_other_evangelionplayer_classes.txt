@@ -145,7 +145,10 @@ extend class evangelionPlayer {
 		// if we're in pilot form, don't use synchronization
 		if (CountInv("playerStatus") > 3)
 			multiplier = 1.0;
-		// if synchronization is 100% or greater, slow the multiplier increase even more
+		// if we don't have energy nor berserk, stop.
+		else if (PP[id].syncfactor <= 1.0 && CountInv("evaenergy") == 0)
+			multiplier = 0;
+		// if synchronization is 100% or greater (berserk), slow the multiplier increase even more
 		else if (PP[id].syncfactor >= 1.0)
 			multiplier = (((PP[id].syncfactor-1.0)/16.0)+1.0);
 		// if synchronization is 50% or greater, slow the multiplier increase

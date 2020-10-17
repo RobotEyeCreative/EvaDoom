@@ -21,17 +21,20 @@ extend class evangelionPlayer {
 	void SkillATField () {
 		
 		// Skill disabled if we're in pilot form, or is already activated, or we don't have enough charge or synchronization.
-		if (CountInv("playerStatus") > 3 || CountInv("Eva01ATField") > 0 || CountInv("atfield") < 1400 || CountInv("evasynchronization") < 2)
+		if (CountInv("playerStatus") > 3 || CountInv("Eva01ATField") > 0 || CountInv("atfield") < 1400 || CountInv("evasynchronization") < 2 || CountInv("evaenergy") == 0)
 			return;
 		
 		int buttons = GetPlayerInput(INPUT_BUTTONS);
 		
+		// Make sure we can activate the skill while moving.
 		if (buttons == BT_USER1 || buttons == BT_USER1+1024 || buttons == BT_USER1+2048 || buttons == BT_USER1+4096 || buttons == BT_USER1+8192) {
 			
 			if (player.ReadyWeapon)
 				lastWeapon = player.ReadyWeapon.getClassName();
 			
 			A_GiveInventory("Eva01ATField", 1);
+			
+			SetStateLabel("Missile");
 			
 			switch(CountInv("playerStatus")) {
 				case 1:

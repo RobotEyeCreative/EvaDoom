@@ -24,14 +24,14 @@ extend class evangelionPlayer {
 	
 	override void FireWeapon (State stat) {
 		
-		// If synchronization is less than 2%, disable shooting.
-		if (CountInv("evasynchronization") < 2)
+		// If we don't have energy or synchronization is less than 2%, disable shooting.
+		if (CountInv("evasynchronization") < 2 || CountInv("evaenergy") == 0)
 			return;
 		
 		super.FireWeapon(stat);
 	}
 	
-	void EvaUnitRestoreSync (int maxsync = 0, int amount = 15, int delay = 70, int healthmax = 50) {
+	void EvaUnitRestoreSync (int maxsync = 0, int amount = 15, int delay = 280, int healthmax = 50) {
 		
 		// Skip if we're not in a evaunit.
 		if (CountInv("playerStatus") > 3 || delay == 0)
@@ -42,10 +42,10 @@ extend class evangelionPlayer {
 		if (maxsync == 0)
 			maxsyncamount = 100;
 		
-		// Restore synchronization every 8 seconds when standing still.
-		if (restCD++ > delay && CountInv("evasynchronization") < maxsyncamount) {
+		// Restore synchronization every <delay> tics when standing still.
+		if (restTime > delay && CountInv("evasynchronization") < maxsyncamount) {
 			
-			restCD = 0;
+			restTime = 0;
 			
 			string fear;
 			
