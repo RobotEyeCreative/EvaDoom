@@ -82,4 +82,7 @@ doomednums {
     10731 = decoration_lamp_01
     10732 = decoration_desk_01
 	10733 = decoration_tree
+	
+	// Others
+	11000 = evaenergybeacon
 }

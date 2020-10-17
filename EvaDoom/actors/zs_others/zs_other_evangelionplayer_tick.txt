@@ -1,9 +1,31 @@
 
 extend class evangelionPlayer {
 	
+	int TicVariable; // Used to make an aproximate version of a 0.1 seconds clock.
+	bool TicAlternate; // Used to make an aproximate version of a 0.1 seconds clock.
+	int energyTime; // Used to make an aproximate version of a 0.1 seconds clock.
+	
 	override void Tick () {
 		
 		super.Tick();
+		
+		if (getAge() == 0) {
+			
+			TicAlternate = False;
+			TicVariable = 3;
+		}
+		
+		// Update time counters. (Resting and moving times)
+		if (self.InStateSequence(self.CurState, self.ResolveState("spawn"))) {
+			restTime++;
+			moveTime = 0;
+			A_GiveInventory("evaenergyhudinactive", 1);
+		}
+		else {
+			moveTime++;
+			restTime = 0;
+			A_TakeInventory("evaenergyhudinactive", 1);
+		}
 		
 		// Class functions
 		refreshStatus();
@@ -15,11 +37,33 @@ extend class evangelionPlayer {
 		// Synchronization functions
 		SyncronizationMultiplier();
 		
+		// Synchronization regeneration
+		EvaUnitRestoreSync(CountInv("evasynchronizationmission"));
+		
+		// Energy (time) loss when moving (1 s/s)
+		if (moveTime > 0) {
+			
+			energyTime++;
+			
+			if (energyTime >= TicVariable) {
+				
+				energyTime = 0;
+				
+				if (TicAlternate)
+					TicVariable--;
+				else
+					TicVariable++;
+				
+				TicAlternate = !TicAlternate;
+				A_TakeInventory("evaenergy", 1);
+			}
+		}
+		
 		// Update properties
 		applyProperties(CountInv("playerStatus"));
 		
 		// Destructive effect
-		double evaspeed = sqrt((vel.x*vel.x)+(vel.y*vel.y));
+		double evaspeed = self.vel.xy.length(); // Speed vector magnitude
 		if (evaspeed > 16.0)
 			A_Explode(10, 16, XF_EXPLICITDAMAGETYPE, FALSE, 0, 0, 0, "", "EvaSplashDamage");
 		if (evaspeed > 33.0)

@@ -1,0 +1,222 @@
+
+class evaenergybeacon : switchabledecoration {
+	
+	double angleoffset;
+	double radiuspoint;
+	
+	default {
+		
+		//$NotAngled
+		//$Category Evangelion/Others
+		//$Sprite ECHAV0
+		
+		health 150;
+		radius 10;
+		height 37;
+		
+		+DONTTHRUST;
+		+SHOOTABLE;
+		+VULNERABLE;
+		+NOBLOOD;
+		+DONTDRAIN;
+	}
+	
+	override void Tick() {
+		
+		// Parameters
+		int maxradius = 512;
+		int quantity = 32;
+		int steps = 15;
+		
+		if (self.InStateSequence(self.CurState, self.ResolveState("radiating"))) {
+			
+			angleoffset += 0.1; // Rotating speed
+			radiuspoint += radiuspoint*0.08; // Expanding speed
+			
+			// Control overflow
+			if (angleoffset >= 360.0)
+				angleoffset -= 360.0;
+			
+			if (radiuspoint >= maxradius)
+				radiuspoint = 2.0;
+			
+			// Spawn SFX
+			SpawnCircle("chargearea", quantity, maxradius, angleoffset, steps);
+			SpawnSpiral("chargespiral", quantity, radiuspoint, angleoffset, (radiuspoint/maxradius));
+			
+			// Recharge energy (3.5 s/s)
+			if (CheckProximity("evangelionPlayer", maxradius, 1, CPXF_SETMASTER|CPXF_NOZ|CPXF_CLOSEST)) {
+				
+				if (master && master.getClassName() == "evangelionPlayer") {
+					
+					master.A_GiveInventory("evacharging", 1); // Also used by the HUD to know when to spawn the energy timer.
+					
+					if (master.CountInv("evacharging") >= 10)
+						master.A_GiveInventory("evaenergy", 1);
+				}
+				
+				/* Old, cable spawning version:
+				vector2 diff = (master.pos.x-self.pos.x, master.pos.y-self.pos.y);
+				double dist = Distance2D(master);
+				double cableweight = 80.0;
+				
+				for (double i = 0.0; i < 1.0; i += 0.01) {
+					
+					double xcoord = self.pos.x + (diff.x*i);
+					double ycoord = self.pos.y + (diff.y*i);
+					double zcoord = self.pos.z + self.height + ((cableweight/80.0)*(cosh(dist*i/cableweight)));
+					
+					vector3 posit = (xcoord, ycoord, zcoord);
+					
+					Spawn("chargespiral", posit);
+				}*/
+			
+			// Disconnect if not in range
+			} else if (master && master.getClassName() == "evangelionPlayer") {
+				master.A_TakeInventory("evacharging", 10);
+			}
+		}
+		else {
+			
+			// Initial/Default values
+			angleoffset = 0.0;
+			radiuspoint = 2.0;
+		}
+		
+		Super.Tick();
+	}
+	
+	// Disconnect when destroyed
+	override void OnDestroy () {
+		
+		if (master && master.getClassName() == "evangelionPlayer")
+			master.A_TakeInventory("evacharging", 10);
+		
+		Super.OnDestroy();
+	}
+	
+	// SFX Spawning
+	void SpawnSpiral (string actor, int quantity, int rad, double aoffs, double a) {
+		
+		SpawnRing(actor, quantity, rad, aoffs, a);
+	}
+	
+	// SFX Spawning
+	void SpawnCircle (string actor, int quantity, int rad, double aoffs, int jump) {
+		
+		if (jump > 0 && getage()%jump != 0)
+			return;
+		
+		SpawnRing(actor, quantity, rad, aoffs);
+	}
+	
+	// SFX Spawning
+	void SpawnRing (string actor, int quantity, int rad, double aoffs = 0.0, double a = 0.0) {
+		
+		bool state;
+		actor spawned;
+		
+		for (float ang = 0.0; ang < 360.0; ang += (360.0/quantity)) {
+			
+			[state, spawned] = A_SpawnItemEx(actor, rad, 0, 0, 0, 0, 0, ang+aoffs);
+			
+			if (state && spawned) {
+				
+				if (abs(spawned.floorz - self.floorz) > 16 || a < 0.0)
+					spawned.SetState(null);
+				
+				if (a > 0.0)
+					spawned.alpha = a;
+			}
+		}
+	}
+	
+	states {
+		
+		spawn:
+			TNT1 A 0 NoDelay { A_SetSize(11, 1); }
+			TNT1 A 1;
+			wait;
+		inactive:
+			ECHA U 8; // TODO: Lowering SFX sound.
+			ECHA UT 20;
+			ECHA S 35;
+			ECHA RQPONMLKJIHGFE 4;
+			ECHA DCBA 20;
+			TNT1 A 0 {
+				bVULNERABLE = false;
+				bSHOOTABLE = false;
+				A_SetSize(11, 1);
+			}
+			TNT1 A 1;
+			wait;
+		active:
+			ECHA ABCD 20; // TODO: Raising SFX sound.
+			ECHA EFGHIJKLMNOPQR 4;
+			ECHA S 35 {
+				bVULNERABLE = true;
+				bSHOOTABLE = true;
+			}
+			ECHA TU 20;
+			ECHA U 8 A_SetSize(11, 37);
+		radiating:
+			ECHA V 8; // TODO: Some SFX Sound?
+			loop;
+		death:
+			BEXP DE 2; // TODO: Make some destroying animation.
+			stop;
+	}
+}
+
+class evacharging : inventory {
+	
+	default {
+		inventory.amount 1;
+		inventory.maxamount 10; // Some small amount of hysteresis
+	}
+}
+
+class chargearea : actor {
+	
+	default {
+		
+		scale 0.5;
+		renderstyle "Add";
+		alpha 0.01;
+		
+		+BRIGHT;
+		+NOCLIP;
+		+NOGRAVITY;
+	}
+	
+	states {
+		
+		spawn:
+			ECAP A 1 NoDelay {
+				
+				A_FadeIn(0.06);
+				
+				if (alpha > 0.5)
+					SetStateLabel("fade");
+			}
+			loop;
+		fade:
+			ECAP A 1 A_FadeOut(0.06);
+			loop;
+	}
+}
+
+class chargespiral : chargearea {
+	
+	default {
+		
+		alpha 0.5;
+	}
+	
+	states {
+		
+		spawn:
+			ECAP A 2 NoDelay;
+			stop;
+	}
+}

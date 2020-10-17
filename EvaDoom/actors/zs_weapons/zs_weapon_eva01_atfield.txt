@@ -35,7 +35,6 @@ class Eva01ATField : eva01weapon {
 		fire:
 			E1FI A 0 A_Overlay(10, "left");
 			E1FI A 0 A_OverlayFlags(1, PSPF_FLIP|PSPF_MIRROR, true);
-		right:
 			E1FI AB 2;
 			E1FI C 0 {
 				
@@ -45,6 +44,7 @@ class Eva01ATField : eva01weapon {
 			E1FI CCCCC 8 {
 				
 				A_TakeInventory("atfield", invoker.drain);
+				invoker.owner.SetState(FindState("Missile"));
 				
 				if (CountInv("atfield") == 0)
 					A_SetTics(0);
@@ -53,10 +53,12 @@ class Eva01ATField : eva01weapon {
 			}
 		rightend:
 			E1FI C 0 A_TakeInventory("atfieldactivated");
-			E1FI BAAA 2;
+			E1FI BAAA 2 { invoker.owner.SetState(FindState("Missile")); }
 			E1FI A 0 {
 				
 				let eva = evangelionPlayer(self);
+				invoker.owner.SetState(FindState("Missile"));
+				
 				if (eva)
 					bool res = A_SelectWeapon(eva.lastWeapon);
 			}
