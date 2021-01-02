@@ -6,10 +6,64 @@
 // Each NPC has an identificative tag starting from 500! (Up to MaxNPCS)
 // The id is defined as the doomid order as specified in mapinfo.
 
-#define NPCTagStart 500
+#libdefine NPCTagStart 500
+#libdefine NPCEvaUnits 3
+#libdefine NPCEva00 1
+#libdefine NPCEva01 2
+#libdefine NPCEva02 3
+#libdefine NPCRei 4
+#libdefine NPCShinji 5
+#libdefine NPCAsuka 6
+#libdefine NPCMisato 7
 
-#include "convtexts.acs"
+#include "txtdb.acs"
 
+// ------------- "Exploration" functions, used to print single comment NPC text lines.
+
+Function str GetExplorationMssg (int who, int index) {
+
+	int npcn = max(0, who-NPCTagStart);
+	
+	return NpcExploration[npcn][index];
+}
+
+Function void PrintNpcExploration (int who, int textid, bool own) {
+
+	GiveInventory("playerConversation", 3);
+	
+	SetFont("VARELA");
+
+	if (own)
+		HudMessage(l:GetExplorationMssg(who, textid); HUDMSG_TYPEON, 1, CR_WHITE, -0.2, -0.7, 1.0, 0.05, 1.0);
+	else
+		HudMessage(l:GetExplorationMssg(who, textid); HUDMSG_TYPEON, 1, CR_CYAN, -0.2, -0.7, 1.0, 0.05, 1.0);
+}
+
+Function void PlayerInspection (int who, int txtid) {
+
+	int identity = CheckInventory("playerIdentity");
+	bool own = true;
+
+	if (who > 0) {
+
+		if (identity != who)
+			own = false;
+
+		if (who > NPCEvaUnits)
+			PrintNpcExploration(NPCTagStart+who-1-NPCEvaUnits, txtid, own);
+		else
+			PrintNpcExploration(NPCTagStart+who-1, txtid, own);
+
+	} else {
+
+		if (identity > NPCEvaUnits)
+			PrintNpcExploration(NPCTagStart+identity-NPCEvaUnits, txtid, own);
+		else
+			PrintNpcExploration(NPCTagStart+identity, txtid, own);
+	}
+}
+
+// ------------- Conversation functions.
 
 Function str GetNpcPotrait (int who) {
 	
@@ -39,6 +93,9 @@ Function void EditNpcResponse (int who, int value, int state, int index) {
 		NpcResponsesIndex[npcn][state][index] = value;
 
 }
+
+/* This function searches the introduced response index and replaces it.
+Executed from ACS. Useful when you want to make sure a determined response only is played once. */
 
 Function void ReplaceNpcResponse (int who, int value, int newvalue) {
 
@@ -70,7 +127,7 @@ Function void ExecuteNpcConversation (int who, int start, int setState) {
 	
 	int npcn = max(0, who-NPCTagStart);
 	
-	// If we want to edit the actual conversation state. Use setState -1 to maintain current state.
+	// If we want to edit the actual conversation state. If not, use setState -1 to maintain current state.
 	if (setState > -1 && setState < MaxStates) // Make sure the new state exists.
 		NpcStatus[npcn] = setState;
 	

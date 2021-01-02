@@ -1,5 +1,6 @@
 #include "zscript/zs_hud/zs_hud_statusbar.txt"
 #include "zscript/zs_hud/zs_hud_draw.txt"
+#include "zscript/zs_hud/zs_hud_draw_comment.txt"
 #include "zscript/zs_hud/zs_hud_draw_conv.txt"
 #include "zscript/zs_hud/zs_hud_draw_eva.txt"
 #include "zscript/zs_hud/zs_hud_draw_pilot.txt"

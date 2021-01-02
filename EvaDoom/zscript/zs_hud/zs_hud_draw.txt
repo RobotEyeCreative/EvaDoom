@@ -46,29 +46,28 @@ extend class MinimalStatusBar {
 			
 			BeginHUD();
 			
+			int convtype = pmo.CountInv("playerConversation");
+
 			if (cp && !automapactive) {
-				
-				switch (pmo.CountInv("playerConversation")) {
+
+				switch (pmo.CountInv("playerIdentity")) {
 					case 1:
-						DrawFullScreenConversation(TicFrac);
-						break;
 					case 2:
-						//DrawFullScreenConversationInEva(TicFrac, cp);
-					case 0:
-						switch (pmo.CountInv("playerStatus")) {
-							case 1:
-							case 2:
-							case 3:
-								DrawFullScreenEvangelion(TicFrac, cp);
-								break;
-							case 4:
-							case 5:
-							case 6:
-								DrawFullScreenPilot(TicFrac);
-								break;						
-							default:
-								// no hud
-						}
+					case 3:
+						DrawFullScreenEvangelion(TicFrac, cp); // Show evangelion hud.
+
+						//if (convtype == 2) // Player talks with an NPC, being in an EVA unit
+							//DrawFullScreenConversationInEva(TicFrac, cp);
+						break;
+					case 4:
+					case 5:
+					case 6:
+						DrawFullScreenPilot(TicFrac); // Show pilot hud. [UNUSED]
+
+						if (convtype == 1) // Player enters conversation with an NPC in pilot form
+							DrawFullScreenConversation(TicFrac);
+						else if (convtype == 3) // Player makes or hears a commentary
+							DrawCommentary(TicFrac);
 				}
 			}
 		}

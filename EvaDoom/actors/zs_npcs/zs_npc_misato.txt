@@ -1,36 +1,43 @@
 class misato : npc {
-
-	states {
 	
+	default {
+		
+		scale 0.5;
+		radius 8;
+		height 58;
+	}
+	
+	states {
+		
 		Spawn:
-			MISA T 4 A_Look;
+			MST1 A 4 A_Look;
 			Loop;
 		See:
-			MISA T 6 A_Chase;
+			MST1 A 6 A_Chase;
 			Loop;
 		Missile:
-			MISA T 3 A_CustomBulletAttack(0.8, 0.8, 1, 8, "BulletPuff");
+			MST1 A 3 A_CustomBulletAttack(0.8, 0.8, 1, 8, "BulletPuff");
 			Goto Spawn;
 	//	Melee:
-	//		MISA F 6 BRIGHT;
+	//		MST1 A 6 BRIGHT;
 	//		Goto Missile;
 		Pain:
-			MISA T 4;
-			MISA T 4 A_Pain;
+			MST1 A 4;
+			MST1 A 4 A_Pain;
 			Goto Spawn;
 		Death:
-			MISA T 10;
-			MISA T 10 A_PlayerScream;
-			MISA T 10 A_NoBlocking;
-			MISA T 10;
-			MISA T -1;
+			MST1 A 10;
+			MST1 A 10 A_PlayerScream;
+			MST1 A 10 A_NoBlocking;
+			MST1 A 10;
+			MST1 A -1;
 			Stop;
 		XDeath:
-			MISA T 5;
-			MISA T 5 A_XScream;
-			MISA T 5 A_NoBlocking;
-			MISA T 5;
-			MISA T -1;
+			MST1 A 5;
+			MST1 A 5 A_XScream;
+			MST1 A 5 A_NoBlocking;
+			MST1 A 5;
+			MST1 A -1;
 			Stop;
 	}
 }

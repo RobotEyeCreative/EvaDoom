@@ -21,7 +21,7 @@ extend class evangelionPlayer {
 	void SkillATField () {
 		
 		// Skill disabled if we're in pilot form, or is already activated, or we don't have enough charge or synchronization.
-		if (CountInv("playerStatus") > 3 || CountInv("Eva01ATField") > 0 || CountInv("atfield") < 1400 || CountInv("evasynchronization") < 2 || CountInv("evaenergy") == 0)
+		if (CountInv("playerIdentity") > 3 || CountInv("Eva01ATField") > 0 || CountInv("atfield") < 1400 || CountInv("evasynchronization") < 2 || CountInv("evaenergy") == 0)
 			return;
 		
 		int buttons = GetPlayerInput(INPUT_BUTTONS);
@@ -36,7 +36,7 @@ extend class evangelionPlayer {
 			
 			SetStateLabel("Missile");
 			
-			switch(CountInv("playerStatus")) {
+			switch(CountInv("playerIdentity")) {
 				case 1:
 					//A_SelectWeapon("Eva00ATField");
 					break;

@@ -1,0 +1,19 @@
+#library "screlib"
+#include "zcommon.acs"
+
+// Scripted events enabled. True -> Disabled.
+bool SE_E[4096];
+
+// Scripted events status. True -> Running. Execution forbidden.
+bool SE_S[4096];
+
+// Scripted events completed. True -> Completed.
+bool SE_C[4096];
+
+Function void AlterSEStatus (int seid, int enabled, int completed) {
+
+	if (enabled == 1) SE_E[seid] = false;
+	if (enabled == 2) SE_E[seid] = true;
+	if (completed == 1) SE_C[seid] = false;
+	if (completed == 2) SE_C[seid] = true;
+}

@@ -60,7 +60,7 @@ extend class evangelionPlayer {
 		}
 		
 		// Update properties
-		applyProperties(CountInv("playerStatus"));
+		applyProperties(CountInv("playerIdentity"));
 		
 		// Destructive effect
 		double evaspeed = self.vel.xy.length(); // Speed vector magnitude

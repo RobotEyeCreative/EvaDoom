@@ -4,6 +4,6 @@ class playerConversation : inventory {
 	default {
 		
 		inventory.amount 1;
-		inventory.maxamount 2;
+		inventory.maxamount 3;
 	}
 }

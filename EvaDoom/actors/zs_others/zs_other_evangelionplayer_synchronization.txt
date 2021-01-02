@@ -18,8 +18,8 @@ extend class evangelionPlayer {
 	void SyncronizationMultiplier () {
 		
 		// Synchronization multiplier property buff.
-		if (CountInv("playerStatus") < 4)
-			PP[CountInv("playerStatus")].syncfactor = 1.0*CountInv("evasynchronization")/100.0;
+		if (CountInv("playerIdentity") < 4)
+			PP[CountInv("playerIdentity")].syncfactor = 1.0*CountInv("evasynchronization")/100.0;
 	}
 	
 	override void FireWeapon (State stat) {
@@ -34,7 +34,7 @@ extend class evangelionPlayer {
 	void EvaUnitRestoreSync (int maxsync = 0, int amount = 15, int delay = 280, int healthmax = 50) {
 		
 		// Skip if we're not in a evaunit.
-		if (CountInv("playerStatus") > 3 || delay == 0)
+		if (CountInv("playerIdentity") > 3 || delay == 0)
 			return;
 		
 		int maxsyncamount = maxsync;
@@ -49,7 +49,7 @@ extend class evangelionPlayer {
 			
 			string fear;
 			
-			switch(CountInv("playerStatus")) {
+			switch(CountInv("playerIdentity")) {
 				case 1:
 					fear = "EvaDoom/EvaUnit/Eva01/Fear";
 					break;

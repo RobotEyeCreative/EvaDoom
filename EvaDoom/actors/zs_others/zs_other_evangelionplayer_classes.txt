@@ -1,5 +1,5 @@
 
-class playerStatus : inventory {
+class playerIdentity : inventory {
 	
 	default {
 		
@@ -9,7 +9,7 @@ class playerStatus : inventory {
 	}
 }
 
-class changeStatus : inventory abstract {
+class changeIdentity : inventory abstract {
 	
 	default {
 		
@@ -19,12 +19,12 @@ class changeStatus : inventory abstract {
 	}
 }
 
-class enterEva00 : changeStatus {}
-class enterEva01 : changeStatus {}
-class enterEva02 : changeStatus {}
-class playChild0 : changeStatus {}
-class playChild1 : changeStatus {}
-class playChild2 : changeStatus {}
+class enterEva00 : changeIdentity {}
+class enterEva01 : changeIdentity {}
+class enterEva02 : changeIdentity {}
+class playChild0 : changeIdentity {}
+class playChild1 : changeIdentity {}
+class playChild2 : changeIdentity {}
 
 struct playerProperties {
 	
@@ -47,6 +47,9 @@ struct playerProperties {
 	int syncreg;
 	int syncregdelay;
 	int syncreghealth;
+	int height;
+	int radius;
+	int maxstep;
 }
 
 
@@ -74,12 +77,12 @@ extend class evangelionPlayer {
 		playerProperties p;
 		
 		switch (classid) {
-			case 1: p.soundclass = "eva01"; p.mass = 6000; p.air = 0; p.viewh = 56; p.attackz = 25; p.friction = 1.05; p.fm1 = 2.0; p.fm2 = 2.4; p.sm1 = 1.4; p.sm2 = 0.4; p.jumpz = 15.0; p.viewbob = 1.2; p.fallingdmg = 0.0; p.gib = false; p.syncreg = 15; p.syncregdelay = 70; p.syncreghealth = 50; break;
-			case 2: p.soundclass = "eva01"; p.mass = 6000; p.air = 0; p.viewh = 56; p.attackz = 25; p.friction = 1.05; p.fm1 = 2.0; p.fm2 = 2.4; p.sm1 = 1.4; p.sm2 = 0.4; p.jumpz = 15.0; p.viewbob = 1.2; p.fallingdmg = 0.0; p.gib = false; p.syncreg = 15; p.syncregdelay = 70; p.syncreghealth = 50; break;
-			case 3: p.soundclass = "eva01"; p.mass = 6000; p.air = 0; p.viewh = 56; p.attackz = 25; p.friction = 1.05; p.fm1 = 2.0; p.fm2 = 2.4; p.sm1 = 1.4; p.sm2 = 0.4; p.jumpz = 15.0; p.viewbob = 1.2; p.fallingdmg = 0.0; p.gib = false; p.syncreg = 15; p.syncregdelay = 70; p.syncreghealth = 50; break;
-			case 4: p.soundclass = "shinji"; p.mass = 90; p.air = 5; p.viewh = 40; p.attackz = 16; p.friction = 1.0; p.fm1 = 0.5; p.fm2 = 0.7; p.sm1 = 0.4; p.sm2 = 0.5; p.jumpz = 8.0; p.viewbob = 0.1; p.fallingdmg = 1.0; p.gib = true; p.syncreg = 0; p.syncregdelay = 0; p.syncreghealth = 0; break;
-			case 5: p.soundclass = "shinji"; p.mass = 90; p.air = 5; p.viewh = 40; p.attackz = 16; p.friction = 1.0; p.fm1 = 0.5; p.fm2 = 0.7; p.sm1 = 0.4; p.sm2 = 0.5; p.jumpz = 8.0; p.viewbob = 0.1; p.fallingdmg = 1.0; p.gib = true; p.syncreg = 0; p.syncregdelay = 0; p.syncreghealth = 0; break;
-			case 6: p.soundclass = "shinji"; p.mass = 90; p.air = 5; p.viewh = 40; p.attackz = 16; p.friction = 1.0; p.fm1 = 0.5; p.fm2 = 0.7; p.sm1 = 0.4; p.sm2 = 0.5; p.jumpz = 8.0; p.viewbob = 0.1; p.fallingdmg = 1.0; p.gib = true; p.syncreg = 0; p.syncregdelay = 0; p.syncreghealth = 0; break;
+			case 1: p.soundclass = "eva01"; p.mass = 6000; p.air = 0; p.viewh = 56; p.attackz = 25; p.friction = 1.05; p.fm1 = 2.0; p.fm2 = 2.4; p.sm1 = 1.4; p.sm2 = 0.4; p.jumpz = 15.0; p.viewbob = 1.2; p.fallingdmg = 0.0; p.gib = false; p.syncreg = 15; p.syncregdelay = 70; p.syncreghealth = 50; p.height = 56; p.radius = 16; p.maxstep = 28; break;
+			case 2: p.soundclass = "eva01"; p.mass = 6000; p.air = 0; p.viewh = 56; p.attackz = 25; p.friction = 1.05; p.fm1 = 2.0; p.fm2 = 2.4; p.sm1 = 1.4; p.sm2 = 0.4; p.jumpz = 15.0; p.viewbob = 1.2; p.fallingdmg = 0.0; p.gib = false; p.syncreg = 15; p.syncregdelay = 70; p.syncreghealth = 50; p.height = 56; p.radius = 16; p.maxstep = 28; break;
+			case 3: p.soundclass = "eva01"; p.mass = 6000; p.air = 0; p.viewh = 56; p.attackz = 25; p.friction = 1.05; p.fm1 = 2.0; p.fm2 = 2.4; p.sm1 = 1.4; p.sm2 = 0.4; p.jumpz = 15.0; p.viewbob = 1.2; p.fallingdmg = 0.0; p.gib = false; p.syncreg = 15; p.syncregdelay = 70; p.syncreghealth = 50; p.height = 56; p.radius = 16; p.maxstep = 28; break;
+			case 4: p.soundclass = "shinji"; p.mass = 90; p.air = 5; p.viewh = 40; p.attackz = 16; p.friction = 1.0; p.fm1 = 0.25; p.fm2 = 0.42; p.sm1 = 0.2; p.sm2 = 0.3; p.jumpz = 0.0; p.viewbob = 0.1; p.fallingdmg = 1.0; p.gib = true; p.syncreg = 0; p.syncregdelay = 0; p.syncreghealth = 0; p.height = 48; p.radius = 8; p.maxstep = 16; break;
+			case 5: p.soundclass = "shinji"; p.mass = 90; p.air = 5; p.viewh = 40; p.attackz = 16; p.friction = 1.0; p.fm1 = 0.25; p.fm2 = 0.42; p.sm1 = 0.2; p.sm2 = 0.3; p.jumpz = 0.0; p.viewbob = 0.1; p.fallingdmg = 1.0; p.gib = true; p.syncreg = 0; p.syncregdelay = 0; p.syncreghealth = 0; p.height = 48; p.radius = 8; p.maxstep = 16; break;
+			case 6: p.soundclass = "shinji"; p.mass = 90; p.air = 5; p.viewh = 40; p.attackz = 16; p.friction = 1.0; p.fm1 = 0.25; p.fm2 = 0.42; p.sm1 = 0.2; p.sm2 = 0.3; p.jumpz = 0.0; p.viewbob = 0.1; p.fallingdmg = 1.0; p.gib = true; p.syncreg = 0; p.syncregdelay = 0; p.syncreghealth = 0; p.height = 48; p.radius = 8; p.maxstep = 16; break;
 		}
 		
 		//PP[classid-1] = p; // Why is this treated as a pointer?... (Struct assignment not implemented yet!)
@@ -100,6 +103,9 @@ extend class evangelionPlayer {
 		PP[classid-1].syncreg = p.syncreg;
 		PP[classid-1].syncregdelay = p.syncregdelay;
 		PP[classid-1].syncreghealth = p.syncreghealth;
+		PP[classid-1].height = p.height;
+		PP[classid-1].radius = p.radius;
+		PP[classid-1].maxstep = p.maxstep;
 	}
 	
 	// Detects if we want to change player class and acts
@@ -143,7 +149,7 @@ extend class evangelionPlayer {
 		double multiplier;
 		
 		// if we're in pilot form, don't use synchronization
-		if (CountInv("playerStatus") > 3)
+		if (CountInv("playerIdentity") > 3)
 			multiplier = 1.0;
 		// if we don't have energy nor berserk, stop.
 		else if (PP[id].syncfactor <= 1.0 && CountInv("evaenergy") == 0)
@@ -174,7 +180,7 @@ extend class evangelionPlayer {
 		sidemove2 = PP[id].sm2 * multiplier;
 		
 		// if we're in an evaunit, and synchronization is less than 30%, disable jumping
-		if (CountInv("playerStatus") <= 3 && PP[id].syncfactor < 0.3)
+		if (CountInv("playerIdentity") <= 3 && PP[id].syncfactor < 0.3)
 			jumpz = 0;
 		else
 			jumpz = PP[id].jumpz * multiplier;
@@ -182,11 +188,14 @@ extend class evangelionPlayer {
 		viewbob = PP[id].viewbob * multiplier;
 		//damagefactor "falling" = PP[id].fallingdmg;
 		bDONTGIB = PP[id].gib;
+		
+		A_SetSize(PP[id].radius, PP[id].height);
+		maxstepheight = PP[id].maxstep;
 	}
 	
 	void changeClass (int classid) {
 		
-		A_SetInventory("playerStatus", classid);
+		A_SetInventory("playerIdentity", classid);
 		
 		applyProperties(classid);
 	}

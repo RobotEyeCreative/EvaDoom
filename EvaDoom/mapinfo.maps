@@ -19,7 +19,6 @@ defaultmap {
 	//outsidefogdensity = 8
 	//skyfog = 1
 	lightmode = 0
-	//nolightfade
 	
 	// Other visuals
 	//bordertexture = ""
@@ -78,6 +77,7 @@ map EVAD02 "Misato's Apartment" {
 	sky1 = "RSKY1", 0
 	exitpic = "INTER00"
 	enterpic = "INTER00"
+	nolightfade
 	ResetHealth
 	ResetInventory
 }

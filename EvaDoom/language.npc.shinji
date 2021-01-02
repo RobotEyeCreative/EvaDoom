@@ -1,0 +1,57 @@
+
+// NPC CONVERSATIONS STRINGS
+
+	[enu default]
+
+	// SHINJI ANSWERS
+
+	NPC_SHI_A0001 = "SA1";
+	NPC_SHI_A0002 = "SA2";
+	NPC_SHI_A0003 = "SA3";
+	NPC_SHI_A0004 = "SA4";
+	NPC_SHI_A0005 = "SA5";
+	NPC_SHI_A0006 = "SA6";
+	NPC_SHI_A0007 = "SA7";
+	NPC_SHI_A0008 = "SA8";
+	NPC_SHI_A0009 = "SA9";
+	NPC_SHI_A0010 = "SA10";
+	NPC_SHI_A0011 = "SA11";
+	NPC_SHI_A0012 = "SA12";
+
+	// SHINJI RESPONSES
+
+	NPC_SHI_Q0001 = "SQ1";
+	NPC_SHI_Q0002 = "SQ2";
+	NPC_SHI_Q0003 = "SQ3";
+	NPC_SHI_Q0004 = "SQ4";
+	NPC_SHI_Q0005 = "SQ5";
+	NPC_SHI_Q0006 = "SQ6";
+	NPC_SHI_Q0007 = "SQ7";
+	NPC_SHI_Q0008 = "SQ8";
+	NPC_SHI_Q0009 = "SQ9";
+	NPC_SHI_Q0010 = "SQ10";
+	NPC_SHI_Q0011 = "SQ11";
+	NPC_SHI_Q0012 = "SQ12";
+
+	// SHINJI EXPLORATION
+
+	NPC_SHI_E0001 = "This is a LITTLE messy?";
+	NPC_SHI_E0002 = "Nothing but bowls of instant ramen? What kind of diet is she living off?";
+	NPC_SHI_E0003 = "Ice, snacks and nothing but beer...";
+	NPC_SHI_E0004 = "What have I gotten myself into?";
+	NPC_SHI_E0005 = "I have my work cut out for me if this is a "little" messy...";
+	NPC_SHI_E0006 = "This must be the wash room. Bath, and water closet. All's a mess...";
+	NPC_SHI_E0007 = "Misato's underwear... How embarrasing...";
+	NPC_SHI_E0008 = "Hmmm";
+	NPC_SHI_E0009 = "Miss Misato? What's the deal with the second freezer?";
+	NPC_SHI_E0010 = "Wake who up? What is that supposed to mean?";
+	NPC_SHI_E0011 = "Pretty spacious. A big balcony and a big TV. Not bad I guess...";
+	NPC_SHI_E0012 = "Ah! I'm sorry! I- I didn't realise this was your room!";
+	NPC_SHI_E0013 = "Uh- sure.";
+	NPC_SHI_E0014 = "It's so quiet compared to the city. Most of the houses out there seem empty...";
+	NPC_SHI_E0015 = "This store room is pretty depressing...\nIt sounds like I can hear the water pipes for the whole complex through that wall.";
+	NPC_SHI_E0016 = "There's already a spare bed set up.";
+	NPC_SHI_E0017 = "It's not huge, but it's not small. Seems comfy.";
+	NPC_SHI_E0018 = "Seems like a nice quiet apartment. I wonder if I should start moving my stuff in now or-";
+	NPC_SHI_E0019 = "Misato is dressing, I should not open the door.";
+	NPC_SHI_E0020 = "SE20";

@@ -56,20 +56,6 @@ str MapTitle[64] = {
 	"TITLE_MAP_20"
 };
 
-str PlayerMessage[128] = {
-
-	"PLAYER_0001",
-	"PLAYER_0002",
-	"PLAYER_0003",
-	"PLAYER_0004",
-	"PLAYER_0005",
-	"PLAYER_0006",
-	"PLAYER_0007",
-	"PLAYER_0008",
-	"PLAYER_0009",
-	"PLAYER_0010"
-};
-
 str SystemMessage[32] = {
 
 	"SYSTEM_0001",
@@ -89,10 +75,7 @@ Function void PrintMapTitle (int num) {
 	HudMessage(l:MapTitle[--MapNum]; HUDMSG_FADEINOUT, 5, CR_BLUE, 0.5, 0.1, 1.0, 1.0, 1.0, 0.8);
 }
 
-Function void PrintPlayerMessage (int textid) {
 
-	HudMessage(l:PlayerMessage[textid]; HUDMSG_TYPEON, 1, CR_RED, 0.2, 0.7, 1.0, 0.05, 1.0);
-}
 
 #define sys_fX 0.0		// fixed X
 #define sys_fY 0.7		// fixed Y
@@ -157,6 +140,25 @@ Function bool SpawnRandomRadius (str type, int spotid, int radius, int newtid, b
 		return TRUE;
 
 	return FALSE;
+}
+
+Function int InvertAngle (int angle) {
+
+	int ang = angle;
+
+	switch (ang) {
+
+		case ANGLE_EAST: ang = ANGLE_WEST; break;
+		case ANGLE_NEAST: ang = ANGLE_SWEST; break;
+		case ANGLE_NORTH: ang = ANGLE_SOUTH; break;
+		case ANGLE_NWEST: ang = ANGLE_SEAST; break;
+		case ANGLE_WEST: ang = ANGLE_EAST; break;
+		case ANGLE_SWEST: ang = ANGLE_NEAST; break;
+		case ANGLE_SOUTH: ang = ANGLE_NORTH; break;
+		case ANGLE_SEAST: ang = ANGLE_NWEST; break;
+	}
+
+	return ang;
 }
 
 // Info: http://forum.zdoom.org/viewtopic.php?f=3&t=52809

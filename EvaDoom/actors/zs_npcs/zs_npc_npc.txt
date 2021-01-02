@@ -9,6 +9,8 @@ class npc : actor {
 		Radius 16;
 		Height 56;
 		Mass 100;
+		Alpha 1.0;
+		RenderStyle "Translucent";
 		
 		Activation THINGSPEC_NoDeathSpecial;
 		

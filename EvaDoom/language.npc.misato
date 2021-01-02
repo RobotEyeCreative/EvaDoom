@@ -1,0 +1,57 @@
+
+// NPC CONVERSATIONS STRINGS
+
+	[enu default]
+
+	// MISATO ANSWERS
+
+	NPC_MIS_A0001 = "Home sweet home! Come on in!";
+	NPC_MIS_A0002 = "Hmm, what is it?";
+	NPC_MIS_A0003 = "\n\nShinji. From this point forward, this house is just as much yours as it is mine. \nI want you to feel at home here.";
+	NPC_MIS_A0004 = "Okay?";
+	NPC_MIS_A0005 = "Shinji, it's okay. You're home!";
+	NPC_MIS_A0006 = "Welcome home! Shinji.";
+	NPC_MIS_A0007 = "Sorry it's a little messy, I just moved in myself. I'm gonna go change, so feel free to make yourself at home!";
+	NPC_MIS_A0008 = "MA8";
+	NPC_MIS_A0009 = "MA9";
+	NPC_MIS_A0010 = "MA10";
+	NPC_MIS_A0011 = "MA11";
+	NPC_MIS_A0012 = "MA12";
+
+	// MISATO RESPONSES
+
+	NPC_MIS_Q0001 = "Ummm";
+	NPC_MIS_Q0002 = "I just want to thank you for haveing me. I'll do my best not to get in the way.";
+	NPC_MIS_Q0003 = "";
+	NPC_MIS_Q0004 = "Umm, I- I suppose so.";
+	NPC_MIS_Q0005 = "I- I'm home.";
+	NPC_MIS_Q0006 = "";
+	NPC_MIS_Q0007 = "S... sure!";
+	NPC_MIS_Q0008 = "MQ8";
+	NPC_MIS_Q0009 = "MQ9";
+	NPC_MIS_Q0010 = "MQ10";
+	NPC_MIS_Q0011 = "MQ11";
+	NPC_MIS_Q0012 = "MQ12";
+
+	// MISATO EXPLORATION
+
+	NPC_MIS_E0001 = "Feel free to take a look around!";
+	NPC_MIS_E0002 = "Oh don't worry about that, you don't want to wake him up just yet.";
+	NPC_MIS_E0003 = "What's this? You trying to get a peek on me changing, huh?\nI had no idea I was letting such a little pervert into my house!";
+	NPC_MIS_E0004 = "Hahaha, relax! I'm just teasing!";
+	NPC_MIS_E0005 = "Boy, you really need to loosen up!";
+	NPC_MIS_E0006 = "I'll be ready in a second, you should go check out your new room. \nIt's down the hall on the left!";
+	NPC_MIS_E0007 = "Dinner time!";
+	NPC_MIS_E0008 = "ME8";
+	NPC_MIS_E0009 = "ME9";
+	NPC_MIS_E0010 = "ME10";
+	NPC_MIS_E0011 = "ME11";
+	NPC_MIS_E0012 = "ME12";
+	NPC_MIS_E0013 = "ME13";
+	NPC_MIS_E0014 = "ME14";
+	NPC_MIS_E0015 = "ME15";
+	NPC_MIS_E0016 = "ME16";
+	NPC_MIS_E0017 = "ME17";
+	NPC_MIS_E0018 = "ME18";
+	NPC_MIS_E0019 = "ME19";
+	NPC_MIS_E0020 = "ME20";
