@@ -23,6 +23,6 @@ extend class MinimalStatusBar {
 		double fillpositiony = Screen.GetHeight()*0.69;
 		double fillwidth = Screen.GetWidth()*0.7;
 		double fillheight = Screen.GetHeight()*0.07;
-		Fill(Color(64,0,0,0), fillpositionx, fillpositiony, fillwidth, fillheight);
+		Fill(Color(128,0,0,0), fillpositionx, fillpositiony, fillwidth, fillheight);
 	}
 }

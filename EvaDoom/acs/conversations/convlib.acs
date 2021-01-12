@@ -40,8 +40,10 @@ Function void ConversationStart (int who) {
 	
 	// Print potrait.
 	SetFont(GetNpcPotrait(who));
-	HudMessage(s:"A"; HUDMSG_FADEINOUT, IDStart-3, 0, -XCenter, -YCoord+ResponseYOffs+0.05, NoTime, 0.4);
-	
+	SetHudSize(1280,960,FALSE);
+	HudMessage(s:"A"; HUDMSG_FADEINOUT, IDStart-3, 0, 640.0, 651.2, NoTime, 0.4);
+	SetHudSize(0,0,FALSE);
+
 	// Print name.
 	SetFont("VARELA");
 	HudMessage(s:GetNpcName(who); HUDMSG_PLAIN, IDStart-2, CR_YELLOW, -XCoord, YCoord-(ResponseYOffs*4), 0);
