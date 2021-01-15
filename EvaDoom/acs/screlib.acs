@@ -1,4 +1,4 @@
-#library "screlib"
+#library "screlib" // Numnzel: Scripted events library
 #include "zcommon.acs"
 
 // Scripted events enabled. True -> Disabled.

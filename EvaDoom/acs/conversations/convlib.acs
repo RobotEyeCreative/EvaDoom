@@ -1,35 +1,24 @@
-#library "convlib"
+#library "convlib" // Numnzel: Conversations library
 #include "zcommon.acs"
-#import "npclib.acs"
+#import "..\mathlib.acs"
+
+#include "..\constants.acs"
+#include "txtdb.acs"
 
 
-// ------------- Start-End conversation functions, set and reset the NPC potrait and some general effects.
-
-
-// Conversation hud display properties
-#define NoTime 32000.0
-#define IDStart 20
-
-#define XCoord 0.156
-#define YCoord 0.734
-#define XCenter 0.5
-#define YCenter 0.5
-#define ResponseYOffs 0.025
-#define AnswersGap 0.1
-#define MessageGap 0.07
-
-#libdefine MaxResponses 8
+// ----------------------------------------------------------------------------------------------------------
+// ACS Map Scripting : ACS Conversation functions. Start, End, Set, Reset and some other utilities.
+// ----------------------------------------------------------------------------------------------------------
 
 /*
 	HudMessage ID definitions for conversations:
 	IDStart +
 	
 	-4	---------------------	Conversation HUD arrow
-	-3	---------------------	NPC potrait
+	-3	---------------------	NPC portrait
 	-2	---------------------	NPC name
 	-1	---------------------	NPC text message
 	1 to MaxResponses	-----	Conversation answer option message
-
 */
 
 Function void ConversationStart (int who) {
@@ -38,18 +27,19 @@ Function void ConversationStart (int who) {
 	CancelFade();
 	FadeTo(0, 0, 0, 0.5, 3.0);
 	
-	// Print potrait.
-	SetFont(GetNpcPotrait(who));
-	SetHudSize(1280,960,FALSE);
-	HudMessage(s:"A"; HUDMSG_FADEINOUT, IDStart-3, 0, 640.0, 651.2, NoTime, 0.4);
-	SetHudSize(0,0,FALSE);
+	SetHudSize(VHudX,VHudY,FALSE);
+
+	// Print portrait.
+	SetFont(GetNpcPortrait(who));
+	HudMessage(s:"A"; HUDMSG_FADEINOUT, IDStart-3, 0, VHudXc, PortraitY+0.2, NoTime, 0.4);
 
 	// Print name.
 	SetFont("VARELA");
-	HudMessage(s:GetNpcName(who); HUDMSG_PLAIN, IDStart-2, CR_YELLOW, -XCoord, YCoord-(ResponseYOffs*4), 0);
-	
+	HudMessage(s:GetNpcName(who); HUDMSG_PLAIN, IDStart-2, CR_YELLOW, XCoord+0.1, NameY+0.2, 0);
+
+	SetHudSize(0,0,FALSE);
 	// PlaySound(0, "interaction/paper");
-	
+
 	// Print conversation hud.
 	GiveInventory("playerConversation", 1);
 }
@@ -68,37 +58,157 @@ Function void ConversationEnd (void) {
 	SetFont("SMALLFONT");
 }
 
-Function void PrintNPCMessage (int text) {
+/* This function searches the introduced response index and replaces it.
+Executed from ACS. Useful when you want to make sure a determined response only is played once. */
 
-	SetFont("VARELA");
-	HudMessage(l:text; HUDMSG_TYPEON, IDStart-1, CR_CYAN, -XCoord, YCoord, NoTime, 0.025, 0.4); //0.05
+Function void ReplaceNpcResponse (int who, int value, int newvalue) {
+
+	int npcn = max(0, who-NPCTagStart);
+	
+	// To replace a value you must specify a value, and new value greater to -1 to take effect.
+	if ( (value > -1 && value < MaxQuestions) && (newvalue > -1 && newvalue < MaxQuestions) )
+		for (int y = 0; y < MaxStates; y++)
+			for (int x = 0; x < MaxResponses; x++)
+				if (NpcResponsesIndex[npcn][y][x] == value) NpcResponsesIndex[npcn][y][x] = newvalue;
+	
+}
+
+/* Had to make a new function because thing specials only let me use 3 parameters...
+Even when the function itself lets me to declare about 5 parameters and use them on ACS. */
+
+Function void EditNpcResponse (int who, int value, int state, int index) {
+
+	int npcn = max(0, who-NPCTagStart);
+	
+	// To edit a value in a specific place you must specify a value, index and state greater than -1 to take effect.
+	if ( (value > -1 && value < MaxQuestions) && (index > -1 && index < MaxResponses) && (state > -1 && state < MaxStates) )
+		NpcResponsesIndex[npcn][state][index] = value;
+
+}
+
+Function int GetNpcNewState (int who, int response) {
+	
+	int npcn = max(0, who-NPCTagStart);
+	
+	// Search response position in current status.
+	for (int i = 0; i < MaxResponses; i++)
+		if (NpcResponsesIndex[npcn][NpcStatus[npcn]][i] == response)
+			break;
+			
+	// Return the new state with response position in current status.
+	return NpcStateResponses[npcn][NpcStatus[npcn]][i];
+}
+
+int ResponsesBuffer[MaxResponses];
+int ResponsesBufferCount;
+
+Function void ExecuteNpcConversation (int who, int start, int setState) {
+	
+	int npcn = max(0, who-NPCTagStart);
+	
+	// If we want to edit the actual conversation state. If not, use setState -1 to maintain current state.
+	if (setState > -1 && setState < MaxStates) // Make sure the new state exists.
+		NpcStatus[npcn] = setState;
+	
+	// Use start = 1 to start a conversation. You can use 0 if you only want to change the status nor index.
+	if (start == 1) {
+		
+		// Print the npc message in the actual conversation status.
+		PrintNPCMessage(NpcAnswers[npcn][NpcStatus[npcn]]);
+		
+		// Reset arrow position. (Goes to the first option.)
+		PrintArrowConversation(666);
+		
+		// Count responses of the current status. i.e: (1 2 0 5 0 0 --> [3])
+		int c = 0;
+		for (int y = 0; y < MaxResponses; y++)
+			if (NpcResponsesIndex[npcn][NpcStatus[npcn]][y] > 0)
+				c++;
+		
+		// Send responses count.
+		ResponsesBufferCount = c;
+		
+		// Clear memory.
+		for (int i = 0; i < MaxResponses; i++)
+			ResponsesBuffer[i] = 0;
+		
+		// Save the responses in memory in reversed order. i.e: (1 2 0 5 0 0 --> 5 2 1)
+		int k = 0;
+		while (y-- > 0)
+			if (NpcResponsesIndex[npcn][NpcStatus[npcn]][y] > 0)
+				ResponsesBuffer[k++] = NpcResponsesIndex[npcn][NpcStatus[npcn]][y];
+		
+		// Clear coordinates and ID's so new printed responses could spawn where they belong.
+		ResetOptionsMessagesCoords();
+		
+		// Delete old responses.
+		for (int z = 0; z < MaxResponses; z++)
+			PrintOptionsMessages("");
+		
+		// Clear coordinates and ID's so new printed responses could spawn where they belong.
+		ResetOptionsMessagesCoords();
+		
+		// Print responses. i.e: (1 2 0 5 0 0 --> print 5 2 1)
+		for (int x = 0; x < ResponsesBufferCount; x++)
+			PrintOptionsMessages(NpcQuestions[npcn][ResponsesBuffer[x]-1]);
+	}
 }
 
 
-// ------------- Conversation behavioral functions, defines how the text will display and the logic.
+// ----------------------------------------------------------------------------------------------------------
+// Internal conversation functions. They should not be used in map scripts.
+// ----------------------------------------------------------------------------------------------------------
 
+
+Function void PrintNPCMessage (int text) {
+
+	SetHudSize(VHudX,VHudY,FALSE);
+	SetFont("VARELA");
+	HudMessage(l:text; HUDMSG_TYPEON, IDStart-1, CR_CYAN, XCoord+0.1, MessageY+0.1, NoTime, WritingSpeed);
+	SetHudSize(0,0,FALSE);
+}
 
 int IDCounter = 1;
-int YCoordResponse = YCoord + MessageGap;
-int ResponsesBuffer[MaxResponses];
+int YCoordResponse = YCoord + YGap;
 
 Function void PrintOptionsMessages (str text) {
-
-	SetFont("VARELA");
 	
-	HudMessage (l:text; HUDMSG_PLAIN, IDStart+IDCounter++, CR_WHITE, -XCoord, YCoordResponse, 0);
-	YCoordResponse += ResponseYOffs;
+	SetHudSize(VHudX,VHudY,FALSE);
+	SetFont("VARELA");
+	HudMessage(l:text; HUDMSG_PLAIN, IDStart+IDCounter++, CR_WHITE, XCoord+0.1, (YCoordResponse+0.2), 0);
+	YCoordResponse += OptionsLineSpacing;
+	SetHudSize(0,0,FALSE);
 }
 
 Function void ResetOptionsMessagesCoords (void) {
 	
-	YCoordResponse = YCoord + MessageGap;
+	YCoordResponse = YCoord + YGap;
 	IDCounter = 1;
 }
 
+Function str GetNpcPortrait (int who) {
+	
+	int npcn = max(0, who-NPCTagStart);
+	
+	str result = StrParam(s:"graphics/npcs/", s:NpcPotraits[npcn][NpcStateEmotion[npcn][NpcStatus[npcn]]], s:".png");
+	
+	return result;
+}
+
+Function str GetNpcName (int who) {
+	
+	int npcn = max(0, who-NPCTagStart);
+	
+	return NpcNames[npcn][0];
+}
+
+
+// ----------------------------------------------------------------------------------------------------------
+// Behavior functions. They're part of the conversation system and appear in the map scripts. Do not call directly.
+// ----------------------------------------------------------------------------------------------------------
+
 
 int ArrowIndex = 1;
-int ResponsesBufferCount;
 int YCoordArrow;
 
 Function void PrintArrowConversation (int direction) {
@@ -115,10 +225,12 @@ Function void PrintArrowConversation (int direction) {
 	}
 	
 	// Update arrow Y position.
-	YCoordArrow = YCoord + MessageGap + (ResponseYOffs * (ArrowIndex-1));
+	YCoordArrow = YCoord + YGap + (OptionsLineSpacing * (ArrowIndex-1));
 	
+	SetHudSize(VHudX,VHudY,FALSE);
 	SetFont("VARELA");
-	HudMessage(s:">"; HUDMSG_PLAIN, IDStart-4, CR_GREEN, -XCoord+0.01, YCoordArrow, 0);
+	HudMessage(s:">"; HUDMSG_PLAIN, IDStart-4, CR_GREEN, (XCoord-3.0)+0.2, YCoordArrow+0.2, 0);
+	SetHudSize(0,0,FALSE);
 }
 
 Function int GetResponse (void) {

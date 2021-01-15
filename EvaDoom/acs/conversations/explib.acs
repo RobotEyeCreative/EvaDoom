@@ -1,0 +1,96 @@
+#library "explib" // Numnzel: Exploration library
+#include "zcommon.acs"
+#import "..\mathlib.acs"
+
+#include "..\constants.acs"
+#include "txtdb.acs"
+
+
+// ----------------------------------------------------------------------------------------------------------
+// ACS Map Scripting : ACS Exploration functions.
+// ----------------------------------------------------------------------------------------------------------
+
+
+// Used to print NPC commentary lines.
+Function void PlayerInspection (int who, int txtid) {
+
+	int identity = CheckInventory("playerIdentity");
+	bool own = true;
+
+	if (who > 0) {
+
+		if (identity != who)
+			own = false;
+
+		if (who > NPCEvaUnits)
+			PrintNpcExploration(NPCTagStart+who-1-NPCEvaUnits, txtid, own);
+		else
+			PrintNpcExploration(NPCTagStart+who-1, txtid, own);
+
+	} else {
+
+		if (identity > NPCEvaUnits)
+			PrintNpcExploration(NPCTagStart+identity-NPCEvaUnits, txtid, own);
+		else
+			PrintNpcExploration(NPCTagStart+identity, txtid, own);
+	}
+}
+
+
+// ----------------------------------------------------------------------------------------------------------
+// Behavior functions. They appear in the map scripts. Do not call directly.
+// ----------------------------------------------------------------------------------------------------------
+
+
+// Shows and hides an image.
+Function void PrintImageInteractionStart (int imstr, str sound) {
+
+	CancelFade();
+	FadeTo(0, 0, 0, 0.5, 3.0);
+
+	if (imstr != 0) {
+		
+		SetFont(imstr);
+		HudMessage(s:"A"; HUDMSG_FADEINOUT, 9, 0, 0.5, 0.5, 65000.0, 0.4);
+
+		if (sound != 0)
+			PlaySound(0, sound);
+	}
+}
+
+Function void PrintImageInteractionEnd (void) {
+
+	HudMessage(s:""; HUDMSG_PLAIN, 9, 0, 0.5, 0.5, 1);
+
+	CancelFade();
+	FadeTo(0, 0, 0, 0.0, 0.4);
+	SetFont("SMALLFONT");
+}
+
+
+// ----------------------------------------------------------------------------------------------------------
+// Internal exploration functions. They should not be used in map scripts.
+// ----------------------------------------------------------------------------------------------------------
+
+
+Function str GetExplorationMssg (int who, int index) {
+
+	int npcn = max(0, who-NPCTagStart);
+	
+	return NpcExploration[npcn][index];
+}
+
+Function void PrintNpcExploration (int who, int textid, bool own) {
+
+	GiveInventory("playerConversation", 3);
+	
+	SetHudSize(VHudX,VHudY,FALSE);
+	SetFont("VARELA");
+
+	if (own)
+		HudMessage(l:GetExplorationMssg(who, textid); HUDMSG_TYPEON, 1, CR_WHITE, EXCoord+0.1, EYCoord+0.1, 0.8, EWritingSpeed, 0.8);
+	else
+		HudMessage(l:GetExplorationMssg(who, textid); HUDMSG_TYPEON, 1, CR_CYAN, EXCoord+0.1, EYCoord+0.1, 0.8, EWritingSpeed, 0.8);
+	
+	SetHudSize(0,0,FALSE);
+}

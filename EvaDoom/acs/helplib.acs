@@ -1,4 +1,4 @@
-#library "vilelib" // Numnzel: I spent too much time thinking about this name.
+#library "helplib" // Numnzel: Helpful resources library
 #include "zcommon.acs"
 
 
@@ -56,68 +56,19 @@ str MapTitle[64] = {
 	"TITLE_MAP_20"
 };
 
-str SystemMessage[32] = {
-
-	"SYSTEM_0001",
-	"SYSTEM_0002"
-};
-
-
-
 Function void PrintMapTitle (int num) {
 
 	int MapNum = GetLevelInfo(LEVELINFO_LEVELNUM);
 
-	if (num >= 0)
+	if (num > 0)
 		MapNum = num;
-		
+	
 	SetFont("BIGFONT");
 	HudMessage(l:MapTitle[--MapNum]; HUDMSG_FADEINOUT, 5, CR_BLUE, 0.5, 0.1, 1.0, 1.0, 1.0, 0.8);
 }
 
-
-
-#define sys_fX 0.0		// fixed X
-#define sys_fY 0.7		// fixed Y
-#define sys_hT 2.0		// fixed HoldTime
-#define sys_tT 0.05		// fixed TypeTime
-#define sys_fT 0.5		// fixed FadeTime
-
-Function void PrintCPUMessage (int textid, bool typeon) {
-
-	if (typeon)
-		HudMessage(l:SystemMessage[textid]; HUDMSG_TYPEON, 2, CR_GREEN, sys_fX, sys_fY, sys_hT, sys_tT, sys_fT);
-	else
-		HudMessage(l:SystemMessage[textid]; HUDMSG_FADEOUT, 2, CR_GREEN, sys_fX, sys_fY, sys_hT, sys_fT);
-}
-
-Function void PrintImageInteractionStart (int imstr, str sound) {
-
-	CancelFade();
-	FadeTo(0, 0, 0, 0.5, 3.0);
-
-	if (imstr != 0) {
-		
-		SetFont(imstr);
-		HudMessage(s:"A"; HUDMSG_FADEINOUT, 9, 0, 0.5, 0.5, MAXTIME, 0.4);
-
-		if (sound != 0)
-			PlaySound(0, sound);
-	}
-}
-
-Function void PrintImageInteractionEnd (void) {
-
-	HudMessage(s:""; HUDMSG_PLAIN, 9, 0, 0.5, 0.5, 1);
-
-	CancelFade();
-	FadeTo(0, 0, 0, 0.0, 0.4);
-	SetFont("SMALLFONT");
-}
-
+// Optional parameter accepts tid for thing deletion, usually the script trigger.
 Function void CheckPoint (int killtag) {
-
-	// Numnzel: Optional parameter enters tid for thing deletion, usually the script trigger.
 
 	if (killtag > 0) Thing_Remove (killtag);
 	Autosave ();
@@ -162,7 +113,6 @@ Function int InvertAngle (int angle) {
 }
 
 // Info: http://forum.zdoom.org/viewtopic.php?f=3&t=52809
-
 Function void FaceActor (int m1, int m2) {
 	
 	int xdiff = GetActorX(m2) - GetActorX(m1);

@@ -7,11 +7,11 @@
 
 	NPC_MIS_A0001 = "Home sweet home! Come on in!";
 	NPC_MIS_A0002 = "Hmm, what is it?";
-	NPC_MIS_A0003 = "\n\nShinji. From this point forward, this house is just as much yours as it is mine. \nI want you to feel at home here.";
+	NPC_MIS_A0003 = "Shinji. From this point forward, this house is just as much yours as it is mine. \nI want you to feel at home here.";
 	NPC_MIS_A0004 = "Okay?";
 	NPC_MIS_A0005 = "Shinji, it's okay. You're home!";
 	NPC_MIS_A0006 = "Welcome home! Shinji.";
-	NPC_MIS_A0007 = "Sorry it's a little messy, I just moved in myself. I'm gonna go change, so feel free to make yourself at home!";
+	NPC_MIS_A0007 = "Sorry it's a little messy, I just moved in myself. I'm gonna go change, so feel free to make yourself \nat home!";
 	NPC_MIS_A0008 = "MA8";
 	NPC_MIS_A0009 = "MA9";
 	NPC_MIS_A0010 = "MA10";
