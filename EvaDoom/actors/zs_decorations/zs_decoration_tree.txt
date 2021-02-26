@@ -11,6 +11,7 @@ class decoration_tree : decoration {
 		+NOBLOOD;
 		+DONTGIB;
 		+DONTDRAIN;
+		+DONTTHRUST;
 	}
 	
 	states {

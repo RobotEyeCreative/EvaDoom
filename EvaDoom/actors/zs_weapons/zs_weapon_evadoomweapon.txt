@@ -1,18 +1,81 @@
 
 class evadoomweapon : weapon abstract {
 	
+	const swayxspeed = 4.0;
+	const recenterspeed = 0.25;
+
+	bool mirrorx;
+	double xoffs;
+	
+	Array<double> xoffsmem;
+
+	meta double maxswayx;
+	property pmaxswayx: maxswayx;
+
 	default {
 		
 		//$NotAngled
 		//$Category Evangelion/Weapons
 		
+		evadoomweapon.pmaxswayx 24.0;
 		inventory.PickupSound "EvaDoom/Weapon/Pickup";
+	}
+
+	override void doEffect () {
+
+		super.Tick();
+
+		if (owner.player.ReadyWeapon &&
+			owner.player.ReadyWeapon.getClassName() == self.getClassName() &&
+			owner.player.WeaponState & WF_WEAPONBOBBING)
+			weaponSway();
+	}
+
+	void weaponSway () {
+
+		if (owner) {
+			
+			let pspr = owner.player.psprites;
+			
+			if (!pspr) return;
+			
+			// horizontal sway
+
+			double xinput = owner.GetPlayerInput(MODINPUT_SIDEMOVE);
+
+			//xinput *= SWAY_SENSITIVITY_X / 10240.0;
+
+			if (xoffsmem.Size() > 3)
+				xoffsmem.Delete(0);
+			
+			xoffsmem.Push(xoffs); // store older xoffs values, needed for combo reading.
+
+			if (xinput > 0)
+				xoffs += (maxswayx - xoffs) / swayxspeed;
+			else if (xinput < 0)
+				xoffs += (-maxswayx - xoffs) / swayxspeed;
+			else
+				xoffs *= abs(xoffs) < 0.5 ? 0 : recenterspeed; // recenter xoffs
+
+			double swayx = clamp(xoffs, -maxswayx, maxswayx);
+			
+			//Console.Printf("%d, time = %d, a = %s", xoffs, Level.maptime, getClassName());
+			
+			pspr.x = mirrorx ? -swayx : swayx;
+
+			// vertical sway
+
+			/*
+			pspr.y = ypitch + 32;
+
+			pspr.y += player.vel.z; // add jump z
+			pspr.y = clamp(pspr.y, -maxswayy, maxswayy);
+			*/
+		}
 	}
 }
 
 class eva01weapon : evadoomweapon abstract {
-	
-	string oldweapon; property poldweapon: oldweapon;
 	
 	// Always remove the atfieldskill when selecting other weapons
 	override state GetUpState () {

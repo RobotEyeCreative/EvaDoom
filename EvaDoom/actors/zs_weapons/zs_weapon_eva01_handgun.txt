@@ -18,7 +18,7 @@ class Eva01HandGun : eva01weapon {
 			PIST A -1;
 			loop;
 		ready:
-			E1HG A 8 A_WeaponReady;
+			E1HG A 8 A_WeaponReady();
 			loop;
 		select:
 			E1HG A 1 A_Raise(12);

@@ -8,4 +8,5 @@
 #include "actors/zs_others/zs_other_evangelionplayer_atfield.txt"
 #include "actors/zs_others/zs_other_evaenergy.txt"
 #include "actors/zs_others/zs_other_beacon.txt"
+#include "actors/zs_others/zs_other_evangelionplayer_movement.txt"
 #include "actors/zs_others/zs_other_evangelionplayer_tick.txt"

@@ -8,6 +8,7 @@ class evangelionPlayer : PlayerPawn {
 	
 	int restTime;
 	int moveTime;
+	bool rightFeet;
 	
 	string lastWeapon;
 	
@@ -55,6 +56,35 @@ class evangelionPlayer : PlayerPawn {
 		//+NOTELEFRAG;
 		//+PLAYERPAWN.NOTHRUSTWHENINVUL;
 	}
+
+	void spawnFeet () {
+		
+		if (CountInv("playerIdentity") <= 3 && floorz == self.pos.z) {
+			
+			if (rightFeet) {
+				A_StartSound("EvaDoom/EvaUnit/Run01");
+				A_SpawnItemEx("evafeetdecal", 0.0, 9.0, 0.0, 0.0, 0.0, 0.0, 0);
+			}
+			else {
+				A_StartSound("EvaDoom/EvaUnit/Run02");
+				A_SpawnItemEx("evafeetdecal", 0.0, -9.0, 0.0, 0.0, 0.0, 0.0, 0);
+			}
+		}
+		
+		rightFeet = !rightFeet;
+	}
+
+	int getFeetTics () {
+		
+		if (evaspeed > 15.0)
+			return 4;
+		else if (evaspeed > 10.0)
+			return 5;
+		else if (evaspeed > 5.0)
+			return 6;
+		
+		return max(6, 16-int(ceil(evaspeed)));
+	}
 	
 	states {
 		
@@ -62,7 +92,10 @@ class evangelionPlayer : PlayerPawn {
 			PLAY A 4;
 			Loop;
 		See:
-			PLAY ABCD 4;
+			PLAY AB 6 A_SetTics(getFeetTics());
+			PLAY B 0 spawnFeet();
+			PLAY CD 6 A_SetTics(getFeetTics());
+			PLAY D 0 spawnFeet();
 			Loop;
 		Missile:
 			PLAY E 12;
@@ -107,5 +140,41 @@ class evangelionPlayer : PlayerPawn {
 			PLAY STUVWX 5;
 			PLAY Y -1;
 			Stop;
+	}
+}
+
+class evafeetdecal : actor {
+
+	default {
+
+		radius 6;
+		height 1;
+		renderstyle "Translucent";
+		alpha 0.8;
+		scale 0.4;
+
+		-SOLID;
+		+NOGRAVITY;
+		+NOBLOCKMAP;
+		+MOVEWITHSECTOR;
+		+FLATSPRITE;
+	}
+
+	override void PostBeginPlay() {
+
+		super.PostBeginPlay();
+
+		if (floorz < self.pos.z)
+			SetState(null);
+
+		A_Explode(50, 6, XF_EXPLICITDAMAGETYPE, FALSE, 0, 0, 0, "", "EvaSplashDamage");
+	}
+
+	states {
+
+		spawn:
+			FEET A 140;
+			FEET A 1 A_FadeOut(0.01);
+			wait;
 	}
 }

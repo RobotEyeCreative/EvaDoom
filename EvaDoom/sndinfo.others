@@ -3,3 +3,8 @@
 
 EvaDoom/ATField/Activate 					sounds/snd_other/snd_other_atfield/atfield_activate.ogg
 $Volume EvaDoom/ATField/Activate			0.3
+
+EvaDoom/EvaUnit/Run01						sounds/snd_other/eva_run01.wav
+$Volume EvaDoom/EvaUnit/Run01				1.0
+EvaDoom/EvaUnit/Run02						sounds/snd_other/eva_run02.wav
+$Volume EvaDoom/EvaUnit/Run02				1.0
