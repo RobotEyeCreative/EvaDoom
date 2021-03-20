@@ -220,7 +220,7 @@ class Eva01Fists : eva01weapon {
 					A_SetTics(3);
 			}
 			E1FI A 4;
-			E1FI A 1 A_ReFire;
+			E1FI A 1 A_ReFire("seriespunches");
 			goto ready;
 		runningpunch:
 			E1FI AB 1;

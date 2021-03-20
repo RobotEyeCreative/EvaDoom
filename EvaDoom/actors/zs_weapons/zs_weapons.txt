@@ -1,6 +1,8 @@
 
 #include "actors/zs_weapons/zs_weapon_evadoomweapon.txt"
 
+#include "actors/zs_weapons/zs_weapon_evabullet.txt"
+
 #include "actors/zs_weapons/zs_weapon_eva01_assaultrifle.txt"
 #include "actors/zs_weapons/zs_weapon_eva01_handgun.txt"
 #include "actors/zs_weapons/zs_weapon_eva01_fists.txt"

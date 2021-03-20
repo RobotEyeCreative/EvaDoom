@@ -25,7 +25,8 @@ class evadoomweapon : weapon abstract {
 
 		super.Tick();
 
-		if (owner.player.ReadyWeapon &&
+		if (owner &&
+			owner.player.ReadyWeapon &&
 			owner.player.ReadyWeapon.getClassName() == self.getClassName() &&
 			owner.player.WeaponState & WF_WEAPONBOBBING)
 			weaponSway();
@@ -33,45 +34,42 @@ class evadoomweapon : weapon abstract {
 
 	void weaponSway () {
 
-		if (owner) {
-			
-			let pspr = owner.player.psprites;
-			
-			if (!pspr) return;
-			
-			// horizontal sway
+		let pspr = owner.player.psprites;
+		
+		if (!pspr) return;
+		
+		// horizontal sway
 
-			double xinput = owner.GetPlayerInput(MODINPUT_SIDEMOVE);
+		double xinput = owner.GetPlayerInput(MODINPUT_SIDEMOVE);
 
-			//xinput *= SWAY_SENSITIVITY_X / 10240.0;
+		//xinput *= SWAY_SENSITIVITY_X / 10240.0;
 
-			if (xoffsmem.Size() > 3)
-				xoffsmem.Delete(0);
-			
-			xoffsmem.Push(xoffs); // store older xoffs values, needed for combo reading.
+		if (xoffsmem.Size() > 3)
+			xoffsmem.Delete(0);
+		
+		xoffsmem.Push(xoffs); // store older xoffs values, needed for combo reading.
 
-			if (xinput > 0)
-				xoffs += (maxswayx - xoffs) / swayxspeed;
-			else if (xinput < 0)
-				xoffs += (-maxswayx - xoffs) / swayxspeed;
-			else
-				xoffs *= abs(xoffs) < 0.5 ? 0 : recenterspeed; // recenter xoffs
+		if (xinput > 0 && owner.CountInv("evaenergy") > 0)
+			xoffs += (maxswayx - xoffs) / swayxspeed;
+		else if (xinput < 0 && owner.CountInv("evaenergy") > 0)
+			xoffs += (-maxswayx - xoffs) / swayxspeed;
+		else
+			xoffs *= abs(xoffs) < 0.5 ? 0 : recenterspeed; // recenter xoffs
 
-			double swayx = clamp(xoffs, -maxswayx, maxswayx);
-			
-			//Console.Printf("%d, time = %d, a = %s", xoffs, Level.maptime, getClassName());
-			
-			pspr.x = mirrorx ? -swayx : swayx;
+		double swayx = clamp(xoffs, -maxswayx, maxswayx);
+		
+		//Console.Printf("%d, time = %d, a = %s", xoffs, Level.maptime, getClassName());
+		
+		pspr.x = mirrorx ? -swayx : swayx;
 
-			// vertical sway
+		// vertical sway
 
-			/*
-			pspr.y = ypitch + 32;
+		/*
+		pspr.y = ypitch + 32;
 
-			pspr.y += player.vel.z; // add jump z
-			pspr.y = clamp(pspr.y, -maxswayy, maxswayy);
-			*/
-		}
+		pspr.y += player.vel.z; // add jump z
+		pspr.y = clamp(pspr.y, -maxswayy, maxswayy);
+		*/
 	}
 }
 

@@ -8,12 +8,12 @@ class HeavyBullets : ammo {
 		
 		radius 8;
 		height 8;
-		inventory.pickupmessage "Heavy Bullets +50";
+		inventory.pickupmessage "Heavy Bullets +30";
 		//inventory.icon "ICONA0";
-		inventory.amount 50;
-		inventory.maxamount 300;
-		ammo.backpackamount 50;
-		ammo.backpackmaxamount 400;
+		inventory.amount 30;
+		inventory.maxamount 90;
+		ammo.backpackamount 30;
+		ammo.backpackmaxamount 150;
 	}
 	
 	states {
