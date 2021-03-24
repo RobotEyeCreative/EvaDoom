@@ -1,0 +1,1 @@
+#include "actors/gl_weapons/gl_weapon_eva01_assaultrifle.txt"
