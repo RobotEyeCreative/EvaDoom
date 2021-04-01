@@ -1,0 +1,7 @@
+class structure : actor abstract {
+    
+    default {
+        
+        //$Category Evangelion/Structures
+    }
+}

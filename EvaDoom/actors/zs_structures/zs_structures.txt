@@ -1,0 +1,3 @@
+#include "actors/zs_structures/zs_structures_structure.txt"
+#include "actors/zs_structures/zs_structures_cityblock1.txt"
+#include "actors/zs_structures/zs_structures_cityblock2.txt"

@@ -82,6 +82,10 @@ doomednums {
     10731 = decoration_lamp_01
     10732 = decoration_desk_01
 	10733 = decoration_tree
+
+	// Structures
+	10900 = structure_cityblock_01
+	10901 = structure_cityblock_02
 	
 	// Others
 	11000 = evaenergybeacon

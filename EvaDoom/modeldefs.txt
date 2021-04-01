@@ -1,0 +1,12 @@
+// Buildings
+
+// structure_cityblock_01
+Model structure_cityblock_01 {
+	
+	Path "models/buildings/buildingcity1"
+	Model 0 "structure1.obj"
+	//Model 1 "structure1.obj"
+	
+	Scale 10.0 10.0 6.0
+	FrameIndex MODL A 0 0
+}

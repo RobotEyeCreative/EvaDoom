@@ -1,0 +1,3 @@
+BLOCA = "voxels/buildings/buildingcity1/structure1.kvx" { 
+	Scale = 18.0
+}
