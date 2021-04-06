@@ -1,16 +1,16 @@
-class structure_cityblock_01 : structure {
+class structure : actor abstract {
     
     default {
         
-        radius 104;
-        height 560;
+        //$Category Evangelion/Structures
 
         +SOLID;
         +SHOOTABLE;
         +DONTTHRUST;
         +NODAMAGE;
+        +NOBLOOD;
     }
-    
+
     states {
         
         spawn:

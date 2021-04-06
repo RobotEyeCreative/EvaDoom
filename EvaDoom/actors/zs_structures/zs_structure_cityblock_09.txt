@@ -1,0 +1,8 @@
+class structure_cityblock_09 : structure {
+    
+    default {
+        
+        radius 104;
+        height 560;
+    }
+}

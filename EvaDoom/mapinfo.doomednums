@@ -86,6 +86,15 @@ doomednums {
 	// Structures
 	10900 = structure_cityblock_01
 	10901 = structure_cityblock_02
+	10902 = structure_cityblock_03
+	10903 = structure_cityblock_04
+	10904 = structure_cityblock_05
+	10905 = structure_cityblock_06
+	10906 = structure_cityblock_07
+	10907 = structure_cityblock_08
+	10908 = structure_cityblock_09
+	10909 = structure_cityblock_10
+
 	
 	// Others
 	11000 = evaenergybeacon

@@ -1,0 +1,9 @@
+Model structure_cityblock_07 {
+	
+	Path "models/buildings/cityblock_07"
+	Model 0 "cityblock_07.obj"
+	Skin 0 "cityblock_07.png"
+	
+	Scale 10.0 10.0 10.0
+	FrameIndex MODL A 0 0
+}

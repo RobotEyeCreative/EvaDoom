@@ -1,0 +1,4 @@
+material texture "models/buildings/cityblock_04/cityblock_04.png" 
+{
+    shader "shaders/simsun.fp"
+}
