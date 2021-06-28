@@ -82,6 +82,19 @@ map EVAD02 "Misato's Apartment" {
 	ResetInventory
 }
 
+map EVAD13 "Central Dogma - Eva01 Cage" {
+	
+	levelnum = 13
+	next = "MAP03"
+	music = "D_STALKS"
+	sky1 = "RSKY1", 0
+	exitpic = "INTER00"
+	enterpic = "INTER00"
+	nolightfade
+	ResetHealth
+	ResetInventory
+}
+
 map EVAD98 "Tokyo-3 Pre-Alpha version" {
 	
 	levelnum = 98

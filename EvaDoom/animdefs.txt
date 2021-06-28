@@ -7,3 +7,5 @@ Texture HUD_BL1 Range HUD_BL2 Tics 1
 Texture HUD_BR1 Range HUD_BR4 Tics 2
 
 Texture LAPC1 Range LAPC3 Tics 6
+
+Warp texture CAGE011

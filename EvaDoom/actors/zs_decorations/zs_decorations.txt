@@ -33,6 +33,6 @@
 #include "actors/zs_decorations/zs_decoration_lamp01.txt"
 #include "actors/zs_decorations/zs_decoration_desc01.txt"
 
-
+#include "actors/zs_decorations/zs_decoration_eva01.txt"
 
 

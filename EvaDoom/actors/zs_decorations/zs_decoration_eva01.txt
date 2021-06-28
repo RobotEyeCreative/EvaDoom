@@ -1,0 +1,23 @@
+class decoration_eva01 : actor {
+    
+    default {
+        
+        //$Category Evangelion/Decoration
+
+        radius 192;
+        height 128;
+
+        +SHOOTABLE;
+        +DONTTHRUST;
+        +NODAMAGE;
+        +NOBLOOD;
+        +NOGRAVITY;
+    }
+
+    states {
+        
+        spawn:
+            MODL A -1;
+            loop;
+    }
+}
