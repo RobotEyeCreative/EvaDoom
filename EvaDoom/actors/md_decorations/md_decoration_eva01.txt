@@ -7,5 +7,5 @@ Model decoration_eva01 {
 	Scale 100.0 100.0 100.0
 	FrameIndex MODL A 0 0
 
-	USEACTORPITCH
+	//USEACTORPITCH
 }

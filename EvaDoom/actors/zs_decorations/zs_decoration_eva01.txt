@@ -4,8 +4,8 @@ class decoration_eva01 : actor {
         
         //$Category Evangelion/Decoration
 
-        radius 192;
-        height 128;
+        radius 384;
+        height 3600;
 
         +SHOOTABLE;
         +DONTTHRUST;
