@@ -55,23 +55,9 @@ defaultmap {
 	compat_floormove = 0
 }
 
-map EVAD01 "Tokyo-3" {
+map MAP01 "Misato's Apartment" {
 	
 	levelnum = 1
-	//titlepatch = ""
-	next = "EVAD02"
-	//nointermission
-	//noinventorybar
-	music = "music/music_tokyo3.midi"
-	//fogdensity = 100
-	sky1 = "RSKY1", 0
-	exitpic = "INTER00"
-	enterpic = "INTER00"
-}
-
-map EVAD02 "Misato's Apartment" {
-	
-	levelnum = 2
 	next = "MAP03"
 	music = "music/music_apartment.wav"
 	sky1 = "RSKY1", 0
@@ -82,7 +68,21 @@ map EVAD02 "Misato's Apartment" {
 	ResetInventory
 }
 
-map EVAD13 "Central Dogma - Eva01 Cage" {
+map MAP04 "Tokyo-3" {
+	
+	levelnum = 4
+	//titlepatch = ""
+	next = "EVA02"
+	//nointermission
+	//noinventorybar
+	music = "music/music_tokyo3.midi"
+	//fogdensity = 100
+	sky1 = "RSKY1", 0
+	exitpic = "INTER00"
+	enterpic = "INTER00"
+}
+
+map MAP13 "Central Dogma - Eva01 Cage" {
 	
 	levelnum = 13
 	next = "MAP03"
@@ -95,7 +95,7 @@ map EVAD13 "Central Dogma - Eva01 Cage" {
 	ResetInventory
 }
 
-map EVAD98 "Tokyo-3 Pre-Alpha version" {
+map MAP98 "Tokyo-3 Pre-Alpha version" {
 	
 	levelnum = 98
 	//titlepatch = ""
@@ -109,7 +109,7 @@ map EVAD98 "Tokyo-3 Pre-Alpha version" {
 	enterpic = "INTER00"
 }
 
-map EVAD99 "Testing Map" {
+map MAP99 "Testing Map" {
 	
 	levelnum = 99
 	next = "MAP03"

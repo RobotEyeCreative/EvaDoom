@@ -6,6 +6,7 @@ class decoration_eva01 : actor {
 
         radius 384;
         height 3600;
+		renderradius 4096;
 
         +SHOOTABLE;
         +DONTTHRUST;
