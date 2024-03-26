@@ -1,0 +1,202 @@
+
+class playerIdentity : inventory {
+	
+	default {
+		
+		inventory.amount 1;
+		inventory.maxamount 6;
+		+INVENTORY.PERSISTENTPOWER;
+	}
+}
+
+class changeIdentity : inventory abstract {
+	
+	default {
+		
+		inventory.amount 1;
+		inventory.maxamount 1;
+		+INVENTORY.PERSISTENTPOWER;
+	}
+}
+
+class enterEva00 : changeIdentity {}
+class enterEva01 : changeIdentity {}
+class enterEva02 : changeIdentity {}
+class playChild0 : changeIdentity {}
+class playChild1 : changeIdentity {}
+class playChild2 : changeIdentity {}
+
+struct playerProperties {
+	
+	string soundclass;
+	int mass;
+	int air;
+	int viewh;
+	int attackz;
+	double friction;
+	double fm1;
+	double fm2;
+	double sm1;
+	double sm2;
+	double jumpz;
+	double viewbob;
+	double fallingdmg;
+	bool gib;
+	double syncfactor;
+	int syncamount;
+	int syncreg;
+	int syncregdelay;
+	int syncreghealth;
+	int height;
+	int radius;
+	int maxstep;
+}
+
+
+extend class evangelionPlayer {
+	
+	// Stores player properties for each class.
+	playerProperties PP[6];
+	
+	// Initializes properties to default values
+	override void PostBeginPlay () {
+		
+		super.PostBeginPlay();
+		
+		if (getAge() < 1) {
+			
+			changeClass(4); //Set pilot 1 as default start;
+			
+			for (int i = 1; i <= PP.size(); i++)
+				setDefaultProperties(i);
+		}
+	}
+	
+	void setDefaultProperties (int classid) {
+		
+		playerProperties p;
+		
+		switch (classid) {
+			case 1: p.soundclass = "eva01"; p.mass = 6000; p.air = 0; p.viewh = 56; p.attackz = 25; p.friction = 1.05; p.fm1 = 2.0; p.fm2 = 2.4; p.sm1 = 1.4; p.sm2 = 0.4; p.jumpz = 15.0; p.viewbob = 1.2; p.fallingdmg = 0.0; p.gib = false; p.syncreg = 15; p.syncregdelay = 70; p.syncreghealth = 50; p.height = 56; p.radius = 16; p.maxstep = 28; break;
+			case 2: p.soundclass = "eva01"; p.mass = 6000; p.air = 0; p.viewh = 56; p.attackz = 25; p.friction = 1.05; p.fm1 = 2.0; p.fm2 = 2.4; p.sm1 = 1.4; p.sm2 = 0.4; p.jumpz = 15.0; p.viewbob = 1.2; p.fallingdmg = 0.0; p.gib = false; p.syncreg = 15; p.syncregdelay = 70; p.syncreghealth = 50; p.height = 56; p.radius = 16; p.maxstep = 28; break;
+			case 3: p.soundclass = "eva01"; p.mass = 6000; p.air = 0; p.viewh = 56; p.attackz = 25; p.friction = 1.05; p.fm1 = 2.0; p.fm2 = 2.4; p.sm1 = 1.4; p.sm2 = 0.4; p.jumpz = 15.0; p.viewbob = 1.2; p.fallingdmg = 0.0; p.gib = false; p.syncreg = 15; p.syncregdelay = 70; p.syncreghealth = 50; p.height = 56; p.radius = 16; p.maxstep = 28; break;
+			case 4: p.soundclass = "shinji"; p.mass = 90; p.air = 5; p.viewh = 40; p.attackz = 16; p.friction = 1.0; p.fm1 = 0.25; p.fm2 = 0.42; p.sm1 = 0.2; p.sm2 = 0.3; p.jumpz = 0.0; p.viewbob = 0.2; p.fallingdmg = 1.0; p.gib = true; p.syncreg = 0; p.syncregdelay = 0; p.syncreghealth = 0; p.height = 48; p.radius = 8; p.maxstep = 16; break;
+			case 5: p.soundclass = "shinji"; p.mass = 90; p.air = 5; p.viewh = 40; p.attackz = 16; p.friction = 1.0; p.fm1 = 0.25; p.fm2 = 0.42; p.sm1 = 0.2; p.sm2 = 0.3; p.jumpz = 0.0; p.viewbob = 0.2; p.fallingdmg = 1.0; p.gib = true; p.syncreg = 0; p.syncregdelay = 0; p.syncreghealth = 0; p.height = 48; p.radius = 8; p.maxstep = 16; break;
+			case 6: p.soundclass = "shinji"; p.mass = 90; p.air = 5; p.viewh = 40; p.attackz = 16; p.friction = 1.0; p.fm1 = 0.25; p.fm2 = 0.42; p.sm1 = 0.2; p.sm2 = 0.3; p.jumpz = 0.0; p.viewbob = 0.2; p.fallingdmg = 1.0; p.gib = true; p.syncreg = 0; p.syncregdelay = 0; p.syncreghealth = 0; p.height = 48; p.radius = 8; p.maxstep = 16; break;
+		}
+		
+		//PP[classid-1] = p; // Why is this treated as a pointer?... (Struct assignment not implemented yet!)
+		PP[classid-1].soundclass = p.soundclass;
+		PP[classid-1].mass = p.mass;
+		PP[classid-1].air = p.air;
+		PP[classid-1].viewh = p.viewh;
+		PP[classid-1].attackz = p.attackz;
+		PP[classid-1].friction = p.friction;
+		PP[classid-1].fm1 = p.fm1;
+		PP[classid-1].fm2 = p.fm2;
+		PP[classid-1].sm1 = p.sm1;
+		PP[classid-1].sm2 = p.sm2;
+		PP[classid-1].jumpz = p.jumpz;
+		PP[classid-1].viewbob = p.viewbob;
+		//PP[classid-1].fallingdmg = p.fallingdmg;
+		PP[classid-1].gib = p.gib;
+		PP[classid-1].syncreg = p.syncreg;
+		PP[classid-1].syncregdelay = p.syncregdelay;
+		PP[classid-1].syncreghealth = p.syncreghealth;
+		PP[classid-1].height = p.height;
+		PP[classid-1].radius = p.radius;
+		PP[classid-1].maxstep = p.maxstep;
+	}
+	
+	// Detects if we want to change player class and acts
+	void refreshStatus () {
+		
+		int newclass;
+		
+		if		(CountInv("enterEva00") > 0) { resetInv(); newclass = 1; A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); A_GiveInventory("evaenergy", 1800); }
+		else if (CountInv("enterEva01") > 0) { resetInv(); newclass = 2; A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); A_GiveInventory("evaenergy", 3000); }
+		else if (CountInv("enterEva02") > 0) { resetInv(); newclass = 3; A_GiveInventory("Eva01Fists", 1); A_GiveInventory("Eva01HandGun", 1); A_GiveInventory("evaenergy", 3000); }
+		else if (CountInv("playChild0") > 0) { resetInv(); newclass = 4; A_SetInventory("evasynchronization", 100); }
+		else if (CountInv("playChild1") > 0) { resetInv(); newclass = 5; A_SetInventory("evasynchronization", 100); }
+		else if (CountInv("playChild2") > 0) { resetInv(); newclass = 6; A_SetInventory("evasynchronization", 100); }
+		else return;
+		
+		changeClass(newclass);
+	}
+	
+	void resetInv () {
+		
+		A_TakeInventory("enterEva00");
+		A_TakeInventory("enterEva01");
+		A_TakeInventory("enterEva02");
+		A_TakeInventory("playChild0");
+		A_TakeInventory("playChild1");
+		A_TakeInventory("playChild2");
+		
+		A_TakeInventory("Eva01Fists");
+		A_TakeInventory("Eva01HandGun");
+		A_TakeInventory("Eva01AssaultRifle");
+		A_TakeInventory("Bullets");
+		A_TakeInventory("HeavyBullets");
+		
+		A_TakeInventory("evaenergy");
+		//A_TakeInventory("evasynchronization");
+		A_TakeInventory("atfield");
+	}
+	
+	void applyProperties (int id) {
+		
+		double multiplier;
+		
+		// if we're in pilot form, don't use synchronization
+		if (CountInv("playerIdentity") > 3)
+			multiplier = 1.0;
+		// if we don't have energy nor berserk, stop.
+		else if (PP[id].syncfactor <= 1.0 && CountInv("evaenergy") == 0)
+			multiplier = 0;
+		// if synchronization is 100% or greater (berserk), slow the multiplier increase even more
+		else if (PP[id].syncfactor >= 1.0)
+			multiplier = (((PP[id].syncfactor-1.0)/16.0)+1.0);
+		// if synchronization is 50% or greater, slow the multiplier increase
+		else if (PP[id].syncfactor >= 0.5)
+			multiplier = 0.2 + (((PP[id].syncfactor-0.5)/4.0)+0.5);
+		// if synchronization is less than 2%, stop.
+		else if (PP[id].syncfactor <= 0.02)
+			multiplier = 0;
+		else
+			multiplier = 0.2 + PP[id].syncfactor;
+		
+		//A_SetMugshotState("E01");
+		//face = "E01";
+		mass = PP[id].mass;
+		aircapacity = PP[id].air;
+		viewheight = PP[id].viewh;
+		attackzoffset = PP[id].attackz;
+		friction = PP[id].friction;
+		
+		forwardmove1 = PP[id].fm1 * multiplier;
+		forwardmove2 = PP[id].fm2 * multiplier;
+		sidemove1 = PP[id].sm1 * multiplier;
+		sidemove2 = PP[id].sm2 * multiplier;
+		
+		// if we're in an evaunit, and synchronization is less than 30%, disable jumping
+		if (CountInv("playerIdentity") <= 3 && PP[id].syncfactor < 0.3)
+			jumpz = 0;
+		else
+			jumpz = PP[id].jumpz * multiplier;
+		
+		viewbob = PP[id].viewbob * multiplier;
+		//damagefactor "falling" = PP[id].fallingdmg;
+		bDONTGIB = PP[id].gib;
+		
+		A_SetSize(PP[id].radius, PP[id].height);
+		maxstepheight = PP[id].maxstep;
+	}
+	
+	void changeClass (int classid) {
+		
+		A_SetInventory("playerIdentity", classid);
+		
+		applyProperties(classid);
+	}
+}

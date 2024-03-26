@@ -1,0 +1,25 @@
+class HeavyBullets : ammo {
+	
+	default {
+		
+		//$NotAngled
+		//$Category Evangelion/Ammo
+		//$Title "Bullets"
+		
+		radius 8;
+		height 8;
+		inventory.pickupmessage "Heavy Bullets +30";
+		//inventory.icon "ICONA0";
+		inventory.amount 30;
+		inventory.maxamount 90;
+		ammo.backpackamount 30;
+		ammo.backpackmaxamount 150;
+	}
+	
+	states {
+		
+		spawn:
+			AMMO A -1;
+			loop;
+	}
+}

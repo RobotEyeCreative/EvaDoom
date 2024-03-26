@@ -1,0 +1,46 @@
+// Each NPC has an identificative tag starting from 500! (Up to MaxNPCS)
+// The id is defined as the doomid order as specified in mapinfo.
+// This is used in the scripted event system, aswell as in the conversation system!
+
+#define NPCTagStart 500
+#define NPCEvaUnits 3
+#define NPCEva00 1
+#define NPCEva01 2
+#define NPCEva02 3
+#define NPCRei 4
+#define NPCShinji 5
+#define NPCAsuka 6
+#define NPCMisato 7
+
+// ----------------------------------------------------------------------------------------------------------
+// Conversation system library constants (convlib)
+// ----------------------------------------------------------------------------------------------------------
+
+// Conversation system variables
+#define MaxResponses 8
+
+// Conversation hud display properties
+#define WritingSpeed 0.025
+#define NoTime 32000.0
+#define IDStart 20
+
+#define VHudX 1280
+#define VHudY 960
+#define VHudXc (VHudX/2)*1.0
+#define VHudYc (VHudY/2)*1.0
+#define XCoord 50.0
+#define YCoord 700.0
+#define OptionsLineSpacing 25.0
+#define YGap 80.0
+
+#define PortraitY YCoord-49.0
+#define NameY YCoord-79.0
+#define MessageY YCoord-10.0
+
+// ----------------------------------------------------------------------------------------------------------
+// Exploration system library constants (explib)
+// ----------------------------------------------------------------------------------------------------------
+
+#define EXCoord 55.0
+#define EYCoord 670.0
+#define EWritingSpeed 0.035

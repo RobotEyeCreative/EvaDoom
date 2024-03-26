@@ -1,0 +1,18 @@
+
+extend class MinimalStatusBar {
+	
+	void DrawFullScreenConversation (double TicFrac) {
+		
+		// ----------------- conversation text hud
+		
+		
+		// Resize factor making sure the image fills the vertical space
+		Double relationCorrection = 1.0+(16.0/9.0);
+		relationCorrection -= Screen.GetWidth()/(1.0*Screen.GetHeight());
+		Double resolutionFactorFill = relationCorrection*Screen.GetWidth()*0.000525;
+		
+		DrawImage("graphics/chud/chud.png", (0, 0), DI_ITEM_CENTER | DI_SCREEN_CENTER, 0.7, (-1, -1), resolutionFactorFill*(1.0, 1.0));
+	}
+}
+
+	

@@ -1,0 +1,15 @@
+class decoration_kettle_01 : decoration {
+    
+    default {
+        
+        radius 5;
+        height 17;
+    }
+    
+    states {
+        
+        spawn:
+            KE01 A -1;
+            loop;
+    }
+}

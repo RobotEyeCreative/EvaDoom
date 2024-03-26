@@ -1,0 +1,40 @@
+class decoration_tree : decoration {
+	
+	default {
+		
+		health 8;
+		damagefactor "EvaSplashDamage", 1.0;
+		radius 7;
+		height 12;
+		
+		+VULNERABLE;
+		+NOBLOOD;
+		+DONTGIB;
+		+DONTDRAIN;
+		+DONTTHRUST;
+	}
+	
+	states {
+		
+		spawn:
+			TREE A 0 NoDelay A_Jump(256, "tree01", "tree02", "tree03", "tree04", "tree05");
+		death:
+			TREE Z -1;
+			stop;
+		tree01:
+			TREE A -1;
+			stop;
+		tree02:
+			TREE B -1;
+			stop;
+		tree03:
+			TREE C -1;
+			stop;
+		tree04:
+			TREE D -1;
+			stop;
+		tree05:
+			TREE E -1;
+			stop;
+	}
+}

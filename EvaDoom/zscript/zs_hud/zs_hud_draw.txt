@@ -1,0 +1,68 @@
+
+extend class MinimalStatusBar {
+	
+	override void DrawAutomapHUD (double ticFrac) {
+		// This uses the normal automap HUD but just changes the highlight color.
+		DoDrawAutomapHUD(Font.CR_GREY, Font.CR_UNTRANSLATED);
+	}
+	
+	override void Draw (int state, double TicFrac) {
+		
+		// player data
+		PlayerInfo cp = CPlayer;
+		let pmo = cp.mo;
+		
+		// create the list of owned ammo
+		// this only contains ammo that the player has weapons for
+		ownedAmmo.Clear();
+		// credit to argv on zdf for the following if() {} block - my implementation for this was slow
+		// as all fuck, and upon it being brought up, jesus was my original code bad D:
+		// this should be far faster
+		if (cp) {
+			
+			for (let inv = pmo.Inv; inv; inv = inv.Inv) {
+				// [argv] look through the player pawn's inventory for weapons
+				if (inv is "Weapon") {
+					// [argv] take each ammo item, and add it to ownedAmmo if not already present
+					let ammo = Weapon(inv).Ammo1;
+					if (ammo && ownedAmmo.Size() == ownedAmmo.Find(ammo))
+						ownedAmmo.Push(ammo);
+					
+					ammo = Weapon(inv).Ammo2;
+					if (ammo && ownedAmmo.Size() == ownedAmmo.Find(ammo))
+						ownedAmmo.Push(ammo);
+				}
+			}
+		}
+		
+		Super.Draw(state, TicFrac);
+		
+		BeginHUD();
+		
+		int convtype = pmo.CountInv("playerConversation");
+
+		if (cp && !automapactive) {
+
+			switch (pmo.CountInv("playerIdentity")) {
+				case 1:
+				case 2:
+				case 3:
+					DrawFullScreenEvangelion(TicFrac, cp); // Show evangelion hud.
+
+					//if (convtype == 2) // Player talks with an NPC, being in an EVA unit
+						//DrawFullScreenConversationInEva(TicFrac, cp);
+					break;
+				case 4:
+				case 5:
+				case 6:
+					DrawFullScreenPilot(TicFrac); // Show pilot hud. [UNUSED]
+
+					if (convtype == 1) // Player enters conversation with an NPC in pilot form
+						DrawFullScreenConversation(TicFrac);
+					else if (convtype == 3) // Player makes or hears a commentary
+						DrawCommentary(TicFrac);
+			}
+		}
+	}
+}
+

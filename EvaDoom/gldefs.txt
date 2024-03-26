@@ -1,0 +1,17 @@
+
+// GLDefs
+//#include "actors/gl_monsters/gl_monsters.txt"
+#include "actors/gl_weapons/gl_weapons.txt"
+#include "actors/gl_structures/gl_structures.txt"
+
+
+
+// Brightmaps
+#include "brightmaps/bm_monsters/bm_monsters.txt"
+
+
+
+
+
+
+

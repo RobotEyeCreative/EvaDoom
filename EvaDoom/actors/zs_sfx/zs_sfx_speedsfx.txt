@@ -1,0 +1,35 @@
+
+class speedsfx : Actor {
+
+	default {
+
+		radius 2;
+		height 2;
+		scale 0.5;
+		renderstyle "Add";
+		alpha 0.5;
+
+		+NOBLOCKMAP;
+		+NOGRAVITY;
+		+ROLLSPRITE;
+	}
+
+	states {
+
+		spawn:
+			SPED A 0 NoDelay A_SetRoll(random(-40,40));
+			SPED A 1 A_FadeOut(0.15);
+			wait;
+	}
+}
+
+class speedsfx2 : speedsfx {
+
+	states {
+
+		spawn:
+			SPED A 0 NoDelay A_SetRoll(random(140,220));
+			SPED A 1 A_FadeOut(0.15);
+			wait;
+	}
+}

@@ -1,0 +1,54 @@
+
+extend class evangelionPlayer {
+
+	override void PlayRunning () {
+
+		super.PlayRunning();
+		
+		// Destructive effect
+		if (CheckInventory("evarunning", 1)) {
+
+			A_Explode(10, 16, XF_EXPLICITDAMAGETYPE, FALSE, 0, 0, 0, "", "EvaSplashDamage");
+
+			/* -unsucessful test-
+			vector2 idirection;
+			idirection.x = cos(self.angle); // Inverse direction X
+			idirection.y = sin(self.angle); // Inverse direction Y
+
+			vector2 evaspeedn;
+			evaspeedn.x = self.vel.x / evaspeed; // Inverse direction X
+			evaspeedn.y = self.vel.y / evaspeed; // Inverse direction Y
+
+			double evaangle = evaspeedn dot idirection;
+
+			A_SpawnItemEx("speedsfx", 80.0, 0.0, 50.0, 0.0, 0.0, 0.0, acos(evaangle)*-1);
+			*/
+
+			if (random(0,1))
+				A_SpawnItemEx("speedsfx", 80.0, 0.0, 50.0, 0.0, 8.0, 0.0, 0);
+			else
+				A_SpawnItemEx("speedsfx2", 80.0, 0.0, 50.0, 0.0, -8.0, 0.0, 0);
+		}
+		else if (CheckInventory("evarunning", 1)) {
+			
+			A_Explode(10, 16, XF_EXPLICITDAMAGETYPE, FALSE, 0, 0, 0, "", "EvaSplashDamage");
+			A_Explode(12, 18, XF_EXPLICITDAMAGETYPE, FALSE, 0, 0, 0, "", "EvaSplashDamage");
+
+			if (random(0,1))
+				A_SpawnItemEx("speedsfx", 80.0, 0.0, 50.0, 0.0, 8.0, 0.0, 0);
+			else
+				A_SpawnItemEx("speedsfx2", 80.0, 0.0, 50.0, 0.0, -8.0, 0.0, 0);
+		}
+	}
+}
+
+class evarunning : inventory {
+
+	default {
+		inventory.amount 1;
+		inventory.maxamount 1;
+	}
+}
+
+class evasprinting : evarunning {}
+

@@ -1,0 +1,123 @@
+
+class leliel : angel {
+	
+	double counter;
+	
+	default {
+		
+		//$Title "Leliel"
+		
+		radius 64;
+		height 128;
+		health 3000;
+		speed 0;
+		
+		deathsound "EvaDoom/Monster/Leliel/Death";
+		
+		+NOGRAVITY;
+		+STANDSTILL;
+		+DONTTHRUST;
+		+BLOCKEDBYSOLIDACTORS;
+		+SPAWNCEILING;
+		+FORCEXYBILLBOARD;
+		+BRIGHT;
+	}
+	
+	override void Tick() {
+		
+		super.Tick();
+		
+		if (alpha < 0.7) {
+			bNODAMAGE = true;
+			bSHOOTABLE = false;
+			bSOLID = false;
+			bCANTSEEK = false;
+		} else {
+			bNODAMAGE = false;
+			bSHOOTABLE = true;
+			bSOLID = true;
+			bCANTSEEK = true;
+		}
+	}
+	
+	void SpawnBlood (int amount = 1, double force = 0.0, int probability = 0) {
+		
+		for (int i = 0; i < amount; i++)
+			if (random(0, probability) == 0)
+				A_SpawnItemEx("blood", frandom(radius, -radius), 0, height/2.0, frandom(force/2.0, force), 0, 0, frandom(0.0, 360.0));
+	}
+	
+	states {
+		spawn:
+			LELI ABCDE 8 A_Look;
+			loop;
+		resting:
+			LELI A 70;
+		see:
+			LELI ABCDE 8 {
+				A_Chase("missile", "missile", CHF_DONTTURN|CHF_DONTMOVE);
+				if (target && random(0,10))
+					SetStateLabel("missile");
+			}
+			loop;
+		missile:
+			LELI A 1 {
+				A_FadeOut(0.04, FTF_CLAMP);
+				if (alpha <= 0.0)
+					SetStateLabel("teleport");
+			}
+			loop;
+		teleport:
+			LELI A 0 A_Warp(AAPTR_TARGET, frandom(512.0, -512.0), frandom(512.0, -512.0), frandom((target.ceilingz-target.pos.z)/2.0, target.ceilingz-target.pos.z), 0, 0);
+			LELI A 0 A_JumpIfTargetInLOS("attack", 0, 0); // check if the target is in sight, so it does not teleport behind a wall or outside the map.
+			loop;
+		attack:
+			LELI A 0 A_FaceTarget;
+			LELI A 0 { if (target) spawn("leliel_shadow", target.pos); }//target.A_SpawnItemEx("leliel_shadow"); }
+			LELI A 300;
+			LELI A 1 {
+				A_FadeIn(0.04);
+				if (alpha >= 1.0)
+					SetStateLabel("resting");
+			}
+			wait;
+		death:
+			LELI F 0 { counter = 8.0; alpha = 1.0; bNOGRAVITY = true; }
+			LELI F 0 A_Scream;
+			LELI FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF 1 SpawnBlood(1, 0.0, 5);
+			LELI GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG 1 SpawnBlood(2, 2.0, 2);
+			LELI HHHHHHHH 1 SpawnBlood(128, 8.0);
+			LELI HHHHHHHIIIIIIIJJJJJJJ 1 {
+				counter += 0.5;
+				SpawnBlood(128, counter);
+			}
+			stop;
+	}
+}
+
+class leliel_shadow : pointlight {
+
+	default {
+		
+		args 255, 255, 255, 1;
+		+DYNAMICLIGHT.SUBTRACTIVE;
+		+DYNAMICLIGHT.NOSHADOWMAP;
+	}
+	
+	override void Tick() {
+		
+		if (args[3] < 256) {
+			args[3]++;
+			A_Explode(1, args[3], XF_HURTSOURCE, false, args[3], 0, 0, "", "DiracSea");
+		}
+		else {
+			args[0] -= 8;
+			args[1] -= 8;
+			args[2] -= 8;
+			
+			if (args[0] <= 0)
+				SetState(Null);
+		}
+	}
+	
+}

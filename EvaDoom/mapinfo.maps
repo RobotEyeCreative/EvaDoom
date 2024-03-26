@@ -1,0 +1,118 @@
+defaultmap {
+
+	// Gameplay
+	nocrouch
+	keepfullinventory
+	//fallingdamage
+	//monsterfallingdamage
+	//checkswitchrange
+	//gravity = 800 // default gravity = 800
+	
+	// Gameplay visuals
+	sky1 = "RSKY1", 0
+	//forcenoskystretch
+	//evenlighting
+	//nointermission
+	
+	// GZDoom OpenGL options
+	//fogdensity = 8
+	//outsidefogdensity = 8
+	//skyfog = 1
+	lightmode = 0
+	
+	// Other visuals
+	//bordertexture = ""
+	//titlepatch = ""
+	//mapbackground = "" // automap background image lump
+	
+	// Compatibility options
+	compat_shorttex = 0
+	compat_stairs = 0
+	compat_light = 0
+	compat_limitpain = 0
+	compat_nopassover = 0
+	compat_notossdrops = 0
+	compat_useblocking = 0
+	compat_nodoorlight = 0
+	compat_soundtarget = 0
+	compat_dehhealth = 0
+	compat_trace = 0
+	compat_dropoff = 0
+	compat_crossdropoff = 0
+	compat_invisibility = 0
+	compat_boomscroll = 0
+	compat_silent_instant_floors = 0
+	compat_sectorsounds = 0
+	compat_missileclip = 0
+	compat_anybossdeath = 0
+	compat_mbfmonstermove = 0
+	compat_corpsegibs = 0
+	compat_noblockfriends = 0
+	compat_spritesort = 0
+	compat_polyobj = 0
+	compat_maskedmidtex = 0
+	compat_badangles = 0
+	compat_floormove = 0
+}
+
+map MAP01 "Misato's Apartment" {
+	
+	levelnum = 1
+	next = "MAP03"
+	music = "music/music_apartment.wav"
+	sky1 = "RSKY1", 0
+	exitpic = "INTER00"
+	enterpic = "INTER00"
+	nolightfade
+	ResetHealth
+	ResetInventory
+}
+
+map MAP04 "Tokyo-3" {
+	
+	levelnum = 4
+	//titlepatch = ""
+	next = "EVA02"
+	//nointermission
+	//noinventorybar
+	music = "music/music_tokyo3.midi"
+	//fogdensity = 100
+	sky1 = "RSKY1", 0
+	exitpic = "INTER00"
+	enterpic = "INTER00"
+}
+
+map MAP13 "Central Dogma - Eva01 Cage" {
+	
+	levelnum = 13
+	next = "MAP03"
+	music = "D_STALKS"
+	sky1 = "RSKY1", 0
+	exitpic = "INTER00"
+	enterpic = "INTER00"
+	nolightfade
+	ResetHealth
+	ResetInventory
+}
+
+map MAP98 "Tokyo-3 Pre-Alpha version" {
+	
+	levelnum = 98
+	//titlepatch = ""
+	next = "Apartment"
+	//nointermission
+	//noinventorybar
+	music = "music/music_tokyo3.midi"
+	//fogdensity = 100
+	sky1 = "RSKY1", 0
+	exitpic = "INTER00"
+	enterpic = "INTER00"
+}
+
+map MAP99 "Testing Map" {
+	
+	levelnum = 99
+	next = "MAP03"
+	ResetHealth
+	ResetInventory
+}

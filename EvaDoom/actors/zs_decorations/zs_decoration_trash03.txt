@@ -1,0 +1,15 @@
+class decoration_trash_03 : decoration {
+    
+    default {
+        
+        radius 5;
+        height 24;
+    }
+    
+    states {
+        
+        spawn:
+            TR03 A -1;
+            loop;
+    }
+}

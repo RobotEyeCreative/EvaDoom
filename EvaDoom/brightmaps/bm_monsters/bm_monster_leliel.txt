@@ -1,0 +1,7 @@
+// Leliel brightmaps
+
+brightmap sprite LELIA0 { map "brightmaps/bm_monsters/bm_monster_leliel/LELIZ0.png" disablefullbright }
+brightmap sprite LELIB0 { map "brightmaps/bm_monsters/bm_monster_leliel/LELIZ0.png" disablefullbright }
+brightmap sprite LELIC0 { map "brightmaps/bm_monsters/bm_monster_leliel/LELIZ0.png" disablefullbright }
+brightmap sprite LELID0 { map "brightmaps/bm_monsters/bm_monster_leliel/LELIZ0.png" disablefullbright }
+brightmap sprite LELIE0 { map "brightmaps/bm_monsters/bm_monster_leliel/LELIZ0.png" disablefullbright }

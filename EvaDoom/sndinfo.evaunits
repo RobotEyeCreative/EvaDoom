@@ -1,0 +1,81 @@
+
+// #### Player classes ####
+
+// Evangelion Unit 01
+
+$playersound	eva01	male	*death		sounds/snd_other/snd_other_eva01/eva01_death.wav
+$playersound	eva01	male	*xdeath		sounds/snd_other/snd_other_eva01/eva01_xdeath.wav
+$playersound	eva01	male	*gibbed		dsslop
+$playersound	eva01	male	*pain100	sounds/snd_other/snd_other_eva01/eva01_pain.wav
+$playersounddup	eva01	male	*pain75		*pain100
+$playersounddup	eva01	male	*pain50		*pain100
+$playersounddup	eva01	male	*pain25		*pain100
+$playersound	eva01	male	*grunt		sounds/snd_other/eva_fall.wav
+$playersounddup	eva01	male	*land		*grunt
+$playersound	eva01	male	*jump		dsjump
+$playersound	eva01	male	*usefail	sounds/snd_other/eva_action.wav
+
+$playersound	eva01	female	*death		sounds/snd_other/snd_other_eva01/eva01_death.wav
+$playersound	eva01	female	*xdeath		sounds/snd_other/snd_other_eva01/eva01_xdeath.wav
+$playersound	eva01	female	*gibbed		dsslop
+$playersound	eva01	female	*pain100	sounds/snd_other/snd_other_eva01/eva01_pain.wav
+$playersounddup	eva01	female	*pain75		*pain100
+$playersounddup	eva01	female	*pain50		*pain100
+$playersounddup	eva01	female	*pain25		*pain100
+$playersound	eva01	female	*grunt		sounds/snd_other/eva_fall.wav
+$playersounddup	eva01	female	*land		*grunt
+$playersound	eva01	female	*jump		dsfjump
+$playersound	eva01	female	*usefail	sounds/snd_other/eva_action.wav
+
+$playersound	eva01	other	*death		sounds/snd_other/snd_other_eva01/eva01_death.wav
+$playersound	eva01	other	*xdeath		sounds/snd_other/snd_other_eva01/eva01_xdeath.wav
+$playersound	eva01	other	*gibbed		dsslop
+$playersound	eva01	other	*pain100	sounds/snd_other/snd_other_eva01/eva01_pain.wav
+$playersounddup	eva01	other	*pain75		*pain100
+$playersounddup	eva01	other	*pain50		*pain100
+$playersounddup	eva01	other	*pain25		*pain100
+$playersound	eva01	other	*grunt		sounds/snd_other/eva_fall.wav
+$playersounddup	eva01	other	*land		*grunt
+$playersound	eva01	other	*jump		dscjump
+$playersound	eva01	other	*usefail	sounds/snd_other/eva_action.wav
+
+EvaDoom/EvaUnit/Eva01/Fear 					sounds/snd_other/snd_other_eva01/eva01_fear1.wav
+$Volume EvaDoom/EvaUnit/Eva01/Fear			1.0
+
+// Shinji
+
+$playersound	shinji	male	*death		sounds/snd_other/snd_other_eva01/eva01_death.wav
+$playersound	shinji	male	*xdeath		sounds/snd_other/snd_other_eva01/eva01_xdeath.wav
+$playersound	shinji	male	*gibbed		dsslop
+$playersound	shinji	male	*pain100	sounds/snd_other/snd_other_eva01/eva01_pain.wav
+$playersounddup	shinji	male	*pain75		*pain100
+$playersounddup	shinji	male	*pain50		*pain100
+$playersounddup	shinji	male	*pain25		*pain100
+$playersound	shinji	male	*grunt		sounds/snd_other/eva_fall.wav
+$playersounddup	shinji	male	*land		*grunt
+$playersound	shinji	male	*jump		dsjump
+$playersound	shinji	male	*usefail	sounds/snd_other/eva_action.wav
+
+$playersound	shinji	female	*death		sounds/snd_other/snd_other_eva01/eva01_death.wav
+$playersound	shinji	female	*xdeath		sounds/snd_other/snd_other_eva01/eva01_xdeath.wav
+$playersound	shinji	female	*gibbed		dsslop
+$playersound	shinji	female	*pain100	sounds/snd_other/snd_other_eva01/eva01_pain.wav
+$playersounddup	shinji	female	*pain75		*pain100
+$playersounddup	shinji	female	*pain50		*pain100
+$playersounddup	shinji	female	*pain25		*pain100
+$playersound	shinji	female	*grunt		sounds/snd_other/eva_fall.wav
+$playersounddup	shinji	female	*land		*grunt
+$playersound	shinji	female	*jump		dsfjump
+$playersound	shinji	female	*usefail	sounds/snd_other/eva_action.wav
+
+$playersound	shinji	other	*death		sounds/snd_other/snd_other_eva01/eva01_death.wav
+$playersound	shinji	other	*xdeath		sounds/snd_other/snd_other_eva01/eva01_xdeath.wav
+$playersound	shinji	other	*gibbed		dsslop
+$playersound	shinji	other	*pain100	sounds/snd_other/snd_other_eva01/eva01_pain.wav
+$playersounddup	shinji	other	*pain75		*pain100
+$playersounddup	shinji	other	*pain50		*pain100
+$playersounddup	shinji	other	*pain25		*pain100
+$playersound	shinji	other	*grunt		sounds/snd_other/eva_fall.wav
+$playersounddup	shinji	other	*land		*grunt
+$playersound	shinji	other	*jump		dscjump
+$playersound	shinji	other	*usefail	sounds/snd_other/eva_action.wav

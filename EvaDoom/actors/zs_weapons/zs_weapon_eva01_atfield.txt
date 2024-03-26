@@ -1,0 +1,80 @@
+
+class Eva01ATField : eva01weapon {
+	
+	bool right;
+	int drain;
+	
+	property pdrain: drain;
+	
+	default {
+		
+		//$Title "EvaFists"
+		
+		weapon.ammouse 0;
+		weapon.ammotype "";
+		weapon.ammogive 0;
+		//weapon.readysound "";
+		//weapon.upsound "";
+		
+		eva01atfield.pdrain 150;
+		
+		+WEAPON.AMMO_OPTIONAL;
+		+WEAPON.MELEEWEAPON;
+		+WEAPON.NO_AUTO_SWITCH;
+	}
+	
+	states {
+		
+		select:
+			TNT1 A 0 A_Raise(12);
+			loop;
+		deselect:
+			TNT1 A 1 A_Lower(12);
+			loop;
+		ready:
+		fire:
+			E1FI A 0 A_Overlay(10, "left");
+			E1FI A 0 A_OverlayFlags(1, PSPF_FLIP|PSPF_MIRROR, true);
+			E1FI AB 2;
+			E1FI C 0 {
+				
+				A_GiveInventory("atfieldactivated");
+				A_StartSound("EvaDoom/Weapon/EvaFists/Fire");
+			}
+			E1FI CCCCC 8 {
+				
+				A_TakeInventory("atfield", invoker.drain);
+				invoker.owner.SetState(FindState("Missile"));
+				
+				if (CountInv("atfield") == 0)
+					A_SetTics(0);
+				else
+					A_Explode(1, 32, XF_HURTSOURCE); // Spawn the atfield sfx
+			}
+		rightend:
+			E1FI C 0 A_TakeInventory("atfieldactivated");
+			E1FI BAAA 2 { invoker.owner.SetState(FindState("Missile")); }
+			E1FI A 0 {
+				
+				let eva = evangelionPlayer(self);
+				invoker.owner.SetState(FindState("Missile"));
+				
+				if (eva)
+					bool res = A_SelectWeapon(eva.lastWeapon);
+			}
+			EIFI A 1 Bright A_WeaponReady(WRF_NOFIRE);
+			wait;
+		left:
+			E1FI AB 2;
+			E1FI CCCCC 8 {
+				
+				if (CountInv("atfield") == 0)
+					A_SetTics(0);
+			}
+		leftend:
+			E1FI BAAA 2;
+			E1FI A 1 Bright A_WeaponReady(WRF_NOFIRE);
+			E1FI A 1;
+			wait;
+	}
+}

@@ -1,0 +1,4 @@
+:SlidingDoor
+	door 11
+	play EvaDoom/Doors/WoodSlide
+end

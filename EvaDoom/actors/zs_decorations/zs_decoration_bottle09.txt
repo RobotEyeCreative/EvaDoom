@@ -1,0 +1,15 @@
+class decoration_bottle_09 : decoration {
+    
+    default {
+        
+        radius 5;
+        height 17;
+    }
+    
+    states {
+        
+        spawn:
+            BO09 I -1;
+            loop;
+    }
+}

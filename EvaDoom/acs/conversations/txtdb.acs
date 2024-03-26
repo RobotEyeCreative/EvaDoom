@@ -1,0 +1,606 @@
+
+// NPCS conversation lines. (Status count) Change to match the quantity of conversation strings of the npcs.
+#define MaxStates 1024
+
+// NPCS responses. If you want to define more responses, change it. It defines the size of the response array and some other logic.
+#define MaxQuestions 30
+
+#define MaxEmotions 16
+#define MaxNPCS 10
+#define MaxNames 3
+
+// Stores each NPC status.
+int NpcStatus[MaxNPCS] = { 0, 0, 0, 0, 0, 0 };
+
+// Stores names.
+str NpcNames[MaxNPCS][MaxNames] = {
+	
+	{ "Rei",		"¿¿??", "¿¿??" },
+	{ "Shinji",		"¿¿??", "¿¿??" },
+	{ "Asuka",		"¿¿??", "¿¿??" },
+	{ "Kaworu",		"¿¿??", "¿¿??" },
+	{ "Misato",		"¿¿??", "¿¿??" },
+	{ "Ritsuko",	"¿¿??", "¿¿??" },
+	{ "Gendo",		"¿¿??", "¿¿??" },
+	{ "",			"", "" },
+	{ "",			"", "" },
+	{ "",			"", "" },
+};
+
+// Stores potraits lists.
+str NpcPotraits[MaxNPCS][MaxEmotions] = {
+	
+	{ "talk_rei_01", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
+	{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
+	{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
+	{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
+	{ "talk_misato1_happy", "talk_misato2_happy", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
+	{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
+	{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
+	{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
+	{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
+	{ "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
+};
+
+// Defines the npcs answer messages. (Each state has a response (answer) associated)
+str NpcAnswers[MaxNPCS][MaxStates] = {
+	
+	// Rei answers.
+	{
+		"NPC_MIS_A0001",
+		"NPC_MIS_A0002",
+		"NPC_MIS_A0003",
+		
+		"NPC_MIS_A0004",
+		"NPC_MIS_A0005",
+		
+		"NPC_MIS_A0006",
+		
+		"NPC_MIS_A0007",
+		
+		"NPC_MIS_A0008",
+		"NPC_MIS_A0009",
+		"NPC_MIS_A0010",
+		
+		"NPC_MIS_A0011",
+		"NPC_MIS_A0012"
+	},
+	// Shinji answers.
+	{
+		"NPC_MIS_A0001",
+		"NPC_MIS_A0002",
+		"NPC_MIS_A0003",
+		
+		"NPC_MIS_A0004",
+		"NPC_MIS_A0005",
+		
+		"NPC_MIS_A0006",
+		
+		"NPC_MIS_A0007",
+		
+		"NPC_MIS_A0008",
+		"NPC_MIS_A0009",
+		"NPC_MIS_A0010",
+		
+		"NPC_MIS_A0011",
+		"NPC_MIS_A0012"
+	},
+	// Asuka answers.
+	{
+		"NPC_MIS_A0001",
+		"NPC_MIS_A0002",
+		"NPC_MIS_A0003",
+		
+		"NPC_MIS_A0004",
+		"NPC_MIS_A0005",
+		
+		"NPC_MIS_A0006",
+		
+		"NPC_MIS_A0007",
+		
+		"NPC_MIS_A0008",
+		"NPC_MIS_A0009",
+		"NPC_MIS_A0010",
+		
+		"NPC_MIS_A0011",
+		"NPC_MIS_A0012"
+	},
+	// Kaworu answers.
+	{
+		"NPC_MIS_A0001",
+		"NPC_MIS_A0002",
+		"NPC_MIS_A0003",
+		
+		"NPC_MIS_A0004",
+		"NPC_MIS_A0005",
+		
+		"NPC_MIS_A0006",
+		
+		"NPC_MIS_A0007",
+		
+		"NPC_MIS_A0008",
+		"NPC_MIS_A0009",
+		"NPC_MIS_A0010",
+		
+		"NPC_MIS_A0011",
+		"NPC_MIS_A0012"
+	},
+	// Misato answers.
+	{
+		"NPC_MIS_A0001",
+		"NPC_MIS_A0002",
+		"NPC_MIS_A0003",
+		"NPC_MIS_A0004",
+		"NPC_MIS_A0005",
+		"NPC_MIS_A0006",
+		"NPC_MIS_A0007",
+		"NPC_MIS_A0008",
+		"NPC_MIS_A0009",
+		"NPC_MIS_A0010",
+		"NPC_MIS_A0011",
+		"NPC_MIS_A0012"
+	}
+};
+
+// Defines the options the player can answer to the npc (question/RESPONSE).
+str NpcQuestions[MaxNPCS][MaxQuestions] = {
+	
+	// Rei responses.
+	{
+		"NPC_MIS_Q0001",
+		
+		"NPC_MIS_Q0002",
+		"NPC_MIS_Q0003",
+		"NPC_MIS_Q0004",
+		
+		"NPC_MIS_Q0005",
+		"NPC_MIS_Q0006",
+		
+		"NPC_MIS_Q0007",
+		
+		"NPC_MIS_Q0008",
+		"NPC_MIS_Q0009",
+		"NPC_MIS_Q0010",
+		
+		"NPC_MIS_Q0011"
+	},
+	// Shinji responses.
+	{
+		"NPC_MIS_Q0001",
+		
+		"NPC_MIS_Q0002",
+		"NPC_MIS_Q0003",
+		"NPC_MIS_Q0004",
+		
+		"NPC_MIS_Q0005",
+		"NPC_MIS_Q0006",
+		
+		"NPC_MIS_Q0007",
+		
+		"NPC_MIS_Q0008",
+		"NPC_MIS_Q0009",
+		"NPC_MIS_Q0010",
+		
+		"NPC_MIS_Q0011"
+	},
+	// Asuka responses.
+	{
+		"NPC_MIS_Q0001",
+		
+		"NPC_MIS_Q0002",
+		"NPC_MIS_Q0003",
+		"NPC_MIS_Q0004",
+		
+		"NPC_MIS_Q0005",
+		"NPC_MIS_Q0006",
+		
+		"NPC_MIS_Q0007",
+		
+		"NPC_MIS_Q0008",
+		"NPC_MIS_Q0009",
+		"NPC_MIS_Q0010",
+		
+		"NPC_MIS_Q0011"
+	},
+	// Kaworu responses.
+	{
+		"NPC_MIS_Q0001",
+		
+		"NPC_MIS_Q0002",
+		"NPC_MIS_Q0003",
+		"NPC_MIS_Q0004",
+		
+		"NPC_MIS_Q0005",
+		"NPC_MIS_Q0006",
+		
+		"NPC_MIS_Q0007",
+		
+		"NPC_MIS_Q0008",
+		"NPC_MIS_Q0009",
+		"NPC_MIS_Q0010",
+		
+		"NPC_MIS_Q0011"
+	},
+	// Misato responses.
+	{
+		"NPC_MIS_Q0001",
+		"NPC_MIS_Q0002",
+		"NPC_MIS_Q0003",
+		"NPC_MIS_Q0004",
+		"NPC_MIS_Q0005",
+		"NPC_MIS_Q0006",
+		"NPC_MIS_Q0007",
+		"NPC_MIS_Q0008",
+		"NPC_MIS_Q0009",
+		"NPC_MIS_Q0010",
+		"NPC_MIS_Q0011"
+	}
+};
+
+// Defines which responses are available in each state.
+int NpcResponsesIndex[MaxNPCS][MaxStates][MaxResponses] = {
+	
+	// Rei responses.
+	{
+		{ 4, 3, 2, 0, 0, 0, 0, 0 },
+		{ 8, 0, 0, 0, 0, 0, 0, 0 },
+		{ 5, 6, 0, 0, 0, 0, 0, 0 },
+		
+		{ 1, 7, 0, 0, 0, 0, 0, 0 },
+		{ 1, 7, 0, 0, 0, 0, 0, 0 },
+		
+		{ 8, 0, 0, 0, 0, 0, 0, 0 },
+		
+		{ 1, 9, 5, 6, 0, 0, 0, 0 },
+		
+		{ 11, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 }
+	},
+	// Shinji responses.
+	{
+		{ 4, 3, 2, 0, 0, 0, 0, 0 },
+		{ 8, 0, 0, 0, 0, 0, 0, 0 },
+		{ 5, 6, 0, 0, 0, 0, 0, 0 },
+		
+		{ 1, 7, 0, 0, 0, 0, 0, 0 },
+		{ 1, 7, 0, 0, 0, 0, 0, 0 },
+		
+		{ 8, 0, 0, 0, 0, 0, 0, 0 },
+		
+		{ 1, 9, 5, 6, 0, 0, 0, 0 },
+		
+		{ 11, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 }
+	},
+	// Asuka responses.
+	{
+		{ 4, 3, 2, 0, 0, 0, 0, 0 },
+		{ 8, 0, 0, 0, 0, 0, 0, 0 },
+		{ 5, 6, 0, 0, 0, 0, 0, 0 },
+		
+		{ 1, 7, 0, 0, 0, 0, 0, 0 },
+		{ 1, 7, 0, 0, 0, 0, 0, 0 },
+		
+		{ 8, 0, 0, 0, 0, 0, 0, 0 },
+		
+		{ 1, 9, 5, 6, 0, 0, 0, 0 },
+		
+		{ 11, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 }
+	},
+	// Kaworu responses.
+	{
+		{ 4, 3, 2, 0, 0, 0, 0, 0 },
+		{ 8, 0, 0, 0, 0, 0, 0, 0 },
+		{ 5, 6, 0, 0, 0, 0, 0, 0 },
+		
+		{ 1, 7, 0, 0, 0, 0, 0, 0 },
+		{ 1, 7, 0, 0, 0, 0, 0, 0 },
+		
+		{ 8, 0, 0, 0, 0, 0, 0, 0 },
+		
+		{ 1, 9, 5, 6, 0, 0, 0, 0 },
+		
+		{ 11, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 }
+	},
+	// Misato responses.
+	{
+		{ 1, 0, 0, 0, 0, 0, 0, 0 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0 },
+		{ 3, 0, 0, 0, 0, 0, 0, 0 },
+		{ 4, 0, 0, 0, 0, 0, 0, 0 },
+		{ 5, 0, 0, 0, 0, 0, 0, 0 },
+		{ 6, 0, 0, 0, 0, 0, 0, 0 },
+		{ 7, 0, 0, 0, 0, 0, 0, 0 },
+		{ 8, 0, 0, 0, 0, 0, 0, 0 },
+		{ 9, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 }
+	}
+	
+};
+
+
+// Defines what status each response sets.
+int NpcStateResponses[MaxNPCS][MaxStates][MaxResponses] = {
+	
+	// Rei new status for each response.
+	{
+		{ 1, 1, 1, 0, 0, 0, 0, 0 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0 },
+		{ 3, 4, 0, 0, 0, 0, 0, 0 },
+		
+		{ 6, 5, 0, 0, 0, 0, 0, 0 },
+		{ 6, 5, 0, 0, 0, 0, 0, 0 },
+		
+		{ 6, 0, 0, 0, 0, 0, 0, 0 },
+		
+		{ 6, 7, 3, 4, 0, 0, 0, 0 },
+		
+		{ 6, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 }
+	},
+	// Shinji new status for each response.
+	{
+		{ 1, 1, 1, 0, 0, 0, 0, 0 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0 },
+		{ 3, 4, 0, 0, 0, 0, 0, 0 },
+		
+		{ 6, 5, 0, 0, 0, 0, 0, 0 },
+		{ 6, 5, 0, 0, 0, 0, 0, 0 },
+		
+		{ 6, 0, 0, 0, 0, 0, 0, 0 },
+		
+		{ 6, 7, 3, 4, 0, 0, 0, 0 },
+		
+		{ 6, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 }
+	},
+	// Asuka new status for each response.
+	{
+		{ 1, 1, 1, 0, 0, 0, 0, 0 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0 },
+		{ 3, 4, 0, 0, 0, 0, 0, 0 },
+		
+		{ 6, 5, 0, 0, 0, 0, 0, 0 },
+		{ 6, 5, 0, 0, 0, 0, 0, 0 },
+		
+		{ 6, 0, 0, 0, 0, 0, 0, 0 },
+		
+		{ 6, 7, 3, 4, 0, 0, 0, 0 },
+		
+		{ 6, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 }
+	},
+	// Kaworu new status for each response.
+	{
+		{ 1, 1, 1, 0, 0, 0, 0, 0 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0 },
+		{ 3, 4, 0, 0, 0, 0, 0, 0 },
+		
+		{ 6, 5, 0, 0, 0, 0, 0, 0 },
+		{ 6, 5, 0, 0, 0, 0, 0, 0 },
+		
+		{ 6, 0, 0, 0, 0, 0, 0, 0 },
+		
+		{ 6, 7, 3, 4, 0, 0, 0, 0 },
+		
+		{ 6, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 }
+	},
+	// Misato new status for each response.
+	{
+		{ 1, 0, 0, 0, 0, 0, 0, 0 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0 },
+		{ 3, 0, 0, 0, 0, 0, 0, 0 },
+		{ 4, 0, 0, 0, 0, 0, 0, 0 },
+		{ 5, 0, 0, 0, 0, 0, 0, 0 },
+		{ 6, 0, 0, 0, 0, 0, 0, 0 },
+		{ 7, 0, 0, 0, 0, 0, 0, 0 },
+		{ 8, 0, 0, 0, 0, 0, 0, 0 },
+		{ 9, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 },
+		{ 0, 0, 0, 0, 0, 0, 0, 0 }
+	}
+};
+
+// Defines which emotion (potrait) will be used in each state.
+int NpcStateEmotion[MaxNPCS][MaxStates] = {
+	
+	// Rei emotions.
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+	// Shinji emotions.
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+	// Asuka emotions.
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+	// Kaworu emotions.
+	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+	// Misato emotions.
+	{ 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	
+};
+
+// Defines the exploration messages when playing with that npc.
+str NpcExploration[MaxNPCS][MaxQuestions] = {
+	
+	// Rei responses.
+	{
+		"NPC_MIS_E0001",
+		"NPC_MIS_E0002",
+		"NPC_MIS_E0003",
+		"NPC_MIS_E0004",
+		"NPC_MIS_E0005",
+		"NPC_MIS_E0006",
+		"NPC_MIS_E0007",
+		"NPC_MIS_E0008",
+		"NPC_MIS_E0009",
+		"NPC_MIS_E0010",
+		"NPC_MIS_E0011",
+		"NPC_MIS_E0012",
+		"NPC_MIS_E0013",
+		"NPC_MIS_E0014",
+		"NPC_MIS_E0015",
+		"NPC_MIS_E0016",
+		"NPC_MIS_E0017",
+		"NPC_MIS_E0018",
+		"NPC_MIS_E0019",
+		"NPC_MIS_E0020"
+	},
+	// Shinji responses.
+	{
+		"NPC_SHI_E0001",
+		"NPC_SHI_E0002",
+		"NPC_SHI_E0003",
+		"NPC_SHI_E0004",
+		"NPC_SHI_E0005",
+		"NPC_SHI_E0006",
+		"NPC_SHI_E0007",
+		"NPC_SHI_E0008",
+		"NPC_SHI_E0009",
+		"NPC_SHI_E0010",
+		"NPC_SHI_E0011",
+		"NPC_SHI_E0012",
+		"NPC_SHI_E0013",
+		"NPC_SHI_E0014",
+		"NPC_SHI_E0015",
+		"NPC_SHI_E0016",
+		"NPC_SHI_E0017",
+		"NPC_SHI_E0018",
+		"NPC_SHI_E0019",
+		"NPC_SHI_E0020"
+	},
+	// Asuka responses.
+	{
+		"NPC_MIS_E0001",
+		"NPC_MIS_E0002",
+		"NPC_MIS_E0003",
+		"NPC_MIS_E0004",
+		"NPC_MIS_E0005",
+		"NPC_MIS_E0006",
+		"NPC_MIS_E0007",
+		"NPC_MIS_E0008",
+		"NPC_MIS_E0009",
+		"NPC_MIS_E0010",
+		"NPC_MIS_E0011",
+		"NPC_MIS_E0012",
+		"NPC_MIS_E0013",
+		"NPC_MIS_E0014",
+		"NPC_MIS_E0015",
+		"NPC_MIS_E0016",
+		"NPC_MIS_E0017",
+		"NPC_MIS_E0018",
+		"NPC_MIS_E0019",
+		"NPC_MIS_E0020"
+	},
+	// Kaworu responses.
+	{
+		"NPC_MIS_E0001",
+		"NPC_MIS_E0002",
+		"NPC_MIS_E0003",
+		"NPC_MIS_E0004",
+		"NPC_MIS_E0005",
+		"NPC_MIS_E0006",
+		"NPC_MIS_E0007",
+		"NPC_MIS_E0008",
+		"NPC_MIS_E0009",
+		"NPC_MIS_E0010",
+		"NPC_MIS_E0011",
+		"NPC_MIS_E0012",
+		"NPC_MIS_E0013",
+		"NPC_MIS_E0014",
+		"NPC_MIS_E0015",
+		"NPC_MIS_E0016",
+		"NPC_MIS_E0017",
+		"NPC_MIS_E0018",
+		"NPC_MIS_E0019",
+		"NPC_MIS_E0020"
+	},
+	// Misato responses.
+	{
+		"NPC_MIS_E0001",
+		"NPC_MIS_E0002",
+		"NPC_MIS_E0003",
+		"NPC_MIS_E0004",
+		"NPC_MIS_E0005",
+		"NPC_MIS_E0006",
+		"NPC_MIS_E0007",
+		"NPC_MIS_E0008",
+		"NPC_MIS_E0009",
+		"NPC_MIS_E0010",
+		"NPC_MIS_E0011",
+		"NPC_MIS_E0012",
+		"NPC_MIS_E0013",
+		"NPC_MIS_E0014",
+		"NPC_MIS_E0015",
+		"NPC_MIS_E0016",
+		"NPC_MIS_E0017",
+		"NPC_MIS_E0018",
+		"NPC_MIS_E0019",
+		"NPC_MIS_E0020"
+	}
+};

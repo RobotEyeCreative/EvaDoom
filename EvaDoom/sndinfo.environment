@@ -1,0 +1,11 @@
+
+// #### Environment ####
+
+EvaDoom/Doors/WoodOpen 						sounds/snd_environment/door_handle_open.wav
+$Volume EvaDoom/Doors/WoodOpen				1.0
+
+EvaDoom/Doors/WoodClose 					sounds/snd_environment/door_handle_close.wav
+$Volume EvaDoom/Doors/WoodClose				1.0
+
+EvaDoom/Doors/WoodSlide 					sounds/snd_environment/door_wooden_sliding_open.wav
+$Volume EvaDoom/Doors/WoodSlide				1.0

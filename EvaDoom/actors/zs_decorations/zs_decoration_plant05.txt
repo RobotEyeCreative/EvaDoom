@@ -1,0 +1,15 @@
+class decoration_plant_05 : decoration {
+    
+    default {
+        
+        radius 5;
+        height 24;
+    }
+    
+    states {
+        
+        spawn:
+            PL05 E -1;
+            loop;
+    }
+}

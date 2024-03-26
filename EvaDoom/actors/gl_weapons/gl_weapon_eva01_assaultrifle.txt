@@ -1,0 +1,6 @@
+
+pointlight assaultriflelight {
+
+    color 1.0 1.0 1.0
+    size 128
+}

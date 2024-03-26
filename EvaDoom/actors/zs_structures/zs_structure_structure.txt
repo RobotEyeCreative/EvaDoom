@@ -1,0 +1,20 @@
+class structure : actor abstract {
+    
+    default {
+        
+        //$Category Evangelion/Structures
+
+        +SOLID;
+        +SHOOTABLE;
+        +DONTTHRUST;
+        +NODAMAGE;
+        +NOBLOOD;
+    }
+
+    states {
+        
+        spawn:
+            MODL A -1;
+            loop;
+    }
+}

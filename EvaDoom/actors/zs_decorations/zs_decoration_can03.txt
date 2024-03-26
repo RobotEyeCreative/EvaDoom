@@ -1,0 +1,15 @@
+class decoration_can_03 : decoration {
+    
+    default {
+        
+        radius 5;
+        height 24;
+    }
+    
+    states {
+        
+        spawn:
+            TN03 A -1;
+            loop;
+    }
+}

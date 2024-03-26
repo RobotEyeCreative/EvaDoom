@@ -1,0 +1,97 @@
+
+// #### Monsters ####
+
+// 1 - Sachiel
+
+EvaDoom/Monster/Sachiel/Melee 				sounds/snd_monsters/snd_monster_sachiel/sachiel_melee.wav
+EvaDoom/Monster/Sachiel/MeleeStart 			sounds/snd_monsters/snd_monster_sachiel/sachiel_meleestart.wav
+EvaDoom/Monster/Sachiel/MeleeEnd 			sounds/snd_monsters/snd_monster_sachiel/sachiel_meleeend.wav
+EvaDoom/Monster/Sachiel/MeleeRam 			sounds/snd_monsters/snd_monster_sachiel/sachiel_meleeram.wav
+$Volume EvaDoom/Monster/Sachiel/Melee		1.0
+$Volume EvaDoom/Monster/Sachiel/MeleeStart	1.0
+$Volume EvaDoom/Monster/Sachiel/MeleeEnd	1.0
+$Volume EvaDoom/Monster/Sachiel/MeleeRam	1.0
+
+// 2 - Shamshel
+
+EvaDoom/Monster/Shamshel/Death 				sounds/snd_monsters/snd_monster_shamshel/shamshel_death.wav
+EvaDoom/Monster/Shamshel/Attack 			sounds/snd_monsters/snd_monster_shamshel/shamshel_attack.wav
+$Volume EvaDoom/Monster/Shamshel/Death		1.0
+$Volume EvaDoom/Monster/Shamshel/Attack		0.6
+
+// 3 - Ramiel
+
+
+
+
+
+// 4 - Gaghiel
+
+
+
+
+
+// 5 - Israfel
+
+
+
+
+
+// 6 - Sandalphon
+
+
+
+
+
+// 7 - Matarael
+
+
+
+
+
+// 8 - Sahaquiel
+
+
+
+
+
+// 9 - Ireul
+
+
+
+
+
+// 10 - Leliel
+
+EvaDoom/Monster/Leliel/Death 				sounds/snd_monsters/snd_monster_leliel/leliel_death.wav
+$Volume EvaDoom/Monster/Leliel/Death		1.0
+
+// 11 - Bardiel
+
+
+
+
+
+// 12 - Zeruel
+
+
+
+
+
+// 13 - Arael
+
+
+
+
+
+// 14 - Armisael
+
+
+
+
+
+// 15 - Tabris
+
+
+
+

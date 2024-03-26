@@ -1,0 +1,371 @@
+/*
+COMBO SYSTEM PROTOTYPE
+class combo abstract {
+	
+	int step;
+	evaweapon parent;
+
+	static const int keys[] = { 1, 2, 3, 4 };
+	//Array<int> keys;
+
+	void checkCombo (int input) {
+
+		if (keys[step] == input) {
+			
+			step++;
+			
+			if (step == keys.size())
+				doAction();
+		}
+		else {
+			step = 0;
+		}
+	}
+	
+	virtual int doAction () { return -1; }
+}
+
+class lateralpunch : combo {
+
+	override int doAction () {
+		return 9999;
+	}
+}
+*/
+
+class Eva01Fists : eva01weapon {
+	
+	int sync;
+	//Array<combo> combos;
+	
+	default {
+		
+		//$Title "EvaFists"
+
+		evadoomweapon.pmaxswayx 40.0;
+		weapon.ammouse 0;
+		weapon.ammotype "";
+		weapon.ammogive 0;
+		weapon.slotnumber 1;
+		//weapon.readysound "";
+		//weapon.upsound "";
+		
+		+WEAPON.AMMO_OPTIONAL;
+		+WEAPON.MELEEWEAPON;
+	}
+
+	/*
+	COMBO SYSTEM PROTOTYPE
+	override void AttachToOwner (Actor other) {
+
+		combos.Push(new('lateralpunch'));
+
+		for (int i = 0; i < combos.Size(); i++)
+			combos[i].parent = self;
+	}
+
+	override void Tick () {
+
+		switch (CheckComboInput(ReadComboInput())) {
+			case 9999:
+				A_Log("COMBO1");
+				break;
+			default:
+				A_Log("NO");
+		}
+	}
+
+	int ReadComboInput () {
+		
+		if (owner) {
+			
+			int buttons = owner.GetPlayerInput(INPUT_BUTTONS);
+
+			if (buttons & BT_BACK) return 3;
+			if (buttons & BT_FORWARD) return 1;
+			if (buttons & BT_MOVELEFT) return 4;
+			if (buttons & BT_MOVERIGHT) return 2;
+			if (buttons & BT_JUMP) return 5;
+		}
+
+		return 0;
+	}
+
+	int CheckComboInput (int input) {
+		
+		int mem;
+
+		for (int i = 0; i < combos.Size(); i++) {
+			mem = combos[i].checkCombo(input);
+			if (mem > 0) return mem;
+		}
+		
+		return -1;
+	}
+	*/
+
+	double GetDamageMult (double multiplier = 1.0) {
+		
+		self.sync = CountInv("evasynchronization");
+		
+		double basevalue = random(70+(min(100,self.sync)/2),80+min(100,self.sync));
+
+		return (multiplier * basevalue);
+	}
+
+	bool mirroring (int mirror = 0) {
+		
+		if (mirror == 0)
+			mirrorx = !mirrorx;
+		if (mirror == 1)
+			mirrorx = true;
+		if (mirror == 2)
+			mirrorx = false;
+
+		return mirrorx;
+	}
+
+	override void doEffect () {
+
+		super.doEffect();
+		
+		//if (xoffsmem.Size() > 0)
+			//Console.Printf("%i, %d, %d, %d", owner.CountInv("evapressleft"), xoffsmem[0], maxswayx*0.5, maxswayx*0.98);
+	}
+
+	void clearCombos () {
+
+		A_TakeInventory("evasidepunch");
+	}
+	
+	states {
+		ready:
+			E1FI A 0 { invoker.clearCombos(); }
+			E1FI A 0 A_WeaponReady();
+			E1FI A 0 A_JumpIf(GetPlayerInput(INPUT_BUTTONS) & BT_MOVERIGHT, "goright"); // Exclude left
+			E1FI A 0 A_JumpIf(GetPlayerInput(INPUT_BUTTONS) & BT_MOVELEFT, "goleft"); // Exclude right
+			E1FI A 1;
+			goto ready+1;
+		goright:
+			E1FI A 1 A_WeaponReady();
+			E1FI A 0 A_JumpIf(CountInv("evapressleft") > 0 && invoker.xoffsmem[0] > invoker.maxswayx*0.3 && invoker.xoffsmem[0] < invoker.maxswayx*0.99, "combo1RL");
+			E1FI A 0 A_JumpIf(GetPlayerInput(INPUT_BUTTONS) & BT_MOVERIGHT, "goright");
+			goto ready;
+		goleft:
+			E1FI A 1 A_WeaponReady();
+			E1FI A 0 A_JumpIf(GetPlayerInput(INPUT_BUTTONS) & BT_MOVELEFT, "goleft");
+			goto ready;
+		combo1RL:
+			E1FI A 1 A_WeaponReady();
+			E1FI A 0 A_JumpIf(CountInv("evapressright") > 0 && invoker.xoffsmem[0] < -invoker.maxswayx*0.3 && invoker.xoffsmem[0] > -invoker.maxswayx*0.99, "combo1RLR");
+			E1FI A 0 A_JumpIf(GetPlayerInput(INPUT_BUTTONS) & BT_MOVELEFT, "combo1RL");
+			goto ready;
+		combo1RLR:
+			E1FI A 0 A_GiveInventory("evasidepunch", 1);
+			E1FI AAAA 1 A_WeaponReady();
+			E1FI A 0 A_WeaponOffset(invoker.xoffs, invoker.xoffs, WOF_ADD);
+			E1FI A 0 A_JumpIf(invoker.xoffs > invoker.maxswayx*0.99, "ready");
+			E1FI A 0 A_JumpIf(GetPlayerInput(INPUT_BUTTONS) & BT_MOVERIGHT, "combo1RLR");
+			goto ready;
+		select:
+			E1FI A 1 A_Raise(32);
+			loop;
+		deselect:
+			E1FI A 1 A_Lower(32);
+			loop;
+		fire:
+			E1FI A 0 A_JumpIfInventory("evasidepunch", 1, "sidepunch");
+			E1FI A 0 A_JumpIfInventory("evarunning", 1, 1);
+			goto seriespunches;
+			E1FI A 0 A_JumpIfInventory("airCrash", 1, "flyingkick");
+			goto runningpunch;
+		seriespunches:
+			E1FI A 0 {
+				
+				invoker.sync = CountInv("evasynchronization");
+				A_OverlayFlags(1, PSPF_FLIP|PSPF_MIRROR, invoker.mirroring());
+			}
+			E1FI AB 3 {
+				if (invoker.sync >= 100)
+					A_SetTics(1);
+				else if (invoker.sync >= 50)
+					A_SetTics(2);
+				else
+					A_SetTics(3);
+			}
+			E1FI C 8 {
+				if (invoker.sync >= 100)
+					A_SetTics(8);
+				else if (invoker.sync >= 50)
+					A_SetTics(8);
+				else if (invoker.sync >= 35)
+					A_SetTics(9);
+				else if (invoker.sync >= 25)
+					A_SetTics(11);
+				else if (invoker.sync >= 10)
+					A_SetTics(12);
+				else
+					A_SetTics(13);
+				
+				A_StartSound("EvaDoom/Weapon/EvaFists/Fire");
+				
+				A_CustomPunch(invoker.GetDamageMult(1.0), true, CPF_NOTURN, "BulletPuff", 80);
+			}
+			E1FI BA 3 {
+				if (invoker.sync >= 100)
+					A_SetTics(2);
+				else if (invoker.sync >= 50)
+					A_SetTics(2);
+				else
+					A_SetTics(3);
+			}
+			E1FI A 4;
+			E1FI A 1 A_ReFire("seriespunches");
+			goto ready;
+		runningpunch:
+			E1FI AB 1;
+			E1FI C 50 {
+				A_GiveInventory("evafastpunchstop", 1);
+				A_SpawnItemEx("evafastpunch",		110.0, 0.0, 32.0, 12.0, 0.0, 0.0, 0);
+				A_SpawnItemEx("evafastpunchsmall",	110.0, 0.0, 32.0, 16.0, 0.0, 0.0, 0);
+				A_CustomPunch(invoker.GetDamageMult(2.2), true, CPF_NOTURN, "evafastpunchpuff", 110);
+			}
+			E1FI BA 4;
+		runningpunchhold:
+			E1FI A 1;
+			E1FI A 0 A_ReFire("runningpunchhold");
+			goto ready;
+		sidepunch:
+			E1FI A 0 A_TakeInventory("evasidepunch");
+			E1FI AB 1;
+			E1FI C 50 {
+				A_SpawnItemEx("evafastpunch",		110.0, 0.0, 32.0, 12.0, 0.0, 0.0, 0);
+				A_SpawnItemEx("evafastpunchsmall",	110.0, 0.0, 32.0, 16.0, 0.0, 0.0, 0);
+				A_CustomPunch(invoker.GetDamageMult(2.2), true, CPF_NOTURN, "evafastpunchpuff", 110);
+			}
+			E1FI BA 4;
+			goto ready;
+		flyingkick:
+			E1FI H 0 A_WeaponOffset(0, 173.0);
+			E1FI H 0 A_GiveInventory("evaflyingkickon", 1);
+			E1FI H 0 { A_OverlayFlags(1, PSPF_FLIP|PSPF_MIRROR, invoker.mirroring(2)); }
+		flyingkickloop:
+			E1FI H 1 {
+				
+				A_SpawnItemEx("evafastpunch", 110.0, 0.0, 32.0, 12.0, 0.0, 0.0, 0);
+				
+				if (OverlayY() - 45.0 < 0)
+					A_WeaponOffset(0.0, 0.0, WOF_KEEPX|WOF_INTERPOLATE);
+				else
+					A_WeaponOffset(0.0, -45.0, WOF_KEEPX|WOF_ADD);
+			}
+			E1FI H 0 A_JumpIfInventory("airCrash", 1, "flyingkickloop");
+			E1FI H 0 A_Explode(invoker.GetDamageMult(3.2), 256, 0, TRUE, 256);
+			E1FI H 15 A_WeaponOffset(0, 0);
+			goto ready;
+	}
+}
+
+class evafastpunch : Actor {
+
+	default {
+
+		radius 2;
+		height 2;
+
+		renderstyle "translucent";
+		alpha 0.7;
+		
+		+NOGRAVITY;
+		+NOBLOCKMAP;
+		-SOLID;
+	}
+
+	states {
+
+		spawn:
+			SPPU AAAA 1 {
+				scale *= 1.05;
+				A_FadeOut(0.08);
+			}
+			loop;
+	}
+}
+
+class evafastpunchstop : powerup {
+
+	float memspeed;
+
+	default {
+
+		inventory.amount 1;
+		inventory.maxamount 1;
+		powerup.duration 30;
+		+INVENTORY.AUTOACTIVATE;
+	}
+
+	override void AttachToOwner (actor other) {
+		
+		super.AttachToOwner(other);
+
+		memspeed = owner.speed;
+		owner.speed = 0;
+		owner.vel.x = 0;
+		owner.vel.y = 0;
+	}
+
+	override void doEffect () {
+		super.doEffect();
+		if (owner && getAge() >= 10) owner.speed += (memspeed / 20);
+	}
+}
+
+class evafastpunchpuff : BulletPuff {
+
+	default {
+
+		+HITTRACER;
+		+PUFFONACTORS;
+		+PUFFGETSOWNER;
+	}
+
+	override void Tick () {
+		
+		super.Tick();
+
+		if (target && tracer) {
+			A_RadiusThrust(40000, 2048, 0, 1024);
+			SetState(null);
+		}
+	}
+}
+
+class evafastpunchsmall : evafastpunch {
+	
+	default {
+		scale 0.5;
+	}
+
+	states {
+
+		spawn:
+			SPPU A 0 NoDelay A_Explode(30, 256, XF_EXPLICITDAMAGETYPE, FALSE, 0, 0, 0, "", "EvaSplashDamage");
+			goto super::spawn;
+	}
+}
+
+class evasidepunch : inventory {
+
+	default {
+		inventory.amount 1;
+		inventory.maxamount 1;
+	}
+}
+
+class evaflyingkickon : inventory {
+
+	default {
+		inventory.amount 1;
+		inventory.maxamount 1;
+	}
+}

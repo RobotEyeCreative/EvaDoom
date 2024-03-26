@@ -1,0 +1,42 @@
+gameinfo {
+	
+	// Essential definitions
+	playerclasses = "evangelionPlayer"
+	statusbarclass = "MinimalStatusBar"
+	
+	// Gameplay-esque properties
+	defkickback = 300
+	
+	// Gameplay decorative properties
+	advisorytime = 0
+	intermissioncounter = false
+	intermissionmusic = "music/music_intermission.midi"
+	pickupcolor = "00 00 00"
+	
+	// Menu decorative properties
+	drawreadthis = false
+	titlepage = "graphics/menu/m_title.png"
+	creditpage = "m_credit"
+	//infopage = "HELPINF1"
+	//addinfopage = "HELPINF2"
+	
+	titlemusic = "music/music_title.wav"
+	dimcolor = "00 00 00"
+	dimamount = 0.3
+	menufontcolor_title     = "green"
+	menufontcolor_label     = "white"
+	menufontcolor_value     = "white"
+	menufontcolor_action    = "UNTRANSLATED"
+	menufontcolor_header    = "green"
+	menufontcolor_highlight = "blue"
+	menufontcolor_selection = "cyan"
+	menuslidercolor = "white"
+	//pausesign = ""
+	//cursorpic = ""
+}
+
+automap {
+	
+	base = "Doom"
+	showlocks = true
+}

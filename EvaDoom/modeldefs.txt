@@ -1,0 +1,4 @@
+// Buildings
+
+#include "actors/md_structures/md_structures.txt"
+#include "actors/md_decorations/md_decorations.txt"

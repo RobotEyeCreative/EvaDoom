@@ -1,0 +1,4 @@
+
+addkeysection "EvaDoom Controls" EvaDoomSection
+addmenukey "Evangelion Unit Skill: Activate AT-Field" +user1
+defaultbind F +user1

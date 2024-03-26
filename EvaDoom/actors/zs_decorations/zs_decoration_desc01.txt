@@ -1,0 +1,15 @@
+class decoration_desk_01 : decoration {
+    
+    default {
+        
+        radius 5;
+        height 24;
+    }
+    
+    states {
+        
+        spawn:
+            DE01 A -1;
+            loop;
+    }
+}

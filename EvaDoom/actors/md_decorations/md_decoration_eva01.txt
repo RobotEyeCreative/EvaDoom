@@ -1,0 +1,11 @@
+Model decoration_eva01 {
+	
+	Path "models/decorations/eva01"
+	Model 0 "eva01.obj"
+	Skin 0 "eva01.png"
+	
+	Scale 100.0 100.0 100.0
+	FrameIndex MODL A 0 0
+
+	//USEACTORPITCH
+}

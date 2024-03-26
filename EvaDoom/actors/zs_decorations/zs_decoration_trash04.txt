@@ -1,0 +1,15 @@
+class decoration_trasH_04 : decoration {
+    
+    default {
+        
+        radius 5;
+        height 24;
+    }
+    
+    states {
+        
+        spawn:
+            TR04 A -1;
+            loop;
+    }
+}

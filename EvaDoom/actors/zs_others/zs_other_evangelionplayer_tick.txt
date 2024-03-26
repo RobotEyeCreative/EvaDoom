@@ -1,0 +1,197 @@
+
+extend class evangelionPlayer {
+	
+	int TicVariable; // Used to make an aproximate version of a 0.1 seconds clock.
+	bool TicAlternate; // Used to make an aproximate version of a 0.1 seconds clock.
+	int energyTime; // Used to make an aproximate version of a 0.1 seconds clock.
+
+	double evaspeed;
+	
+	bool inAir;
+
+	override void Tick () {
+		
+		super.Tick();
+		
+		if (getAge() == 0) {
+			
+			TicAlternate = False;
+			TicVariable = 3;
+		}
+		
+		// Update time counters. (Resting and moving times)
+		enterRestingTime();
+		
+		// Class functions
+		refreshStatus();
+		
+		// Skills functions
+		SkillATField();
+		ATFieldRegenerate(3);
+		
+		// Synchronization functions
+		SyncronizationMultiplier();
+		
+		// Synchronization regeneration
+		EvaUnitRestoreSync(CountInv("evasynchronizationmission"));
+		
+		// Energy (time) loss when moving (1 s/s)
+		energyLoss();
+		
+		// Update properties
+		applyProperties(CountInv("playerIdentity"));
+
+		// Combo reads
+		generateComboKeys();
+
+		// Speed calculation
+		speedCalculation(18.0, 33.0);
+
+		// Jump detection
+		jumpDetection();
+	}
+
+	void enterRestingTime () {
+
+		if (self.InStateSequence(self.CurState, self.ResolveState("spawn"))) {
+			restTime++;
+			moveTime = 0;
+			A_GiveInventory("evaenergyhudinactive", 1);
+		}
+		else {
+			moveTime++;
+			restTime = 0;
+			A_TakeInventory("evaenergyhudinactive", 1);
+		}
+	}
+
+	void energyLoss () {
+
+		if (moveTime > 0) {
+			
+			energyTime++;
+			
+			if (energyTime >= TicVariable) {
+				
+				energyTime = 0;
+				
+				if (TicAlternate)
+					TicVariable--;
+				else
+					TicVariable++;
+				
+				TicAlternate = !TicAlternate;
+				A_TakeInventory("evaenergy", 1);
+			}
+		}
+	}
+
+	void generateComboKeys () {
+
+		int buttons = GetPlayerInput(INPUT_BUTTONS);
+		
+		if (buttons & BT_BACK) A_GiveInventory("evagoesback", 1);
+		if (buttons & BT_FORWARD) A_GiveInventory("evagoesforw", 1);
+		if (buttons & BT_MOVELEFT) A_GiveInventory("evagoesleft", 1);
+		if (buttons & BT_MOVERIGHT) A_GiveInventory("evagoesright", 1);
+		if (buttons & BT_JUMP) A_GiveInventory("evajumps", 1);
+	}
+
+	void speedCalculation (double fastspeed, double sprintspeed) {
+		
+		evaspeed = self.vel.xy.length(); // Speed vector magnitude
+
+		if (evaspeed >= fastspeed) {
+			
+			A_GiveInventory("evarunning", 1);
+			A_TakeInventory("evasprinting", 1);
+		}
+		else if (evaspeed >= sprintspeed) {
+
+			A_GiveInventory("evarunning", 1);
+			A_GiveInventory("evasprinting", 1);
+		}
+		else {
+			
+			A_TakeInventory("evarunning", 1);
+			A_TakeInventory("evasprinting", 1);
+		}
+	}
+
+	void jumpDetection () {
+		
+		if (inAir || waterlevel == 0 && floorz < self.pos.z && abs(self.vel.z) > 3.0)
+			inAir = true;
+
+		// Falling detection
+		if (inAir && self.vel.z < 0.0)
+			A_GiveInventory("airFall");
+
+		// Crash detection
+		if (inAir && self.vel.z < -4.0)
+			A_GiveInventory("airCrash", 1);
+
+		// Land detection
+		if (inAir && floorz == self.pos.z) {
+			
+			if (CountInv("airCrash") > 0) {
+				spawnFeet();
+				spawnFeet();
+
+				A_TakeInventory("airCrash", 1);
+			}
+
+			A_TakeInventory("airFall", 1);
+			
+			inAir = false;
+		}
+	}
+}
+
+class airCrash : inventory {
+
+	default {
+		inventory.amount 1;
+		inventory.maxamount 1;
+	}
+}
+
+class airFall : airCrash {}
+
+class evapresseskey : powerup abstract {
+	
+	default {
+		inventory.amount 1;
+		inventory.maxamount 1;
+		powerup.duration 5;
+		+INVENTORY.AUTOACTIVATE;
+	}
+}
+
+class evapressback : evapresseskey {}
+class evapressforw : evapresseskey {}
+class evapressleft : evapresseskey {}
+class evapressright : evapresseskey {}
+class evapressjump : evapresseskey {}
+
+class evaholdskey : evapresseskey abstract {
+
+	meta Class<Inventory> PressedKey;
+	property pPressedKey: PressedKey;
+
+	default {
+		powerup.duration 5;
+	}
+
+	override void AttachToOwner (actor other) {
+		super.AttachToOwner(other);
+		if (owner) owner.GiveInventory(self.PressedKey, 1);
+	}
+}
+
+class evagoesback : evaholdskey { default { evaholdskey.pPressedKey "evapressback"; } }
+class evagoesforw : evaholdskey { default { evaholdskey.pPressedKey "evapressforw"; } }
+class evagoesleft : evaholdskey { default { evaholdskey.pPressedKey "evapressleft"; } }
+class evagoesright : evaholdskey { default { evaholdskey.pPressedKey "evapressright"; } }
+class evajumps : evaholdskey { default { evaholdskey.pPressedKey "evapressjump"; } }
+

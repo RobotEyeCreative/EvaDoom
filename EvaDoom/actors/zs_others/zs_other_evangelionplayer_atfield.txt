@@ -1,0 +1,52 @@
+
+// This item is used by the hud to know that the skill is activated and for the damage calculation.
+class atfieldactivated : inventory {
+	
+	default {
+		
+		inventory.amount 1;
+		inventory.maxamount 1;
+		+INVENTORY.PERSISTENTPOWER;
+	}
+}
+
+extend class evangelionPlayer {
+	
+	default {
+		
+		// Maximum AT field amount. TODO: The HUD should read this value...
+		evangelionPlayer.patshields 2000;
+	}
+	
+	void SkillATField () {
+		
+		// Skill disabled if we're in pilot form, or is already activated, or we don't have enough charge or synchronization.
+		if (CountInv("playerIdentity") > 3 || CountInv("Eva01ATField") > 0 || CountInv("atfield") < 1400 || CountInv("evasynchronization") < 2 || CountInv("evaenergy") == 0)
+			return;
+		
+		int buttons = GetPlayerInput(INPUT_BUTTONS);
+		
+		// Make sure we can activate the skill while moving.
+		if (buttons == BT_USER1 || buttons == BT_USER1+1024 || buttons == BT_USER1+2048 || buttons == BT_USER1+4096 || buttons == BT_USER1+8192) {
+			
+			if (player.ReadyWeapon)
+				lastWeapon = player.ReadyWeapon.getClassName();
+			
+			A_GiveInventory("Eva01ATField", 1);
+			
+			SetStateLabel("Missile");
+			
+			switch(CountInv("playerIdentity")) {
+				case 1:
+					//A_SelectWeapon("Eva00ATField");
+					break;
+				case 2:
+					A_SelectWeapon("Eva01ATField");
+					break;
+				case 3:
+					//A_SelectWeapon("Eva02ATField");
+					break;
+			}
+		}
+	}
+}

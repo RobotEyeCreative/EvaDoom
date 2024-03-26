@@ -1,0 +1,15 @@
+class decoration_lamp_01 : decoration {
+    
+    default {
+        
+        radius 5;
+        height 24;
+    }
+    
+    states {
+        
+        spawn:
+            LA01 A -1;
+            loop;
+    }
+}

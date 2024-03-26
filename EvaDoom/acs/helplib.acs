@@ -1,0 +1,122 @@
+#library "helplib" // Numnzel: Helpful resources library
+#include "zcommon.acs"
+
+
+#libdefine ANGLE_EAST			0
+#libdefine ANGLE_NEAST			32
+#libdefine ANGLE_NORTH			64
+#libdefine ANGLE_NWEST			96
+#libdefine ANGLE_WEST			128
+#libdefine ANGLE_SWEST			160
+#libdefine ANGLE_SOUTH			192
+#libdefine ANGLE_SEAST			224
+
+#libdefine ACTOR_FACE_NORTH		0.25
+#libdefine ACTOR_FACE_WEST		0.5
+#libdefine ACTOR_FACE_EAST		1.0
+#libdefine ACTOR_FACE_SOUTH		0.75
+
+#libdefine MAXSECTORTID			900
+#libdefine STARTINGPLAYERTID	1000
+
+#libdefine MAXTIME				65000.0
+#libdefine HOUR					35*60*60
+#libdefine TMIN					35*60
+#libdefine HMIN					35*30
+#libdefine DSEC					35*2
+#libdefine SEC					35
+#libdefine HSEC					35/2
+#libdefine QSEC					35/4
+#libdefine OSEC					35/8
+#libdefine DTIC					2
+#libdefine TIC					1
+
+
+str MapTitle[64] = {
+	
+	"TITLE_MAP_01",
+	"TITLE_MAP_02",
+	"TITLE_MAP_03",
+	"TITLE_MAP_04",
+	"TITLE_MAP_05",
+	"TITLE_MAP_06",
+	"TITLE_MAP_07",
+	"TITLE_MAP_08",
+	"TITLE_MAP_09",
+	"TITLE_MAP_10",
+	"TITLE_MAP_11",
+	"TITLE_MAP_12",
+	"TITLE_MAP_13",
+	"TITLE_MAP_14",
+	"TITLE_MAP_15",
+	"TITLE_MAP_16",
+	"TITLE_MAP_17",
+	"TITLE_MAP_18",
+	"TITLE_MAP_19",
+	"TITLE_MAP_20"
+};
+
+Function void PrintMapTitle (int num) {
+
+	int MapNum = GetLevelInfo(LEVELINFO_LEVELNUM);
+
+	if (num > 0)
+		MapNum = num;
+	
+	SetFont("BIGFONT");
+	HudMessage(l:MapTitle[--MapNum]; HUDMSG_FADEINOUT, 5, CR_BLUE, 0.5, 0.1, 1.0, 1.0, 1.0, 0.8);
+}
+
+// Optional parameter accepts tid for thing deletion, usually the script trigger.
+Function void CheckPoint (int killtag) {
+
+	if (killtag > 0) Thing_Remove (killtag);
+	Autosave ();
+}
+
+Function bool SpawnRandomRadius (str type, int spotid, int radius, int newtid, bool fog) {
+
+	int ang = random(0.0, 360.0);
+	int dist = random(0.0, radius);
+
+	int x = GetActorX(spotid) + FixedMul(cos(ang), dist);
+	int y = GetActorY(spotid) + FixedMul(sin(ang), dist);
+
+	int test = Spawn(type, x, y, GetActorZ(spotid), newtid, 0);
+
+	if (test && fog)
+		Spawn("TeleportFog", x, y, GetActorZ(spotid), 0, 0);
+
+	if (test)
+		return TRUE;
+
+	return FALSE;
+}
+
+Function int InvertAngle (int angle) {
+
+	int ang = angle;
+
+	switch (ang) {
+
+		case ANGLE_EAST: ang = ANGLE_WEST; break;
+		case ANGLE_NEAST: ang = ANGLE_SWEST; break;
+		case ANGLE_NORTH: ang = ANGLE_SOUTH; break;
+		case ANGLE_NWEST: ang = ANGLE_SEAST; break;
+		case ANGLE_WEST: ang = ANGLE_EAST; break;
+		case ANGLE_SWEST: ang = ANGLE_NEAST; break;
+		case ANGLE_SOUTH: ang = ANGLE_NORTH; break;
+		case ANGLE_SEAST: ang = ANGLE_NWEST; break;
+	}
+
+	return ang;
+}
+
+// Info: http://forum.zdoom.org/viewtopic.php?f=3&t=52809
+Function void FaceActor (int m1, int m2) {
+	
+	int xdiff = GetActorX(m2) - GetActorX(m1);
+	int ydiff = GetActorY(m2) - GetActorY(m1);
+	
+	SetActorAngle(m1, VectorAngle(xdiff, ydiff));
+}

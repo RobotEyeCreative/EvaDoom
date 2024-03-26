@@ -1,0 +1,3 @@
+iwad = "DOOM2.WAD"
+startuptitle = "< NEON GENESIS DOOM EVANGELION >"
+startupcolors = "000000", "FFAA00"

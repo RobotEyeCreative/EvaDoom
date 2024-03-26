@@ -1,0 +1,297 @@
+
+extend class MinimalStatusBar {
+	
+	int faketimecounter;
+	
+	void DrawFullScreenEvangelion (double TicFrac, PlayerInfo cp) {
+		
+		
+		// ----------------- global variables
+		
+		
+		// player data
+		let pmo = cp.mo;
+		
+		// hud automatic scale adjustment
+		Vector2 hudPartsScale = (1.0, 1.0);
+		
+		if (Screen.GetWidth() < 1024.0)
+			hudPartsScale = (0.5, 0.5);
+		
+		// Resize factor trying to maintaining vertical proportions
+		Double resolutionFactorStrict = Screen.GetWidth()*0.000525;
+		Vector2 resolutionFactorStrictVec = resolutionFactorStrict*(1.0, 1.0);
+		
+		//resolutionFactorStrictVec = defaultScale;
+		
+		
+		// ----------------- evangelion cabinet frame
+		
+		
+		// Resize factor making sure the image fills the vertical space
+		Double relationCorrection = 1.0+(16.0/9.0);
+		relationCorrection -= Screen.GetWidth()/(1.0*Screen.GetHeight());
+		Double resolutionFactorFill = relationCorrection*Screen.GetWidth()*0.000525;
+		
+		DrawImage("HUDLAY3", (0, 0), DI_ITEM_CENTER | DI_SCREEN_CENTER, 1, (-1, -1), resolutionFactorFill*(1.0, 1.0));
+		
+		
+		// ----------------- draw hud parts (top left)
+		
+		
+		DrawImage("HUD_TL", (0, 0), DI_ITEM_LEFT_TOP | DI_SCREEN_LEFT_TOP, 1, (-1, -1), resolutionFactorStrictVec);
+		
+		// ammo main variables
+		ammo ammocurrent;
+		int ammocount = 0;
+		int ammomax = 0;
+		
+		if (cp.ReadyWeapon && cp.ReadyWeapon.Ammo1) {
+			
+			ammocurrent = cp.ReadyWeapon.Ammo1;
+			ammocount = min(9999,pmo.CountInv(ammocurrent.GetClassName()));
+			ammomax = ammocurrent.MaxAmount;
+		}
+		
+		// ammo counter
+		vector2 ammocounterpos = (Screen.GetWidth()*0.173, Screen.GetHeight()*0.026);
+		string ammocounterval = "::::";
+		
+		if (ammocount > 999)		ammocounterval = FormatNumber(ammocount, 0, 9, 0);
+		else if (ammocount > 99)	ammocounterval = FormatNumber(ammocount, 0, 9, 0, ":");
+		else if (ammocount > 9)		ammocounterval = FormatNumber(ammocount, 0, 9, 0, "::");
+		else if (ammocount > 0)		ammocounterval = FormatNumber(ammocount, 0, 9, 0, ":::");
+		
+		DrawString(FontEvangelionLCDMono, ammocounterval, ammocounterpos, DI_TEXT_ALIGN_RIGHT | DI_SCREEN_LEFT_TOP, Font.CR_UNTRANSLATED, 1, -1, 4, resolutionFactorStrictVec);
+		
+		// ammo counter bar
+		int ammobarfragments = CreatePercent(ammocount, ammomax, 12);
+		
+		if (ammocount >= ammomax)
+			ammobarfragments = 13;
+		
+		vector2 ammobarlistposition = (Screen.GetWidth()*0.176, Screen.GetHeight()*0.13);
+		vector2 ammobarseparation = (Screen.GetWidth()*0.00105, Screen.GetHeight()*0.0095);
+		string ammobarfragment = "graphics/hud/hud_ammo_bar_5.png";
+		
+		if (ammocount > 0)
+			for (int i = 0; i <= ammobarfragments; i++) {
+				
+				if (i > 11)
+					ammobarfragment = "graphics/hud/hud_ammo_bar_1.png";
+				else if (i > 8)
+					ammobarfragment = "graphics/hud/hud_ammo_bar_2.png";
+				else if (i > 5)
+					ammobarfragment = "graphics/hud/hud_ammo_bar_3.png";
+				else if (i > 2)
+					ammobarfragment = "graphics/hud/hud_ammo_bar_4.png";
+				
+				DrawImage(ammobarfragment, (ammobarlistposition.x+ammobarseparation.x*i, ammobarlistposition.y-ammobarseparation.y*i), DI_ITEM_LEFT_TOP | DI_SCREEN_LEFT_TOP, 1, (-1, -1), resolutionFactorStrictVec);
+			}
+		
+		// ammo reserve list
+		double ammolistpositionx = Screen.GetWidth()*0.086;
+		double ammolistpositiony = Screen.GetHeight()*0.04;
+		double ammolisttagpositionx = Screen.GetWidth()*0.065;
+		int ammolistvseparation = Screen.GetHeight()*0.015;
+		
+		for (int i = 0; i < ownedAmmo.Size(); i++) {
+			
+			int ammotranslation = Font.CR_UNTRANSLATED;
+			string ammotag = ownedAmmo[i].GetTag();
+			
+			if (cp.ReadyWeapon && ammocurrent == ownedAmmo[i])
+				ammotranslation = Font.CR_GOLD;
+			
+			DrawString(FontEvangelionBITMono, FormatNumber(min(999, ownedAmmo[i].Amount), 0, 9), (ammolistpositionx, ammolistpositiony+ammolistvseparation*i), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_LEFT_TOP, ammotranslation, 1, -1, 4, resolutionFactorStrictVec);
+			DrawString(FontEvangelionBITMono, ammotag.Left(4), (ammolisttagpositionx, ammolistpositiony+ammolistvseparation*i), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_LEFT_TOP, ammotranslation, 1, -1, 4, resolutionFactorStrictVec);
+		}
+		
+		// weapon number list and icon
+		vector2 weaponlistposition = (Screen.GetWidth()*0.109, Screen.GetHeight()*0.116);
+		int weaponlistseparation = Screen.GetWidth()*0.01249;
+		int weaponlistsize = 6;
+		
+		for (int i = 0; i < weaponlistsize; i++) {
+			
+			int listtranslation = Font.CR_DARKGRAY;
+			
+			if (cp.HasWeaponsInSlot(i+1))
+				listtranslation = Font.CR_WHITE;
+			
+			if (cp.ReadyWeapon && cp.ReadyWeapon.SlotNumber == i+1)
+				listtranslation = Font.CR_CYAN;
+			
+			DrawString(FontEvangelionBITMono, FormatNumber(i+1), (weaponlistposition.x+weaponlistseparation*i, weaponlistposition.y), DI_TEXT_ALIGN_RIGHT | DI_SCREEN_LEFT_TOP, listtranslation, 1, -1, 4, resolutionFactorStrictVec);
+		}
+		
+		// draw weapon icon
+		vector2 iconpos = (Screen.GetWidth()*0.136, Screen.GetHeight()*0.083);
+		string icon = "";
+		
+		if (cp.ReadyWeapon)
+			if (cp.ReadyWeapon.getClassName() == "Eva01AssaultRifle")
+				icon = "E1RFX0";
+			else if (cp.ReadyWeapon.getClassName() == "Eva01HandGun")
+				icon = "E1HGX0";
+		
+		DrawImage(icon, iconpos, DI_ITEM_CENTER | DI_SCREEN_LEFT_TOP, 1, (-1, -1), resolutionFactorStrictVec);
+		
+		
+		// ----------------- draw hud parts (bottom left)
+		
+		
+		DrawImage("HUD_BL1", (0, 0), DI_ITEM_LEFT_BOTTOM | DI_SCREEN_LEFT_BOTTOM, 1, (-1, -1), resolutionFactorStrictVec);
+		
+		// health
+		int healthCurrent = pmo.health;
+		vector2 healthbarpos = (Screen.GetWidth()*0.01, -Screen.GetHeight()*0.1154);
+		
+		InterpolateValue(healthCurrent, healthInterpolated, healthInterpolationPile, 12, 10);
+		
+		double scalehealthbar = (1.0*clamp(healthInterpolated, 0, 100))/100.0;
+		
+		DrawImage("HUDHEALB", healthbarpos, DI_ITEM_LEFT | DI_ITEM_VCENTER | DI_SCREEN_LEFT_BOTTOM, 1, (-1, -1), ((resolutionFactorStrict*0.5)+(resolutionFactorStrict*scalehealthbar*0.5), resolutionFactorStrict*scalehealthbar));
+		
+		
+		// ----------------- draw hud parts (bottom center)
+		
+		
+		DrawImage("HUD_BC", (0, 0), DI_ITEM_CENTER_BOTTOM | DI_SCREEN_CENTER_BOTTOM, 1, (-1, -1), resolutionFactorStrictVec);
+		
+		// portrait
+		vector2 portraitposition = (0, -Screen.GetHeight()*0.07);
+		DrawTexture(GetMugShot(5), portraitposition, DI_ITEM_CENTER | DI_SCREEN_CENTER_BOTTOM, 1, (-1, -1), resolutionFactorStrictVec*3.0);
+		
+		// inventory list
+		vector2 inventoryposition = (0, -Screen.GetHeight()*0.12);
+		if (isInventoryBarVisible())
+			DrawInventoryBar(diparms, inventoryposition, 1, DI_ITEM_HCENTER | DI_ITEM_BOTTOM | DI_SCREEN_CENTER_BOTTOM);
+		
+		
+		// ----------------- draw hud parts (bottom right)
+		
+		
+		DrawImage("HUD_BR1", (0, 0), DI_ITEM_RIGHT_BOTTOM | DI_SCREEN_RIGHT_BOTTOM, 1, (-1, -1), resolutionFactorStrictVec);
+		
+		// synchronization graph
+		vector2 syncgraphpos = (-Screen.GetWidth()*0.146, -Screen.GetHeight()*0.043);
+		vector2 syncgraphlimits = TexSize("HUDSYNC2");
+		double syncgraphwidth = Screen.GetWidth()*0.1348;
+		double syncgraphheight = Screen.GetHeight()*0.1054;
+		int maxdesync = Screen.GetWidth()*0.02; // arbitrary value
+		int syncCurrent = pmo.CountInv("evasynchronization");
+		
+		InterpolateValue(syncCurrent, syncInterpolated, syncInterpolationPile, 45, 10);
+		
+		double syncfactor = (syncInterpolated*-1.0/100.0)+1.0; // [from 0.0 to 1.0, depending on synchronization value]
+		int syncoffset = maxdesync*syncfactor;
+		
+		syncmovement1 = GraphMovement(syncGraphs[0], ceil(syncgraphlimits.x/2.0), max(1, Screen.GetWidth()*0.0008), syncoffset); // [from 0 to maxwidth]
+		syncmovement2 = GraphMovement(syncGraphs[1], ceil(syncgraphlimits.x/2.0), max(1, Screen.GetWidth()*0.0008), 0); // [from 0 to maxwidth]
+		syncmovement3 = GraphMovement(syncGraphs[2], ceil(syncgraphlimits.x/2.0), max(1, Screen.GetWidth()*0.0008), -syncoffset); // [from 0 to maxwidth]
+		
+		SetClipRect(Screen.GetWidth()*0.8553, Screen.GetHeight()*0.8510, syncgraphwidth, syncgraphheight);
+		
+		if (syncInterpolated == 100)
+			DrawImage("HUDSYNC0", (syncgraphpos.x-syncmovement2, syncgraphpos.y), DI_ITEM_LEFT | DI_SCREEN_RIGHT_BOTTOM, 0.9, (-1, -1), resolutionFactorStrictVec);
+		else {
+			DrawImage("HUDSYNC3", (syncgraphpos.x-syncmovement3, syncgraphpos.y), DI_ITEM_LEFT | DI_SCREEN_RIGHT_BOTTOM, 0.6, (-1, -1), resolutionFactorStrictVec);
+			DrawImage("HUDSYNC2", (syncgraphpos.x-syncmovement2, syncgraphpos.y), DI_ITEM_LEFT | DI_SCREEN_RIGHT_BOTTOM, 0.6, (-1, -1), resolutionFactorStrictVec);
+			DrawImage("HUDSYNC1", (syncgraphpos.x-syncmovement1, syncgraphpos.y), DI_ITEM_LEFT | DI_SCREEN_RIGHT_BOTTOM, 0.6, (-1, -1), resolutionFactorStrictVec);
+		}
+		
+		ClearClipRect();
+		
+		// energy (time) counter
+		vector2 energycounterpos = (-Screen.GetWidth()*0.001, -Screen.GetHeight()*0.3);
+		vector2 energycountertextpos = (energycounterpos.x-Screen.GetWidth()*0.009, energycounterpos.y+Screen.GetHeight()*0.018);
+		string energycounterval = "0:00:0";
+		int energycount;
+		
+		if (pmo.CountInv("evacharging") < 10) { // if we are not charging
+			
+			if (pmo.CountInv("evaenergyhudinactive") == 1)
+				DrawImage("HUD_BRE2", energycounterpos, DI_ITEM_RIGHT_TOP | DI_SCREEN_RIGHT_BOTTOM, 1, (-1, -1), resolutionFactorStrictVec);
+			else
+				DrawImage("HUD_BRE1", energycounterpos, DI_ITEM_RIGHT_TOP | DI_SCREEN_RIGHT_BOTTOM, 1, (-1, -1), resolutionFactorStrictVec);
+			
+			energycount = min(9999,pmo.CountInv("evaenergy"));
+			
+			string energycountermin = FormatNumber(energycount/600, 0, 9, 0);
+			
+			int energysec = (energycount/10) - ((energycount/600)*60);
+			string energycountersec = FormatNumber(energysec, 0, 9, 0);
+			
+			if (energysec < 10)
+				energycountersec = "0"..energycountersec;
+			
+			string energycounterdsc = FormatNumber(energycount % 10, 0, 9, 0);
+			
+			if (energycount == 0)
+				faketimecounter = 0;
+			else if (pmo.CountInv("evaenergyhudinactive") == 0 && --faketimecounter < 0 || faketimecounter > 9) // simulate hundredth of a second
+				faketimecounter = 9;
+			
+			energycounterval = energycountermin..":"..energycountersec..":"..energycounterdsc..faketimecounter;
+			
+			DrawString(FontLiquidCrystal, energycounterval, energycountertextpos, DI_TEXT_ALIGN_RIGHT | DI_SCREEN_RIGHT_BOTTOM, Font.CR_ORANGE, 1, -1, 4, resolutionFactorStrictVec*0.5);
+		}
+		
+		
+		// ----------------- draw hud parts (top right)
+		
+		
+		DrawImage("HUD_TR", (0, 0), DI_ITEM_RIGHT_TOP | DI_SCREEN_RIGHT_TOP, 1, (-1, -1), resolutionFactorStrictVec);
+		
+		// at field activation
+		double atfpos = -Screen.GetWidth()*0.127;
+		double atfpos2 = Screen.GetHeight()*0.06;
+		double atfpos3 = Screen.GetHeight()*0.09;
+		
+		if (pmo.CountInv("atfieldactivated") > 0)
+			DrawImage("graphics/hud/hud_atf_wait.png", (atfpos, atfpos3), DI_ITEM_RIGHT_TOP | DI_SCREEN_RIGHT_TOP, 1, (-1, -1), resolutionFactorStrictVec);
+		else
+			DrawImage("graphics/hud/hud_atf_active.png", (atfpos, atfpos2), DI_ITEM_RIGHT_TOP | DI_SCREEN_RIGHT_TOP, 1, (-1, -1), resolutionFactorStrictVec);
+		
+		// at field counter bar
+		inventory atfieldcurrent = pmo.FindInventory("atfield");
+		int atfieldcount = 0;
+		int atfieldmax = 0;
+		
+		if (atfieldcurrent) {
+			
+			atfieldcount = pmo.CountInv("atfield");
+			
+			// TODO: read the player class property!
+			atfieldmax = 2000; //pmo.atshields;
+			//atfieldmax = atfieldcurrent.MaxAmount;
+		}
+		
+		int atfbarfragments = CreatePercent(atfieldcount, atfieldmax, 12);
+		
+		if (atfieldcount >= atfieldmax)
+			atfbarfragments = 13;
+		
+		vector2 atfbarlistposition = (-Screen.GetWidth()*0.176, Screen.GetHeight()*0.13);
+		vector2 atfbarseparation = (-Screen.GetWidth()*0.00105, Screen.GetHeight()*0.0095);
+		string atfbarfragment = "graphics/hud/hud_atf_bar_1.png";
+		
+		if (atfieldcount > 0)
+			for (int i = 0; i <= atfbarfragments; i++) {
+				
+				if (i > 10)
+					atfbarfragment = "graphics/hud/hud_atf_bar_5.png";
+				else if (i > 7)
+					atfbarfragment = "graphics/hud/hud_atf_bar_4.png";
+				else if (i > 5)
+					atfbarfragment = "graphics/hud/hud_atf_bar_3.png";
+				else if (i > 1)
+					atfbarfragment = "graphics/hud/hud_atf_bar_2.png";
+				
+				DrawImage(atfbarfragment, (atfbarlistposition.x+atfbarseparation.x*i, atfbarlistposition.y-atfbarseparation.y*i), DI_ITEM_RIGHT_TOP | DI_SCREEN_RIGHT_TOP, 1, (-1, -1), resolutionFactorStrictVec);
+			}
+	}
+}
+
+	
